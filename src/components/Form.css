@@ -1,0 +1,7 @@
+#form {
+    overflow-y: scroll;
+}
+
+#form td {
+    padding: 0.5em;
+}

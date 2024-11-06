@@ -1,0 +1,13 @@
+#function-buttons {
+    justify-content: space-between;
+    display: flex;
+}
+
+#function-buttons>button {
+    width: 10.7%;
+}
+
+#function-buttons>div:first-child {
+    color: rgb(3, 160, 150);
+    font-size: 1.5vh;
+}
