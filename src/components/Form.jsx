@@ -2,7 +2,18 @@ import { useEffect } from 'react'
 import './Form.css'
 
 function Form(props) {
-    const submit = () => { }
+    const submit = (evt) => {
+        evt.preventDefault();
+        for (let i = 0; i < evt.target.length; i++) {
+            props.formElements[i].value = evt.target[i].value;
+        }
+        props.setAction(props.formSuccess);
+    }
+    const numberOnly = (evt) => {
+        if (evt.which > 57) {
+            evt.preventDefault();
+        }
+    }
     const focusChange = (evt) => {
         if (props.lastInputFocused?.target?.id === evt.target.id) {
             return;
@@ -31,14 +42,25 @@ function Form(props) {
                         const key = props.action + ':' + i;
                         switch (element.type) {
                             case 'text':
+                            case 'email':
                                 return <tr key={key}>
-                                    <td>{element.key}</td>
-                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" /></td>
+                                    <td>{element.label}</td>
+                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" name={key} /></td>
+                                </tr>
+                            case 'number':
+                                return <tr key={key}>
+                                    <td>{element.label}</td>
+                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={numberOnly} name={key} /></td>
+                                </tr>
+                            case 'date':
+                                return <tr key={key}>
+                                    <td>{element.label}</td>
+                                    <td><input id={'input-' + i} type='date' onFocus={focusChange} autoComplete="off" name={key} /></td>
                                 </tr>
                             case 'password':
                                 return <tr key={key}>
-                                    <td>{element.key}</td>
-                                    <td><input id={'input-' + i} type='password' onFocus={focusChange} autoComplete="off" /></td>
+                                    <td>{element.label}</td>
+                                    <td><input id={'input-' + i} type='password' onFocus={focusChange} autoComplete="off" name={key} /></td>
                                 </tr>
                             case 'submit':
                                 return <tr key={key}>

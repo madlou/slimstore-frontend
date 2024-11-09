@@ -52,11 +52,15 @@ input {
 }
 
 input[type=text],
+input[type=date],
+input[type=number],
 input[type=password] {
     padding: 0.5em;
 }
 
 #form input[type=text]:focus,
+#form input[type=date]:focus,
+#form input[type=number]:focus,
 #form input[type=password]:focus {
     outline: none;
 }

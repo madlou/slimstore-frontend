@@ -1,6 +1,6 @@
 export const postApi = () => {
     return {
-        getData: async (action) => {
+        getData: async (action, formElements) => {
             const request = await fetch('http://localhost:8084/slimstore/api/register', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -8,7 +8,7 @@ export const postApi = () => {
                     registerNumber: 2,
                     userNumber: 1234,
                     action: action ?? null,
-                    FormElement: [],
+                    formElements: formElements ?? [],
                 }),
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8',

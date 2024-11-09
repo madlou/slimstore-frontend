@@ -16,9 +16,9 @@ function App() {
     const toggleKeyboard = () => {
         setShowKeyboard(!showKeyboard);
     }
-    const getData = async (action) => {
+    const getData = async (action, formElements) => {
         setLastInputFocused(document.getElementById('input-1'));
-        setData(await postApi().getData(action));
+        setData(await postApi().getData(action, formElements));
     }
     useEffect(() => {
         if (data && data.user.id) {
@@ -26,7 +26,7 @@ function App() {
         }
     }, [data]);
     useEffect(() => {
-        getData(action);
+        getData(action, data.flow.formElements);
     }, [action]);
     return (
         <>
@@ -40,9 +40,11 @@ function App() {
                     <AuditLog auditLog={data.auditLog} />
                     <Form
                         action={action}
+                        setAction={setAction}
                         lastInputFocused={lastInputFocused}
                         setLastInputFocused={setLastInputFocused}
                         formElements={data.flow.formElements}
+                        formSuccess={data.flow.formSuccess}
                         message={data.flow.message} />
                 </div>
                 <div id='middle-bottom'>
