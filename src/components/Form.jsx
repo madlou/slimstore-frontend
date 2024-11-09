@@ -7,6 +7,7 @@ function Form(props) {
         for (let i = 0; i < evt.target.length; i++) {
             props.formElements[i].value = evt.target[i].value;
         }
+        props.setForm(props.formElements)
         props.setAction(props.formSuccess);
     }
     const numberOnly = (evt) => {
@@ -14,8 +15,13 @@ function Form(props) {
             evt.preventDefault();
         }
     }
+    const decimalOnly = (evt) => {
+        if (evt.which > 57 && evt.which != 190) {
+            evt.preventDefault();
+        }
+    }
     const focusChange = (evt) => {
-        if (props.lastInputFocused?.target?.id === evt.target.id) {
+        if (!evt.target || props.lastInputFocused?.target?.id === evt.target.id) {
             return;
         }
         if (props.lastInputFocused?.target) {
@@ -26,11 +32,13 @@ function Form(props) {
     }
     useEffect(() => {
         setTimeout(() => {
-            const input = { target: document.getElementById('input-0') };
-            if (input) {
-                focusChange(input);
-                input.target.focus();
+            const node = document.getElementById('input-0');
+            if (!node) {
+                return;
             }
+            const input = { target: node };
+            focusChange(input);
+            input.target.focus();
         }, 300)
     }, [props.action]);
     return (
@@ -51,6 +59,11 @@ function Form(props) {
                                 return <tr key={key}>
                                     <td>{element.label}</td>
                                     <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={numberOnly} name={key} /></td>
+                                </tr>
+                            case 'decimal':
+                                return <tr key={key}>
+                                    <td>{element.label}</td>
+                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={decimalOnly} name={key} /></td>
                                 </tr>
                             case 'date':
                                 return <tr key={key}>

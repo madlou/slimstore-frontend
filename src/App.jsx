@@ -13,27 +13,23 @@ function App() {
     const [showKeyboard, setShowKeyboard] = useState(false)
     const [data, setData] = useState(dataSpec)
     const [action, setAction] = useState('home')
+    const [form, setForm] = useState([])
     const toggleKeyboard = () => {
         setShowKeyboard(!showKeyboard);
     }
-    const getData = async (action, formElements) => {
+    const getData = async (action) => {
         setLastInputFocused(document.getElementById('input-1'));
-        setData(await postApi().getData(action, formElements));
+        setData(await postApi().getData(action, form, setForm));
     }
     useEffect(() => {
-        if (data && data.user.id) {
-            console.log(data);
-        }
-    }, [data]);
-    useEffect(() => {
-        getData(action, data.flow.formElements);
+        getData(action);
     }, [action]);
     return (
         <>
             <div id='top'>
                 <h1>TJX</h1>
                 <h2>SlimStore POS - {data.flow.title}</h2>
-                <button onClick={toggleKeyboard} className=''>Keyboard Toggle</button>
+                <button onClick={toggleKeyboard}>Keyboard Toggle</button>
             </div>
             <div id='middle'>
                 <div id='middle-top' className={showKeyboard ? 'middle-small' : 'middle-large'}>
@@ -45,6 +41,7 @@ function App() {
                         setLastInputFocused={setLastInputFocused}
                         formElements={data.flow.formElements}
                         formSuccess={data.flow.formSuccess}
+                        setForm={setForm}
                         message={data.flow.message} />
                 </div>
                 <div id='middle-bottom'>
