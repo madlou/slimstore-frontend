@@ -13,7 +13,7 @@ export const dataSpec = () => {
             "status": "",
             "lastTxnNumber": 0
         },
-        "flow": {
+        "view": {
             "name": "",
             "title": "",
             "message": "",

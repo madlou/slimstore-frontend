@@ -1,6 +1,7 @@
 export const postApi = () => {
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
     return {
-        getData: async (action, formElements, setForm) => {
+        getData: async (action, formElements, setRequestForm) => {
             const postObject = {
                 storeNumber: 423,
                 registerNumber: 2,
@@ -9,7 +10,7 @@ export const postApi = () => {
                 formElements: formElements ?? [],
             };
             console.log('Request', postObject);
-            const request = await fetch('http://localhost:8084/slimstore/api/register', {
+            const request = await fetch(backendURL + 'register', {
                 method: 'POST',
                 body: JSON.stringify(postObject),
                 headers: {
@@ -18,7 +19,7 @@ export const postApi = () => {
             })
             const data = await request.json();
             console.log('Response', data);
-            setForm([]);
+            setRequestForm([]);
             return data;
         }
     }

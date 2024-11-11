@@ -7,7 +7,7 @@ function Form(props) {
         for (let i = 0; i < evt.target.length; i++) {
             props.formElements[i].value = evt.target[i].value;
         }
-        props.setForm(props.formElements)
+        props.setRequestForm(props.formElements)
         props.setAction(props.formSuccess);
     }
     const numberOnly = (evt) => {
