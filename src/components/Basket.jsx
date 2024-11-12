@@ -29,8 +29,8 @@ function Basket(props) {
                 return (
                     <div key={i} className='space-below'>
                         <div>{line.code} {line.name}</div>
-                        <div className='unit'>{line.quantity} @ £{line.unitValue.toFixed(2)}</div>
                         <div className='total'>£{(line.quantity * line.unitValue).toFixed(2)}</div>
+                        <div className='unit'>{line.quantity} @ £{line.unitValue.toFixed(2)}</div>
                     </div>
                 );
             })}

@@ -3,15 +3,17 @@
 }
 
 #basket>div {
-    height: 3em;
+    margin-bottom: 1em;
 }
 
 #basket .unit {
-    float: left;
     height: 1em;
+    width: 50%;
 }
 
 #basket .total {
     float: right;
     height: 1em;
+    width: 50%;
+    text-align: right;
 }
