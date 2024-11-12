@@ -17,7 +17,7 @@ function Keyboard(props) {
 
     }
     return (
-        <div id='keyboard' className='container document'>
+        <div id='keyboard' className='container'>
             <div>
                 <button onClick={tap}>1</button>
                 <button onClick={tap}>2</button>

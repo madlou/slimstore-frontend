@@ -17,12 +17,12 @@ export const dataSpec = () => {
             "name": "",
             "title": "",
             "message": "",
-            "formValidation": null,
+            "formProcess": null,
             "formSuccess": "",
             "formElements": [],
             "functionButtons": []
         },
-        "auditLog": [],
+        "basket": [],
         "user": {
             "id": 0,
             "code": "",

@@ -71,6 +71,12 @@ input[type=password] {
     color: lightgrey;
 }
 
+.document {
+    scrollbar-color: #121212 rgba(255, 255, 255, 0.07);
+    scrollbar-width: thin;
+    overflow-y: auto;
+}
+
 button,
 input[type=submit] {
     margin: 15px 0;
@@ -84,6 +90,7 @@ input[type=submit] {
     cursor: pointer;
     transition: border-color 0.25s;
     background-color: grey;
+    color: #121212;
 }
 
 button:hover,
@@ -104,4 +111,8 @@ button:focus {
 
 .invisible {
     visibility: hidden;
+}
+
+.space-below {
+    margin-bottom: 1em;
 }

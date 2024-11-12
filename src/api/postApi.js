@@ -1,13 +1,14 @@
 export const postApi = () => {
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     return {
-        getData: async (action, formElements, setRequestForm) => {
+        getData: async (action, formElements, setRequestForm, formProcess) => {
             const postObject = {
                 storeNumber: 423,
                 registerNumber: 2,
                 userNumber: 1234,
                 action: action ?? null,
                 formElements: formElements ?? [],
+                formProcess: formProcess ?? '',
             };
             console.log('Request', postObject);
             const request = await fetch(backendURL + 'register', {

@@ -1,7 +1,13 @@
-#form {
-    overflow-y: scroll;
-}
-
 #form td {
     padding: 0.5em;
+}
+
+#form button {
+    width: 2em;
+}
+
+#form span.quantity {
+    width: 2em;
+    display: inline-block;
+    text-align: center;
 }

@@ -12,8 +12,12 @@ function FunctionButtons(props) {
     props.buttons.forEach(button => {
         fixedButtons[button.position] = button;
     });
-    const doAction = (e) => {
-        props.setAction(e.target.attributes.data.value)
+    const doAction = (evt) => {
+        if (evt.target.attributes.data.value.substring(0, 6) == 'submit') {
+            props.submit(evt);
+        } else {
+            props.setAction(evt.target.attributes.data.value)
+        }
     }
     useEffect(() => {
         document.addEventListener("keydown", (e) => {

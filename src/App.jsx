@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import Keyboard from './components/Keyboard.jsx'
-import AuditLog from './components/AuditLog.jsx'
+import Basket from './components/Basket.jsx'
 import Form from './components/Form.jsx'
 import FunctionButtons from './components/FunctionButtons.jsx'
 import StatusBar from './components/StatusBar.jsx'
@@ -19,7 +19,15 @@ function App() {
     }
     const getData = async (action) => {
         setLastInputFocused(document.getElementById('input-1'));
-        setData(await postApi().getData(action, requestForm, setRequestForm));
+        setData(await postApi().getData(action, requestForm, setRequestForm, data.view.formProcess));
+    }
+    const submit = (evt) => {
+        evt.preventDefault();
+        for (let i = 0; i < evt.target.length; i++) {
+            data.view.formElements[i].value = evt.target[i].value;
+        }
+        setRequestForm(data.view.formElements)
+        setAction(data.view.formSuccess);
     }
     useEffect(() => {
         getData(action);
@@ -33,7 +41,7 @@ function App() {
             </div>
             <div id='middle'>
                 <div id='middle-top' className={showKeyboard ? 'middle-small' : 'middle-large'}>
-                    <AuditLog auditLog={data.auditLog} />
+                    <Basket basket={data.basket} />
                     <Form
                         action={action}
                         setAction={setAction}
@@ -42,6 +50,7 @@ function App() {
                         formElements={data.view.formElements}
                         formSuccess={data.view.formSuccess}
                         setRequestForm={setRequestForm}
+                        submit={submit}
                         message={data.view.message} />
                 </div>
                 <div id='middle-bottom'>
@@ -49,8 +58,8 @@ function App() {
                 </div>
             </div>
             <div id='bottom'>
-                <FunctionButtons buttons={data.view.functionButtons} setAction={setAction} />
-                <StatusBar store={data.store} register={data.register} />
+                <FunctionButtons buttons={data.view.functionButtons} setAction={setAction} submit={submit} />
+                <StatusBar store={data.store} register={data.register} user={data.user} />
             </div>
         </>
     )

@@ -1,0 +1,17 @@
+#basket>div {
+    max-width: 30em;
+}
+
+#basket>div {
+    height: 3em;
+}
+
+#basket .unit {
+    float: left;
+    height: 1em;
+}
+
+#basket .total {
+    float: right;
+    height: 1em;
+}
