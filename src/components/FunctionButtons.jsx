@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import './FunctionButtons.css'
+import Basket from './Basket';
 
 function FunctionButtons(props) {
     const fixedButtons = [];
@@ -16,7 +17,9 @@ function FunctionButtons(props) {
         if (evt.target.attributes.data.value.substring(0, 6) == 'submit') {
             props.submit(evt);
         } else {
-            props.setAction(evt.target.attributes.data.value)
+            const data = evt.target.attributes.data.value.split(',');
+            props.setProcess(data[1]);
+            props.setAction(data[0]);
         }
     }
     useEffect(() => {
@@ -27,6 +30,32 @@ function FunctionButtons(props) {
             }
         }, false);
     }, []);
+    const checkCondition = (value) => {
+        if (!value) {
+            return true;
+        }
+        const condition = value.split(' ');
+        let first = '';
+        let second = condition[2];
+        switch (condition[0]) {
+            case 'basket.length':
+                first = props.data.basket.length;
+                break;
+        }
+        switch (condition[1]) {
+            case '=':
+            case '==':
+                return first == second;
+            case '<':
+                return first < second;
+            case '<=':
+                return first <= second;
+            case '>':
+                return first > second;
+            case '>=':
+                return first >= second;
+        }
+    }
     return (
         <div id="function-buttons">
             {fixedButtons.map((button, i) => {
@@ -36,10 +65,11 @@ function FunctionButtons(props) {
                         id={"F" + button.position}
                         className={'secondary' + (button.label ? '' : ' invisible')}
                         onClick={doAction}
-                        data={button.action}
+                        data={[button.action, button.process]}
+                        disabled={!checkCondition(button.condition)}
                     >
-                        <div data={button.action}>{"F" + button.position}</div>
-                        <div data={button.action}>{button.label}</div>
+                        <div data={[button.action, button.process]}>{"F" + button.position}</div>
+                        <div data={[button.action, button.process]}>{button.label}</div>
                     </button>
                 )
             })}

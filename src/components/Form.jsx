@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './Form.css'
+import { imageApi } from '../api/imageApi.js'
 
 function Form(props) {
     const [formElements, setFormElements] = useState([]);
@@ -33,7 +34,7 @@ function Form(props) {
     }
     const removeProduct = (evt) => {
         setFormElements(formElements.map((element, i) => {
-            if (element.key === evt.target.name && element.value) {
+            if (element.key === evt.target.name && element.value != '0') {
                 element.value = element.value * 1 - 1;
             }
             return element;
@@ -96,12 +97,18 @@ function Form(props) {
                                     <td colSpan='2'><button>{element.value}</button></td>
                                 </tr>
                             case 'image':
+                                if (element.image.substring(0, 5) == 'image') {
+                                    element.image = imageApi().getUrl(element.image);
+                                }
                                 return <tr key={key}>
                                     <td><img src={element.image} /></td><td>{element.key} - {element.label}</td>
                                 </tr>
                             case 'product':
+                                if (element.image.substring(0, 5) == 'image') {
+                                    element.image = imageApi().getUrl(element.image);
+                                }
                                 return <tr key={key}>
-                                    <td>
+                                    <td className='imageBackground'>
                                         <img src={element.image} />
                                     </td>
                                     <td>

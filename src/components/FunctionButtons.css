@@ -6,11 +6,21 @@
 #function-buttons>button {
     width: 10.7%;
     margin: 0.5em 0;
+    height: 2.5em;
+}
+
+#function-buttons>button:disabled {
+    visibility: hidden;
+}
+
+#function-buttons>button>div {
+    font-size: 0.8em;
+    overflow: hidden;
 }
 
 #function-buttons>button>div:first-child {
     color: rgb(3, 160, 150);
-    font-size: 1.5vh;
+    font-size: 0.5em;
 }
 
 @media (orientation: portrait) {
@@ -22,6 +32,7 @@
     #function-buttons>button {
         width: 23.5%;
         margin: 5px 0;
+        height: 2em;
     }
 
     #function-buttons>button>div:first-child {

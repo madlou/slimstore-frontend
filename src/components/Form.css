@@ -11,3 +11,15 @@
     display: inline-block;
     text-align: center;
 }
+
+#form img {
+    max-width: 8em;
+    max-height: 8em;
+}
+
+#form .imageBackground {
+    background-color: white;
+    text-align: center;
+    width: 8em;
+    height: 8em;
+}

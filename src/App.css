@@ -30,6 +30,7 @@
     flex-direction: column;
     flex-grow: 1;
     overflow: hidden;
+    max-height: 83vh;
 }
 
 #middle-top {
@@ -40,7 +41,7 @@
 }
 
 #middle-top.middle-small {
-    max-height: 57vh;
+    max-height: 55vh;
 }
 
 #middle-top.middle-large {
@@ -57,15 +58,13 @@
 } */
 
 #bottom {
-    height: 10%;
+    height: 10vh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
 @media (orientation: portrait) {
-
-    #top {}
 
     #top>h1 {
         margin-top: 0.5em;
@@ -78,8 +77,12 @@
         font-weight: normal;
     }
 
-    #middle {
-        height: 80%;
+    #middle-top.middle-small {
+        max-height: 57vh;
+    }
+
+    #middle-top.middle-large {
+        max-height: 77vh;
     }
 
     #middle-top {
