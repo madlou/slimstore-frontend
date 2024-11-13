@@ -5,9 +5,34 @@
 }
 
 #status-bar>div {
-    font-size: 0.7em;
+    font-size: 1em;
     padding: 0.3em;
     width: 23.5%;
     text-align: center;
     color: darkgray;
+}
+
+#status-bar>div,
+#status-bar>div>label,
+#status-bar>div>span {
+    font-size: 0.8em;
+}
+
+@media (orientation: portrait) {
+
+    #status-bar {
+        height: 2em;
+        overflow: hidden;
+    }
+
+    #status-bar label {
+        display: none;
+    }
+
+    #status-bar>div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
 }

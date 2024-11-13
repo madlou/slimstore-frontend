@@ -51,11 +51,14 @@ function App() {
                         formSuccess={data.view.formSuccess}
                         setRequestForm={setRequestForm}
                         submit={submit}
-                        message={data.view.message} />
+                        message={data.view.message}
+                        showKeyboard={showKeyboard} />
                 </div>
-                <div id='middle-bottom'>
-                    {showKeyboard ? <Keyboard lastInputFocused={lastInputFocused} /> : null}
-                </div>
+                {showKeyboard ? (
+                    <div id='middle-bottom'>
+                        <Keyboard lastInputFocused={lastInputFocused} />
+                    </div>
+                ) : null}
             </div>
             <div id='bottom'>
                 <FunctionButtons buttons={data.view.functionButtons} setAction={setAction} submit={submit} />

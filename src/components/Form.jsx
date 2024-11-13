@@ -65,17 +65,17 @@ function Form(props) {
                             case 'email':
                                 return <tr key={key}>
                                     <td>{element.label}</td>
-                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" name={key} /></td>
+                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'number':
                                 return <tr key={key}>
                                     <td>{element.label}</td>
-                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={numberOnly} name={key} /></td>
+                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={numberOnly} name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'decimal':
                                 return <tr key={key}>
                                     <td>{element.label}</td>
-                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={decimalOnly} name={key} /></td>
+                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={decimalOnly} name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'date':
                                 return <tr key={key}>
@@ -85,7 +85,7 @@ function Form(props) {
                             case 'password':
                                 return <tr key={key}>
                                     <td>{element.label}</td>
-                                    <td><input id={'input-' + i} type='password' onFocus={focusChange} autoComplete="off" name={key} /></td>
+                                    <td><input id={'input-' + i} type='password' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'submit':
                                 return <tr key={key}>

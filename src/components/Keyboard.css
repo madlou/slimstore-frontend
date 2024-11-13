@@ -11,4 +11,13 @@
 #keyboard button {
     width: 5%;
     margin: 0.5em;
+    overflow: hidden;
+}
+
+@media (orientation: portrait) {
+    #keyboard button {
+        width: 8%;
+        margin: 0.1em;
+        padding: 0;
+    }
 }
