@@ -66,50 +66,54 @@ function Form(props) {
                             case 'text':
                             case 'email':
                                 return <tr key={key}>
-                                    <td>{element.label}</td>
+                                    <td colSpan='2'>{element.label}</td>
                                     <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'number':
                                 return <tr key={key}>
-                                    <td>{element.label}</td>
+                                    <td colSpan='2'>{element.label}</td>
                                     <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={numberOnly} name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'decimal':
                                 return <tr key={key}>
-                                    <td>{element.label}</td>
+                                    <td colSpan='2'>{element.label}</td>
                                     <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={decimalOnly} name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'date':
                                 return <tr key={key}>
-                                    <td>{element.label}</td>
+                                    <td colSpan='2'>{element.label}</td>
                                     <td><input id={'input-' + i} type='date' onFocus={focusChange} autoComplete="off" name={key} /></td>
                                 </tr>
                             case 'password':
                                 return <tr key={key}>
-                                    <td>{element.label}</td>
+                                    <td colSpan='2'>{element.label}</td>
                                     <td><input id={'input-' + i} type='password' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'submit':
                                 return <tr key={key}>
-                                    <td colSpan='2'><input id={'input-' + i} type='submit' value={element.value} className='primary' /></td>
+                                    <td colSpan='3'><input id={'input-' + i} type='submit' value={element.value} className='primary' /></td>
                                 </tr>
                             case 'button':
                                 return <tr key={key}>
-                                    <td colSpan='2'><button>{element.value}</button></td>
+                                    <td>{element.key}</td>
+                                    <td>{element.value}</td>
+                                    <td><button type='button'>{element.label}</button></td>
                                 </tr>
                             case 'image':
                                 if (element.image.substring(0, 5) == 'image') {
                                     element.image = imageApi().getUrl(element.image);
                                 }
                                 return <tr key={key}>
-                                    <td><img src={element.image} /></td><td>{element.key} - {element.label}</td>
+                                    <td><img src={element.image} /></td>
+                                    <td>{element.key}</td>
+                                    <td>{element.label}</td>
                                 </tr>
                             case 'product':
                                 if (element.image.substring(0, 5) == 'image') {
                                     element.image = imageApi().getUrl(element.image);
                                 }
                                 return <tr key={key}>
-                                    <td className='imageBackground'>
+                                    <td className='imageBackground' colSpan='2'>
                                         <img src={element.image} />
                                     </td>
                                     <td>
