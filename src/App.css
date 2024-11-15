@@ -86,7 +86,7 @@
     }
 
     #middle-top {
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
 
     #middle-top>div {

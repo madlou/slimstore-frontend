@@ -16,7 +16,12 @@ export default defineConfig(({ command, mode }) => {
             port: port,
             strictPort: true,
             host: true,
-            origin: "http://0.0.0.0:" + port,
-        }
+            origin: "http://localhost:" + port,
+            proxy: {
+                '/api': 'http://localhost:8084',
+                '/image': 'http://localhost:8084',
+            },
+        },
+
     }
 })
