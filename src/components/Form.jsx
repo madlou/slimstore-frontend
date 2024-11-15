@@ -56,6 +56,7 @@ function Form(props) {
     }, [props.formElements]);
     return (
         <div id='form' className='document container'>
+            {props.error ? <div className='error'>{props.error}</div> : ""}
             <div id='message' className='margin-below'>{props.message}</div>
             <form onSubmit={props.submit}>
                 <table><tbody>

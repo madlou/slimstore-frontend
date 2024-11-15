@@ -12,7 +12,7 @@ function App() {
     const [lastInputFocused, setLastInputFocused] = useState(null)
     const [showKeyboard, setShowKeyboard] = useState(false)
     const [data, setData] = useState(dataSpec)
-    const [action, setAction] = useState('home')
+    const [action, setAction] = useState('')
     const [process, setProcess] = useState('');
     const [requestForm, setRequestForm] = useState([])
     const toggleKeyboard = () => {
@@ -20,7 +20,7 @@ function App() {
     }
     const getData = async (action) => {
         setLastInputFocused(document.getElementById('input-1'));
-        setData(await postApi().getData(action, requestForm, setRequestForm, process));
+        setData(await postApi().getData(action, setAction, requestForm, setRequestForm, process));
     }
     const submit = (evt) => {
         evt.preventDefault();
@@ -31,11 +31,16 @@ function App() {
         setAction(data.view.formSuccess);
     }
     useEffect(() => {
-        getData(action);
+        if (action) {
+            getData(action);
+        }
     }, [action]);
     useEffect(() => {
         setProcess(data.view.formProcess)
     }, [data]);
+    useEffect(() => {
+        getData('');
+    }, []);
     return (
         <>
             <div id='top'>
@@ -56,6 +61,7 @@ function App() {
                         setRequestForm={setRequestForm}
                         submit={submit}
                         message={data.view.message}
+                        error={data.error}
                         showKeyboard={showKeyboard} />
                 </div>
                 {showKeyboard ? (

@@ -1,7 +1,7 @@
 export const postApi = () => {
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     return {
-        getData: async (action, formElements, setRequestForm, formProcess) => {
+        getData: async (action, setAction, formElements, setRequestForm, formProcess) => {
             formElements = formElements.filter((element) => {
                 switch (element.type) {
                     case 'submit':
@@ -33,6 +33,7 @@ export const postApi = () => {
             const data = await request.json();
             console.log('Response', data);
             setRequestForm([]);
+            setAction('');
             return data;
         }
     }

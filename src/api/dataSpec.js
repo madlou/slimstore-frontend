@@ -28,7 +28,8 @@ export const dataSpec = () => {
             "code": "",
             "email": "",
             "name": ""
-        }
+        },
+        "error": "",
     }
 }
 

@@ -12,11 +12,13 @@ function Basket(props) {
     })
     const totalRef = useRef(null);
     const scrollToBottom = () => {
-        totalRef.current.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'center'
-        });
+        if (totalRef.current) {
+            totalRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
+        }
     }
     useEffect(() => {
         setTimeout(() => {
@@ -34,11 +36,13 @@ function Basket(props) {
                     </div>
                 );
             })}
-            <div>
-                <div>Total: £{total.toFixed(2)}</div>
-                <div>Transaction Lines: {lines}</div>
-                <div ref={totalRef}>Total Items: {items}</div>
-            </div>
+            {props.basket.length < 1 ? "" : (
+                <div>
+                    <div>Total: £{total.toFixed(2)}</div>
+                    <div>Transaction Lines: {lines}</div>
+                    <div ref={totalRef}>Total Items: {items}</div>
+                </div>
+            )}
         </div>
     )
 }
