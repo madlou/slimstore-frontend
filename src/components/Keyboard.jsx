@@ -4,14 +4,14 @@ import './Keyboard.css'
 function Keyboard(props) {
     const tap = (evt) => {
         const node = props.lastInputFocused.target;
-        const newValue = evt.target.innerHTML;
-        const orig = '' + node.value;
-        if (newValue === 'DEL') {
-            node.value = orig.substr(0, orig.length - 1);
+        const character = evt.target.innerHTML;
+        const text = '' + node.value;
+        if (character === 'DEL') {
+            node.value = text.substr(0, text.length - 1);
         } else if (newValue === 'SPACE') {
-            node.value = orig + ' ';
+            node.value = text + ' ';
         } else {
-            node.value = orig + newValue;
+            node.value = text + character;
         }
         node.focus();
 
