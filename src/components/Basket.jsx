@@ -5,15 +5,23 @@ function Basket(props) {
     let total = 0;
     let lines = 0;
     let items = 0;
+    let tenders = 0;
+    let change = null;
     props.basket.map((line, i) => {
         total += line.quantity * line.unitValue;
         items += line.quantity;
         lines++;
     })
-    const totalRef = useRef(null);
+    props.tender.map((line, i) => {
+        tenders += line.value > 0 ? line.value : 0;
+    })
+    if (tenders >= total) {
+        change = tenders - total;
+    }
+    const basketBottomRef = useRef(null);
     const scrollToBottom = () => {
-        if (totalRef.current) {
-            totalRef.current.scrollIntoView({
+        if (basketBottomRef.current) {
+            basketBottomRef.current.scrollIntoView({
                 behavior: 'smooth',
                 block: 'nearest',
                 inline: 'center'
@@ -37,12 +45,35 @@ function Basket(props) {
                 );
             })}
             {props.basket.length < 1 ? "" : (
-                <div>
-                    <div>Total: £{total.toFixed(2)}</div>
+                <div className='space-below'>
+                    <div>Sub Total: £{total.toFixed(2)}</div>
                     <div>Transaction Lines: {lines}</div>
-                    <div ref={totalRef}>Total Items: {items}</div>
+                    <div>Total Items: {items}</div>
                 </div>
             )}
+            {props.tender.map((line, i) => {
+                return line.value > 0 ? (
+                    <div key={i} className='space-below'>
+                        <div>{line.label} £{(line.value).toFixed(2)}</div>
+                    </div>
+                ) : "";
+            })}
+            {tenders == 0 ? "" : (
+                <div className='space-below'>
+                    <div>Tender Total: £{tenders.toFixed(2)}</div>
+                </div>
+            )}
+            {tenders == 0 || tenders > total ? "" : (
+                <div>
+                    <div>To Pay: £{(total - tenders).toFixed(2)}</div>
+                </div>
+            )}
+            {change == null || change <= 0 ? "" : (
+                <div>
+                    <div>Cash Change: £{change.toFixed(2)}</div>
+                </div>
+            )}
+            <div ref={basketBottomRef}></div>
         </div>
     )
 }

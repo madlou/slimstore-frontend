@@ -22,13 +22,13 @@ function App() {
         setLastInputFocused(document.getElementById('input-1'));
         setData(await postApi().getData(action, setAction, requestForm, setRequestForm, process));
     }
-    const submit = (evt) => {
+    const submit = (evt, action = data.view.formSuccess) => {
         evt.preventDefault();
         for (let i = 0; i < evt.target.length; i++) {
             data.view.formElements[i].value = evt.target[i].value;
         }
         setRequestForm(data.view.formElements)
-        setAction(data.view.formSuccess);
+        setAction(action);
     }
     useEffect(() => {
         if (action) {
@@ -50,7 +50,7 @@ function App() {
             </div>
             <div id='middle'>
                 <div id='middle-top' className={showKeyboard ? 'middle-small' : 'middle-large'}>
-                    <Basket basket={data.basket} />
+                    <Basket basket={data.basket} tender={data.tender} />
                     <Form
                         action={action}
                         setAction={setAction}

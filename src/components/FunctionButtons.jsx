@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import './FunctionButtons.css'
-import Basket from './Basket';
 
 function FunctionButtons(props) {
     const fixedButtons = [];
@@ -14,12 +13,23 @@ function FunctionButtons(props) {
         fixedButtons[button.position] = button;
     });
     const doAction = (evt) => {
-        if (evt.target.attributes.data.value.substring(0, 6) == 'submit') {
+        const value = evt.target.attributes.data.value;
+        if (value.substring(0, 6) == 'submit') {
             props.submit(evt);
         } else {
-            const data = evt.target.attributes.data.value.split(',');
-            props.setProcess(data[1]);
-            props.setAction(data[0]);
+            let split = value.split(',');
+            if (split[1]) {
+                props.setProcess(split[1]);
+            }
+            split = split[0].split(':');
+            if (split[1]) {
+                props.submit({
+                    preventDefault: () => { },
+                    target: [{ value: split[1] }]
+                }, split[0])
+            } else {
+                props.setAction(split[0]);
+            }
         }
     }
     useEffect(() => {
@@ -40,6 +50,9 @@ function FunctionButtons(props) {
         switch (condition[0]) {
             case 'basket.length':
                 first = props.data.basket.length;
+                break;
+            case 'tender.length':
+                first = props.data.tender.length;
                 break;
         }
         switch (condition[1]) {

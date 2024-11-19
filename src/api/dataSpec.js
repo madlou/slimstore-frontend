@@ -23,6 +23,7 @@ export const dataSpec = () => {
             "functionButtons": []
         },
         "basket": [],
+        "tender": [],
         "user": {
             "id": 0,
             "code": "",
