@@ -1,4 +1,9 @@
+import Cookies from 'universal-cookie';
+
 export const postApi = () => {
+
+    const cookies = new Cookies();
+
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     return {
         getData: async (action, setAction, formElements, setRequestForm, formProcess) => {
@@ -34,6 +39,18 @@ export const postApi = () => {
             console.log('Response', data);
             setRequestForm([]);
             setAction('');
+            if (data.store.number && data.register.number) {
+                const cookieOptions = {
+                    path: '/',
+                    maxAge: 60 * 60 * 24 * 365,
+                    sameSite: 'Strict',
+                };
+                cookies.set(
+                    'store-register',
+                    data.store.number + "-" + data.register.number,
+                    cookieOptions,
+                );
+            }
             return data;
         }
     }

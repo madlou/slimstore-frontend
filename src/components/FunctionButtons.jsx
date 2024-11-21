@@ -18,9 +18,7 @@ function FunctionButtons(props) {
             props.submit(evt);
         } else {
             let split = value.split(',');
-            if (split[1]) {
-                props.setProcess(split[1]);
-            }
+            props.setProcess(split[1]);
             split = split[0].split(':');
             if (split[1]) {
                 props.submit({

@@ -42,56 +42,60 @@ function Form(props) {
     }
     useEffect(() => {
         setTimeout(() => {
-            const node = document.getElementById('input-0');
+            const node = document.getElementById(props.data.view.formSuccess + ':0');
             if (!node) {
                 return;
             }
             const input = { target: node };
             focusChange(input);
             input.target.focus();
+            props.data.view.formElements.map((element, i) => {
+                let key = props.data.view.formSuccess + ':' + i;
+                if (element.value) {
+                    document.getElementById(key).value = element.value;
+                }
+            })
         }, 300)
-    }, [props.action]);
-    useEffect(() => {
-        setFormElements(props.formElements);
-    }, [props.formElements]);
+        setFormElements(props.data.view.formElements);
+    }, [props.data]);
     return (
         <div id='form' className='document container'>
-            {props.error ? <div className='error'>{props.error}</div> : ""}
-            <div id='message' className='margin-below'>{props.message}</div>
+            {props.data.error ? <div className='error'>{props.data.error}</div> : ""}
+            <div id='message' className='margin-below'>{props.data.view.message}</div>
             <form onSubmit={props.submit}>
                 <table><tbody>
                     {formElements.map((element, i) => {
-                        const key = props.action + ':' + i;
+                        let key = props.data.view.formSuccess + ':' + i;
                         switch (element.type) {
                             case 'text':
                             case 'email':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} /></td>
+                                    <td><input id={key} type='text' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'number':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={numberOnly} name={key} readOnly={props.showKeyboard} /></td>
+                                    <td><input id={key} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={numberOnly} name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'decimal':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={'input-' + i} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={decimalOnly} name={key} readOnly={props.showKeyboard} /></td>
+                                    <td><input id={key} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={decimalOnly} name={key} readOnly={props.showKeyboard} /></td>
                                 </tr>
                             case 'date':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={'input-' + i} type='date' onFocus={focusChange} autoComplete="off" name={key} /></td>
+                                    <td><input id={key} type='date' onFocus={focusChange} autoComplete="off" name={key} onKeyDown={() => { }} /></td>
                                 </tr>
                             case 'password':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={'input-' + i} type='password' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} /></td>
+                                    <td><input id={key} type='password' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} onKeyDown={() => { }} /></td>
                                 </tr>
                             case 'submit':
                                 return <tr key={key}>
-                                    <td colSpan='3'><input id={'input-' + i} type='submit' value={element.value} className='primary' /></td>
+                                    <td colSpan='3'><input id={key} type='submit' value={element.value} className='primary' /></td>
                                 </tr>
                             case 'button':
                                 return <tr key={key}>

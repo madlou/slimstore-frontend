@@ -18,3 +18,23 @@
     width: 50%;
     text-align: right;
 }
+
+#basket .tender {
+    padding-left: 1em;
+    margin-bottom: 0em;
+}
+
+#basket p {
+    margin-bottom: 0.5em;
+}
+
+#basket .table-with-borders {
+    margin: 1em 0;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+#basket .table-with-borders td {
+    border: 1px solid white;
+    padding: 0.5em;
+}

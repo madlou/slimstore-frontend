@@ -121,6 +121,10 @@ button:focus {
     visibility: hidden;
 }
 
+.space-above {
+    margin-top: 1em;
+}
+
 .space-below {
     margin-bottom: 1em;
 }

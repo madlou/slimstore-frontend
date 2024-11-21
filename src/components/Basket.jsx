@@ -53,13 +53,13 @@ function Basket(props) {
             )}
             {props.tender.map((line, i) => {
                 return line.value > 0 ? (
-                    <div key={i} className='space-below'>
+                    <div key={i} className='tender'>
                         <div>{line.label} £{(line.value).toFixed(2)}</div>
                     </div>
                 ) : "";
             })}
             {tenders == 0 ? "" : (
-                <div className='space-below'>
+                <div className='space-below space-above'>
                     <div>Tender Total: £{tenders.toFixed(2)}</div>
                 </div>
             )}
@@ -74,6 +74,24 @@ function Basket(props) {
                 </div>
             )}
             <div ref={basketBottomRef}></div>
+            {props.title != "Login" ? "" : (
+                <div>
+                    <p>This is a personal development project.</p>
+                    <p>Please feel free to have a play, you can use the following for testing purposes:</p>
+                    <table className="table-with-borders"><tbody>
+                        <tr><td>User</td><td>Password</td></tr>
+                        <tr><td>1111</td><td>1234</td></tr>
+                        <tr><td>2222</td><td>1234</td></tr>
+                        <tr><td>3333</td><td>1234</td></tr>
+                    </tbody></table>
+                    <table className="table-with-borders"><tbody>
+                        <tr><td>Store</td><td>Register</td></tr>
+                        <tr><td>423</td><td>1</td></tr>
+                        <tr><td>423</td><td>2</td></tr>
+                        <tr><td>423</td><td>3</td></tr>
+                    </tbody></table>
+                </div>
+            )}
         </div>
     )
 }

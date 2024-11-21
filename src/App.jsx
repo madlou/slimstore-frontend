@@ -19,7 +19,7 @@ function App() {
         setShowKeyboard(!showKeyboard);
     }
     const getData = async (action) => {
-        setLastInputFocused(document.getElementById('input-1'));
+        setLastInputFocused(null);
         setData(await postApi().getData(action, setAction, requestForm, setRequestForm, process));
     }
     const submit = (evt, action = data.view.formSuccess) => {
@@ -44,24 +44,21 @@ function App() {
     return (
         <>
             <div id='top'>
-                <h1>TJX</h1>
+                <h1>XJT</h1>
                 <h2>SlimStore POS - {data.view.title}</h2>
                 <button onClick={toggleKeyboard}>Keyboard Toggle</button>
             </div>
             <div id='middle'>
                 <div id='middle-top' className={showKeyboard ? 'middle-small' : 'middle-large'}>
-                    <Basket basket={data.basket} tender={data.tender} />
+                    <Basket basket={data.basket} tender={data.tender} title={data.view.title} />
                     <Form
                         action={action}
                         setAction={setAction}
                         lastInputFocused={lastInputFocused}
                         setLastInputFocused={setLastInputFocused}
-                        formElements={data.view.formElements}
-                        formSuccess={data.view.formSuccess}
+                        data={data}
                         setRequestForm={setRequestForm}
                         submit={submit}
-                        message={data.view.message}
-                        error={data.error}
                         showKeyboard={showKeyboard} />
                 </div>
                 {showKeyboard ? (
