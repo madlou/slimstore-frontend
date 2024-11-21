@@ -20,9 +20,6 @@ export const postApi = () => {
                 }
             })
             const postObject = {
-                storeNumber: 423,
-                registerNumber: 2,
-                userNumber: 1234,
                 action: action ?? null,
                 formProcess: formProcess ?? '',
                 formElements: formElements ?? [],
