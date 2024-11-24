@@ -42,7 +42,7 @@ function Form(props) {
     }
     useEffect(() => {
         setTimeout(() => {
-            const node = document.getElementById(props.data.view.formSuccess + ':0');
+            const node = document.getElementById(props.data.view.name + ':0');
             if (!node) {
                 return;
             }
@@ -50,7 +50,7 @@ function Form(props) {
             focusChange(input);
             input.target.focus();
             props.data.view.formElements.map((element, i) => {
-                let key = props.data.view.formSuccess + ':' + i;
+                let key = props.data.view.name + ':' + i;
                 if (element.value) {
                     document.getElementById(key).value = element.value;
                 }
@@ -65,7 +65,7 @@ function Form(props) {
             <form onSubmit={props.submit}>
                 <table><tbody>
                     {formElements.map((element, i) => {
-                        let key = props.data.view.formSuccess + ':' + i;
+                        let key = props.data.view.name + ':' + i;
                         switch (element.type) {
                             case 'text':
                             case 'email':
@@ -126,6 +126,17 @@ function Form(props) {
                                         <button type='button' className='tertiary' onClick={removeProduct} name={element.key}>-</button>
                                         <span className='quantity'>{element.value}</span>
                                         <button type='button' className='tertiary' onClick={addProduct} name={element.key}>+</button>
+                                    </td>
+                                </tr>
+                            case 'select':
+                                return <tr key={key}>
+                                    <td>{element.label}</td>
+                                    <td colSpan='2'>
+                                        <select name={element.key}>
+                                            {element.options.map((option, i) => {
+                                                return <option key={key + ':' + i}>{option}</option>
+                                            })}
+                                        </select>
                                     </td>
                                 </tr>
                         }

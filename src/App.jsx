@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import Keyboard from './components/Keyboard.jsx'
 import Basket from './components/Basket.jsx'
+import Report from './components/Report.jsx'
 import Form from './components/Form.jsx'
 import FunctionButtons from './components/FunctionButtons.jsx'
 import StatusBar from './components/StatusBar.jsx'
@@ -50,7 +51,11 @@ function App() {
             </div>
             <div id='middle'>
                 <div id='middle-top' className={showKeyboard ? 'middle-small' : 'middle-large'}>
-                    <Basket basket={data.basket} tender={data.tender} title={data.view.title} />
+                    {data.report && data.report.length > 0 ?
+                        <Report report={data.report} />
+                        :
+                        <Basket basket={data.basket} tender={data.tender} title={data.view.title} />
+                    }
                     <Form
                         action={action}
                         setAction={setAction}

@@ -23,3 +23,8 @@
     width: 8em;
     height: 8em;
 }
+
+#form select {
+    padding: 0.4em;
+    width: 100%;
+}

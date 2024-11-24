@@ -20,7 +20,7 @@ export const dataSpec = () => {
             "formProcess": null,
             "formSuccess": "",
             "formElements": [],
-            "functionButtons": []
+            "functionButtons": [],
         },
         "basket": [],
         "tender": [],
@@ -31,6 +31,7 @@ export const dataSpec = () => {
             "name": ""
         },
         "error": "",
+        "report": null,
     }
 }
 

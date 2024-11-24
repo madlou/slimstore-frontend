@@ -1,0 +1,11 @@
+#report table {
+    border-collapse: collapse;
+}
+
+#report th,
+#report td {
+    font-size: 0.8em;
+    text-align: center;
+    border: 1px solid white;
+    padding: 0.4em;
+}
