@@ -54,7 +54,7 @@ function App() {
                     {data.report && data.report.length > 0 ?
                         <Report report={data.report} />
                         :
-                        <Basket basket={data.basket} tender={data.tender} title={data.view.title} />
+                        <Basket basket={data.basket} tender={data.tender} name={data.view.name} />
                     }
                     <Form
                         action={action}

@@ -74,7 +74,7 @@ function Basket(props) {
                 </div>
             )}
             <div ref={basketBottomRef}></div>
-            {props.title != "Login" ? "" : (
+            {!["login", "register-setup"].includes(props.name) ? "" : (
                 <div>
                     <p>This is a personal development project.</p>
                     <p>Please feel free to have a play, you can use the following for testing purposes:</p>
