@@ -79,11 +79,13 @@ function Basket(props) {
                     <p>This is a personal development project.</p>
                     <p>Please feel free to have a play, you can use the following for testing purposes:</p>
                     <table className="table-with-borders"><tbody>
-                        <tr><td>User</td><td>Password</td></tr>
-                        <tr><td>1111</td><td>1234</td></tr>
-                        <tr><td>2222</td><td>1234</td></tr>
-                        <tr><td>3333</td><td>1234</td></tr>
+                        <tr><td>User</td><td>Password</td><td>Role</td></tr>
+                        <tr><td>1111</td><td>1234</td><td>Basic</td></tr>
+                        <tr><td>2222</td><td>1234</td><td>Basic</td></tr>
+                        <tr><td>3333</td><td>1234</td><td>Basic</td></tr>
+                        <tr><td>admin</td><td>4321</td><td>Administrator*</td></tr>
                     </tbody></table>
+                    <p><i>*Can create new stores/registers via Register Setup</i></p>
                     <table className="table-with-borders"><tbody>
                         <tr><td>Store</td><td>Register</td></tr>
                         <tr><td>423</td><td>1</td></tr>

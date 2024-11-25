@@ -31,7 +31,6 @@
 #basket .table-with-borders {
     margin: 1em 0;
     border-collapse: collapse;
-    width: 80%;
 }
 
 #basket .table-with-borders td {

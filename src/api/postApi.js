@@ -21,8 +21,10 @@ export const postApi = () => {
             })
             const postObject = {
                 action: action ?? null,
-                formProcess: formProcess ?? '',
-                formElements: formElements ?? [],
+                form: {
+                    process: formProcess ?? '',
+                    elements: formElements ?? [],
+                }
             };
             console.log('Request', postObject);
             const request = await fetch(backendURL + 'api/register', {
