@@ -1,11 +1,12 @@
 #report table {
     border-collapse: collapse;
+    max-width: 100%;
 }
 
 #report th,
 #report td {
-    font-size: 0.8em;
+    font-size: 0.7em;
     text-align: center;
     border: 1px solid white;
-    padding: 0.4em;
+    padding: 0.3em;
 }
