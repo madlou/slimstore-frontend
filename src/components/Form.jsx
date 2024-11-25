@@ -42,16 +42,15 @@ function Form(props) {
     }
     useEffect(() => {
         setTimeout(() => {
-            const node = document.getElementById(props.data.view.name + ':0');
-            if (!node) {
-                return;
+            const node = document.getElementById('form').querySelector('input[type=text]');
+            if (node) {
+                const input = { target: node };
+                focusChange(input);
+                input.target.focus();
             }
-            const input = { target: node };
-            focusChange(input);
-            input.target.focus();
             props.data.view.formElements.map((element, i) => {
                 let key = props.data.view.name + ':' + i;
-                if (element.value) {
+                if (element.value && document.getElementById(key).value == "") {
                     document.getElementById(key).value = element.value;
                 }
             })
