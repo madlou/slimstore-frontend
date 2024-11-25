@@ -129,6 +129,10 @@ button:focus {
     margin-bottom: 1em;
 }
 
+.print-only {
+    display: none;
+}
+
 @media (orientation: portrait) {
     #root {
         padding: 0.5em 0.5em;
@@ -143,4 +147,32 @@ button:focus {
         height: 100dvh;
     }
 
+}
+
+@media print {
+
+    * {
+        font-size: 10px !important;
+        color: black !important;
+    }
+
+    .no-print,
+    .no-print * {
+        display: none !important;
+    }
+
+    .print-only {
+        display: block !important;
+    }
+
+    td,
+    th {
+        border: 1px solid black !important;
+    }
+
+}
+
+@page {
+    size: auto;
+    margin: 0mm;
 }

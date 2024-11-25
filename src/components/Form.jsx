@@ -59,7 +59,7 @@ function Form(props) {
         setFormElements(props.data.view.formElements);
     }, [props.data]);
     return (
-        <div id='form' className='document container'>
+        <div id='form' className='document container no-print'>
             {props.data.error ? <div className='error'>{props.data.error}</div> : ""}
             <div id='message' className='margin-below'>{props.data.view.message}</div>
             <form onSubmit={props.submit}>

@@ -100,3 +100,21 @@
     }
 
 }
+
+@media print {
+
+    #top,
+    #middle,
+    #middle-top,
+    #middle-bottom,
+    #bottom {
+        height: auto;
+        max-height: auto;
+        display: block;
+    }
+
+    #basket {
+        max-width: 250px;
+    }
+
+}
