@@ -22,9 +22,9 @@ function App() {
     const toggleKeyboard = () => {
         setShowKeyboard(!showKeyboard);
     }
-    const getData = async (action) => {
+    const getData = async (action, form = requestForm, serverProcess = process) => {
         setLastInputFocused(null);
-        setData(await postApi().getData(action, setAction, requestForm, setRequestForm, process));
+        setData(await postApi().getData(action, setAction, form, setRequestForm, serverProcess));
     }
     const submit = (evt, action = data.view.formSuccess) => {
         evt.preventDefault();
@@ -69,6 +69,7 @@ function App() {
                         data={data}
                         setRequestForm={setRequestForm}
                         submit={submit}
+                        getData={getData}
                         showKeyboard={showKeyboard} />
                 </div>
                 {showKeyboard ? (

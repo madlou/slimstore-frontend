@@ -40,9 +40,19 @@ function Form(props) {
             return element;
         }));
     }
+    const buttonClick = (evt) => {
+        const key = evt.target.attributes.data.value;
+        const element = formElements.find((element) => {
+            return element.key == key ? true : false;
+        })
+        const formAction = element.button.action;
+        const formProcess = element.button.form.process ?? "";
+        const formSubmitElements = element.button.form.elements ?? [];
+        props.getData(formAction, formSubmitElements, formProcess)
+    }
     useEffect(() => {
         setTimeout(() => {
-            const node = document.getElementById('form').querySelector('input[type=text]');
+            const node = document.getElementById('form').querySelector('input[type=text]:not([disabled])');
             if (node) {
                 const input = { target: node };
                 focusChange(input);
@@ -50,7 +60,7 @@ function Form(props) {
             }
             props.data.view.formElements.map((element, i) => {
                 let key = props.data.view.name + ':' + i;
-                if (element.value && document.getElementById(key).value == "") {
+                if (element.value && document.getElementById(key) && document.getElementById(key).value == "") {
                     document.getElementById(key).value = element.value;
                 }
             })
@@ -71,6 +81,11 @@ function Form(props) {
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
                                     <td><input id={key} type='text' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} /></td>
+                                </tr>
+                            case 'disabled':
+                                return <tr key={key}>
+                                    <td colSpan='2'>{element.label}</td>
+                                    <td><input id={key} type='text' name={key} disabled={true} /></td>
                                 </tr>
                             case 'number':
                                 return <tr key={key}>
@@ -100,7 +115,7 @@ function Form(props) {
                                 return <tr key={key}>
                                     <td>{element.key}</td>
                                     <td>{element.value}</td>
-                                    <td><button type='button'>{element.label}</button></td>
+                                    <td><button type='button' data={element.key} onClick={buttonClick}>{element.label}</button></td>
                                 </tr>
                             case 'image':
                                 if (element.image.substring(0, 5) == 'image') {
