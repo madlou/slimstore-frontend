@@ -1,4 +1,5 @@
 import Cookies from 'universal-cookie';
+import { dataSpec } from './dataSpec.js';
 
 export const postApi = () => {
 
@@ -20,11 +21,9 @@ export const postApi = () => {
                 }
             })
             const postObject = {
-                action: action ?? null,
-                form: {
-                    process: formProcess ?? '',
-                    elements: formElements ?? [],
-                }
+                targetView: action ?? null,
+                serverProcess: formProcess ?? '',
+                elements: formElements ?? [],
             };
             console.log('Request', postObject);
             const request = await fetch(backendURL + 'api/register', {
@@ -35,10 +34,7 @@ export const postApi = () => {
                 },
             })
             const data = await request.json();
-            console.log('Response', data);
-            setRequestForm([]);
-            setAction('');
-            if (data.store.number && data.register.number) {
+            if (data.store && data.store.number && data.register && data.register.number) {
                 const cookieOptions = {
                     path: '/',
                     maxAge: 60 * 60 * 24 * 365,
@@ -49,7 +45,13 @@ export const postApi = () => {
                     data.store.number + "-" + data.register.number,
                     cookieOptions,
                 );
+            } else {
+                data.store = dataSpec().store;
+                data.register = dataSpec().register;
             }
+            setRequestForm([]);
+            setAction('');
+            console.log('Response', data);
             return data;
         }
     }

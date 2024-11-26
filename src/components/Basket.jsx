@@ -74,7 +74,7 @@ function Basket(props) {
                 </div>
             )}
             <div ref={basketBottomRef}></div>
-            {!["login", "register-setup"].includes(props.name) ? "" : (
+            {props.name == 'LOGIN' ? (
                 <div>
                     <p>This is a personal development project.</p>
                     <p>Please feel free to have a play, you can use the following for testing purposes:</p>
@@ -86,6 +86,12 @@ function Basket(props) {
                         <tr><td>admin</td><td>4321</td><td>Administrator*</td></tr>
                     </tbody></table>
                     <p><i>*Can create new stores/registers via Register Setup</i></p>
+                </div>
+            ) : ""}
+            {props.name == 'REGISTER_CHANGE' ? (
+                <div>
+                    <p>This is a personal development project.</p>
+                    <p>Please feel free to have a play, you can use the following for testing purposes:</p>
                     <table className="table-with-borders"><tbody>
                         <tr><td>Store</td><td>Register</td></tr>
                         <tr><td>423</td><td>1</td></tr>
@@ -93,7 +99,7 @@ function Basket(props) {
                         <tr><td>423</td><td>3</td></tr>
                     </tbody></table>
                 </div>
-            )}
+            ) : ""}
         </div>
     )
 }
