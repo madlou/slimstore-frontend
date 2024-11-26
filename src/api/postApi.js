@@ -2,18 +2,19 @@ import Cookies from 'universal-cookie';
 import { dataSpec } from './dataSpec.js';
 
 export const postApi = () => {
-
     const cookies = new Cookies();
-
     const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const logging = import.meta.env.VITE_LOG_TO_CONSOLE == "true" ? true : false;
     return {
         getData: async (action, setAction, formElements, setRequestForm, formProcess) => {
             formElements = formElements.filter((element) => {
-                switch (element.type) {
+                switch (element.type.toLowerCase()) {
                     case 'submit':
                         return false;
                     case 'product':
-                        if (element.value == 0 || element.value == '') {
+                    case 'product_web':
+                    case 'product_drink':
+                        if (element.quantity == 0 || element.quantity == '') {
                             return false;
                         }
                     default:
@@ -25,7 +26,9 @@ export const postApi = () => {
                 serverProcess: formProcess ?? '',
                 elements: formElements ?? [],
             };
-            console.log('Request', postObject);
+            if (logging === true) {
+                console.log('Request', postObject);
+            }
             const request = await fetch(backendURL + 'api/register', {
                 method: 'POST',
                 body: JSON.stringify(postObject),
@@ -51,7 +54,9 @@ export const postApi = () => {
             }
             setRequestForm([]);
             setAction('');
-            console.log('Response', data);
+            if (logging) {
+                console.log('Response', data);
+            }
             return data;
         }
     }

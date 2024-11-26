@@ -26,12 +26,12 @@ function App() {
         setLastInputFocused(null);
         setData(await postApi().getData(action, setAction, form, setRequestForm, serverProcess));
     }
-    const submit = (evt, action = data.view.formSuccess) => {
+    const submit = (evt, action = data.view.form.targetView) => {
         evt.preventDefault();
         for (let i = 0; i < evt.target.length; i++) {
-            data.view.formElements[i].value = evt.target[i].value;
+            data.view.form.elements[i].value = evt.target[i].value;
         }
-        setRequestForm(data.view.formElements)
+        setRequestForm(data.view.form.elements)
         setAction(action);
     }
     useEffect(() => {
@@ -40,7 +40,9 @@ function App() {
         }
     }, [action]);
     useEffect(() => {
-        setProcess(data.view.formProcess)
+        if (data.view.form) {
+            setProcess(data.view.form.serverProcess)
+        }
     }, [data]);
     useEffect(() => {
         getData('');

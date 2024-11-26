@@ -27,15 +27,15 @@ function Form(props) {
     const addProduct = (evt) => {
         setFormElements(formElements.map((element, i) => {
             if (element.key === evt.target.name) {
-                element.value = element.value * 1 + 1;
+                element.quantity = element.quantity * 1 + 1;
             }
             return element;
         }));
     }
     const removeProduct = (evt) => {
         setFormElements(formElements.map((element, i) => {
-            if (element.key === evt.target.name && element.value != '0') {
-                element.value = element.value * 1 - 1;
+            if (element.key === evt.target.name && element.quantity != '0') {
+                element.quantity = element.quantity * 1 - 1;
             }
             return element;
         }));
@@ -58,14 +58,18 @@ function Form(props) {
                 focusChange(input);
                 input.target.focus();
             }
-            props.data.view.formElements.map((element, i) => {
-                let key = props.data.view.name + ':' + i;
-                if (element.value && document.getElementById(key) && document.getElementById(key).value == "") {
-                    document.getElementById(key).value = element.value;
-                }
-            })
+            if (props.data.view.form) {
+                props.data.view.form.elements.map((element, i) => {
+                    let key = props.data.view.name + ':' + i;
+                    if (element.value && document.getElementById(key) && document.getElementById(key).value == "") {
+                        document.getElementById(key).value = element.value;
+                    }
+                })
+            }
         }, 300)
-        setFormElements(props.data.view.formElements);
+        if (props.data.view.form) {
+            setFormElements(props.data.view.form.elements);
+        }
     }, [props.data]);
     return (
         <div id='form' className='document container no-print'>
@@ -75,7 +79,7 @@ function Form(props) {
                 <table><tbody>
                     {formElements.map((element, i) => {
                         let key = props.data.view.name + ':' + i;
-                        switch (element.type) {
+                        switch (element.type.toLowerCase()) {
                             case 'text':
                             case 'email':
                                 return <tr key={key}>
@@ -127,6 +131,8 @@ function Form(props) {
                                     <td>{element.label}</td>
                                 </tr>
                             case 'product':
+                            case 'product_web':
+                            case 'product_drink':
                                 if (element.image.substring(0, 5) == 'image') {
                                     element.image = imageApi().getUrl(element.image);
                                 }
@@ -138,7 +144,7 @@ function Form(props) {
                                         <div>{element.key}: {element.label}</div>
                                         <div>£{element.price.toFixed(2)}</div>
                                         <button type='button' className='tertiary' onClick={removeProduct} name={element.key}>-</button>
-                                        <span className='quantity'>{element.value}</span>
+                                        <span className='quantity'>{element.quantity}</span>
                                         <button type='button' className='tertiary' onClick={addProduct} name={element.key}>+</button>
                                     </td>
                                 </tr>
