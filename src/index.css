@@ -9,6 +9,7 @@ html,
 body {
     position: fixed;
     overflow: hidden;
+    touch-action: none;
 }
 
 body {

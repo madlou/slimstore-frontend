@@ -3,11 +3,10 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
-function preventDefault(e) {
-    e.preventDefault();
-}
-document.body.addEventListener('touchmove', preventDefault, { passive: false });
-document.body.removeEventListener('touchmove', preventDefault);
+document.addEventListener('touchmove', function (event) {
+    if (event.scale !== 1) { event.preventDefault(); }
+}, { passive: false });
+
 
 createRoot(document.getElementById('root')).render(
     // <StrictMode>
