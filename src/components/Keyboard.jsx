@@ -3,18 +3,23 @@ import './Keyboard.css'
 
 function Keyboard(props) {
     const tap = (evt) => {
-        const node = props.lastInputFocused.target;
-        const character = evt.target.innerHTML;
-        const text = '' + node.value;
-        if (character === 'DEL') {
-            node.value = text.substr(0, text.length - 1);
-        } else if (newValue === 'SPACE') {
-            node.value = text + ' ';
-        } else {
-            node.value = text + character;
-        }
-        node.focus();
-
+        props.updateFormElements((draft) => {
+            const idx = draft.findIndex((element) => {
+                return props.viewName + ":" + element.key == props.inputFocused
+            });
+            if (idx >= 0) {
+                let value = draft[idx].value ?? '';
+                const character = evt.target.innerHTML;
+                if (character === 'DEL') {
+                    value = value.substr(0, value.length - 1);
+                } else if (character === 'SPACE') {
+                    value = value + ' ';
+                } else {
+                    value = value + character;
+                }
+                draft[idx].value = value;
+            }
+        })
     }
     return (
         <div id='keyboard' className='container'>

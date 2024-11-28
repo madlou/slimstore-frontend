@@ -64,6 +64,7 @@ input[type=date],
 input[type=number],
 input[type=password] {
     padding: 0.5em;
+    width: 100%;
 }
 
 #form input[type=text]:focus,

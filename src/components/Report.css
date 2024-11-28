@@ -1,3 +1,7 @@
+#report {
+    container-name: report
+}
+
 #report table {
     border-collapse: collapse;
     max-width: 100%;
@@ -5,8 +9,17 @@
 
 #report th,
 #report td {
-    font-size: 0.7em;
+    font-size: 0.7vw;
     text-align: center;
     border: 1px solid white;
     padding: 0.3em;
+}
+
+@media (orientation: portrait) {
+
+    #report th,
+    #report td {
+        font-size: 1.6vw;
+    }
+
 }

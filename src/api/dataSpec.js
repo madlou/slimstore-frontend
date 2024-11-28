@@ -19,8 +19,8 @@ export const dataSpec = () => {
             "message": "",
             "form": {
                 "targetView": "",
-                "serverProcess": null,
-                "elements": [],
+                "serverProcess": "",
+                "elements": null,
             },
             "functionButtons": [],
         },

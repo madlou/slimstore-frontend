@@ -6,38 +6,35 @@ export const postApi = () => {
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     const logging = import.meta.env.VITE_LOG_TO_CONSOLE == "true" ? true : false;
     return {
-        getData: async (action, setAction, formElements, setRequestForm, formProcess) => {
-            formElements = formElements.filter((element) => {
-                switch (element.type.toLowerCase()) {
-                    case 'submit':
-                        return false;
-                    case 'product':
-                    case 'product_web':
-                    case 'product_drink':
-                        if (element.quantity == 0 || element.quantity == '') {
+        request: async (form) => {
+            if (form.elements) {
+                form.elements = form.elements.filter((element) => {
+                    switch (element.type.toLowerCase()) {
+                        case 'submit':
                             return false;
-                        }
-                    default:
-                        return true;
-                }
-            })
-            const postObject = {
-                targetView: action ?? null,
-                serverProcess: formProcess ?? '',
-                elements: formElements ?? [],
-            };
+                        case 'product':
+                        case 'product_web':
+                        case 'product_drink':
+                            if (element.quantity == 0 || element.quantity == '') {
+                                return false;
+                            }
+                        default:
+                            return true;
+                    }
+                })
+            }
             if (logging === true) {
-                console.log('Request', postObject);
+                console.log('Request', form);
             }
             const request = await fetch(backendURL + 'api/register', {
                 method: 'POST',
-                body: JSON.stringify(postObject),
+                body: JSON.stringify(form),
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8',
                 },
             })
-            const data = await request.json();
-            if (data.store && data.store.number && data.register && data.register.number) {
+            const response = await request.json();
+            if (response.store && response.store.number && response.register && response.register.number) {
                 const cookieOptions = {
                     path: '/',
                     maxAge: 60 * 60 * 24 * 365,
@@ -45,19 +42,20 @@ export const postApi = () => {
                 };
                 cookies.set(
                     'store-register',
-                    data.store.number + "-" + data.register.number,
+                    response.store.number + "-" + response.register.number,
                     cookieOptions,
                 );
             } else {
-                data.store = dataSpec().store;
-                data.register = dataSpec().register;
+                response.store = dataSpec().store;
+                response.register = dataSpec().register;
             }
-            setRequestForm([]);
-            setAction('');
+            if (response.view.form == null) {
+                response.view.form = dataSpec().view.form;
+            }
             if (logging) {
-                console.log('Response', data);
+                console.log('Response', response);
             }
-            return data;
+            return response;
         }
     }
 

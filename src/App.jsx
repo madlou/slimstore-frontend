@@ -10,79 +10,81 @@ import { dataSpec } from './api/dataSpec.js'
 import './App.css'
 import PrintHeader from './components/PrintHeader.jsx'
 import PrintFooter from './components/PrintFooter.jsx'
-
+import { useImmer } from "use-immer";
 
 function App() {
-    const [lastInputFocused, setLastInputFocused] = useState(null)
+    const [inputFocused, setInputFocused] = useState(null)
     const [showKeyboard, setShowKeyboard] = useState(false)
-    const [data, setData] = useState(dataSpec)
-    const [action, setAction] = useState('')
-    const [process, setProcess] = useState('');
-    const [requestForm, setRequestForm] = useState([])
+    const [viewName, setViewName] = useState('')
+    const [response, setResponse] = useState(dataSpec())
+    const [requestForm, setRequestForm] = useState(dataSpec().view.form);
+    const [formElements, updateFormElements] = useImmer([])
     const toggleKeyboard = () => {
         setShowKeyboard(!showKeyboard);
     }
-    const getData = async (action, form = requestForm, serverProcess = process) => {
-        setLastInputFocused(null);
-        setData(await postApi().getData(action, setAction, form, setRequestForm, serverProcess));
-    }
-    const submit = (evt, action = data.view.form.targetView) => {
-        evt.preventDefault();
-        for (let i = 0; i < evt.target.length; i++) {
-            data.view.form.elements[i].value = evt.target[i].value;
+    const request = async () => {
+        if (requestForm.targetView != null) {
+            setResponse(await postApi().request(requestForm));
         }
-        setRequestForm(data.view.form.elements)
-        setAction(action);
     }
     useEffect(() => {
-        if (action) {
-            getData(action);
+        if (viewName != response.view.name) {
+            updateFormElements(response.view.form.elements ?? []);
+            setViewName(response.view.name)
         }
-    }, [action]);
+    }, [response]);
     useEffect(() => {
-        if (data.view.form) {
-            setProcess(data.view.form.serverProcess)
-        }
-    }, [data]);
-    useEffect(() => {
-        getData('');
-    }, []);
+        request();
+    }, [requestForm]);
     return (
         <>
             <div id='top' className='no-print'>
                 <h1>XJT</h1>
-                <h2>SlimStore POS - {data.view.title}</h2>
+                <h2>SlimStore POS - {response.view.title}</h2>
                 <button onClick={toggleKeyboard}>Keyboard Toggle</button>
             </div>
             <div id='middle'>
                 <div id='middle-top' className={showKeyboard ? 'middle-small' : 'middle-large'}>
                     <PrintHeader />
-                    {data.report && data.report.length > 0 ?
-                        <Report report={data.report} />
+                    {response.report && response.report.length > 0 ?
+                        <Report report={response.report} />
                         :
-                        <Basket basket={data.basket} tender={data.tender} name={data.view.name} />
+                        <Basket basket={response.basket} tender={response.tender} name={response.view.name} />
                     }
                     <PrintFooter />
                     <Form
-                        action={action}
-                        setAction={setAction}
-                        lastInputFocused={lastInputFocused}
-                        setLastInputFocused={setLastInputFocused}
-                        data={data}
+                        response={response}
+                        formElements={formElements}
+                        inputFocused={inputFocused}
+                        setInputFocused={setInputFocused}
                         setRequestForm={setRequestForm}
-                        submit={submit}
-                        getData={getData}
-                        showKeyboard={showKeyboard} />
+                        showKeyboard={showKeyboard}
+                        updateFormElements={updateFormElements}
+                    />
                 </div>
                 {showKeyboard ? (
                     <div id='middle-bottom' className='no-print'>
-                        <Keyboard lastInputFocused={lastInputFocused} />
+                        <Keyboard
+                            inputFocused={inputFocused}
+                            setInputFocused={setInputFocused}
+                            updateFormElements={updateFormElements}
+                            viewName={viewName}
+                        />
                     </div>
                 ) : null}
             </div>
             <div id='bottom' className='no-print'>
-                <FunctionButtons buttons={data.view.functionButtons} setAction={setAction} submit={submit} setProcess={setProcess} data={data} />
-                <StatusBar store={data.store} register={data.register} user={data.user} />
+                <FunctionButtons
+                    buttons={response.view.functionButtons}
+                    formElements={formElements}
+                    response={response}
+                    setRequestForm={setRequestForm}
+                />
+                <StatusBar
+                    store={response.store}
+                    register={response.register}
+                    user={response.user}
+                />
             </div>
         </>
     )

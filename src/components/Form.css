@@ -28,3 +28,7 @@
     padding: 0.4em;
     width: 100%;
 }
+
+#form input.focused {
+    background-color: yellow;
+}

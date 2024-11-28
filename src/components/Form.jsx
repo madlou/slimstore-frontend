@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import './Form.css'
 import { imageApi } from '../api/imageApi.js'
 
 function Form(props) {
-    const [formElements, setFormElements] = useState([]);
     const numberOnly = (evt) => {
         if (evt.which > 57) {
             evt.preventDefault();
@@ -14,112 +13,162 @@ function Form(props) {
             evt.preventDefault();
         }
     }
-    const focusChange = (evt) => {
-        if (!evt.target || props.lastInputFocused?.target?.id === evt.target.id) {
-            return;
+    const focusChange = (i, target) => {
+        if (target.id == props.inputFocused) {
+            return false;
         }
-        if (props.lastInputFocused?.target) {
-            props.lastInputFocused.target.style.backgroundColor = 'lightgrey';
-        }
-        evt.target.style.backgroundColor = 'yellow';
-        props.setLastInputFocused(evt)
+        props.setInputFocused(target.id);
     }
-    const addProduct = (evt) => {
-        setFormElements(formElements.map((element, i) => {
-            if (element.key === evt.target.name) {
-                element.quantity = element.quantity * 1 + 1;
+    const quantityChange = (i, target) => {
+        props.updateFormElements((draft) => {
+            const value = draft[i].quantity + target.value * 1;
+            if (value >= 0) {
+                draft[i].quantity = value;
             }
-            return element;
-        }));
-    }
-    const removeProduct = (evt) => {
-        setFormElements(formElements.map((element, i) => {
-            if (element.key === evt.target.name && element.quantity != '0') {
-                element.quantity = element.quantity * 1 - 1;
-            }
-            return element;
-        }));
-    }
-    const buttonClick = (evt) => {
-        const key = evt.target.attributes.data.value;
-        const element = formElements.find((element) => {
-            return element.key == key ? true : false;
         })
-        const formAction = element.button.action;
-        const formProcess = element.button.form.process ?? "";
-        const formSubmitElements = element.button.form.elements ?? [];
-        props.getData(formAction, formSubmitElements, formProcess)
+    }
+    const change = (i, target) => {
+        props.updateFormElements((draft) => {
+            draft[i].value = target.value;
+        })
+    }
+    const formButtonClick = (i) => {
+        props.setRequestForm(props.formElements[i].button.form);
+    }
+    const submit = (evt) => {
+        evt.preventDefault();
+        props.setRequestForm({ ...props.response.view.form, elements: props.formElements });
     }
     useEffect(() => {
-        setTimeout(() => {
-            const node = document.getElementById('form').querySelector('input[type=text]:not([disabled])');
-            if (node) {
-                const input = { target: node };
-                focusChange(input);
-                input.target.focus();
-            }
-            if (props.data.view.form) {
-                props.data.view.form.elements.map((element, i) => {
-                    let key = props.data.view.name + ':' + i;
-                    if (element.value && document.getElementById(key) && document.getElementById(key).value == "") {
-                        document.getElementById(key).value = element.value;
-                    }
-                })
-            }
-        }, 300)
-        if (props.data.view.form) {
-            setFormElements(props.data.view.form.elements);
+        if (!props.response.view.form.elements) {
+            return;
         }
-    }, [props.data]);
+        const element = props.response.view.form.elements.find((element) => {
+            return [
+                "text",
+                "email",
+                "number",
+                "decimal",
+                "date",
+                "password",
+            ].includes(element.type.toLowerCase());
+        })
+        if (element) {
+            const id = props.response.view.name + ':' + element.key;
+            props.setInputFocused(id);
+        }
+    }, [props.response.view]);
     return (
         <div id='form' className='document container no-print'>
-            {props.data.error ? <div className='error'>{props.data.error}</div> : ""}
-            <div id='message' className='margin-below'>{props.data.view.message}</div>
-            <form onSubmit={props.submit}>
+            {props.response.error ? <div className='error'>{props.response.error}</div> : ""}
+            <div id='message' className='margin-below'>{props.response.view.message}</div>
+            <form onSubmit={submit}>
                 <table><tbody>
-                    {formElements.map((element, i) => {
-                        let key = props.data.view.name + ':' + i;
+                    {props.formElements.map((element, i) => {
+                        let key = props.response.view.name + ':' + element.key;
                         switch (element.type.toLowerCase()) {
                             case 'text':
                             case 'email':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={key} type='text' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} /></td>
-                                </tr>
-                            case 'disabled':
-                                return <tr key={key}>
-                                    <td colSpan='2'>{element.label}</td>
-                                    <td><input id={key} type='text' name={key} disabled={true} /></td>
+                                    <td><input
+                                        autoComplete="off"
+                                        autoFocus={(key == props.inputFocused) ? true : false}
+                                        className={key == props.inputFocused ? "focused" : ""}
+                                        disabled={element.disabled}
+                                        id={key}
+                                        name={key}
+                                        onChange={(evt) => { change(i, evt.target) }}
+                                        onFocus={(evt) => { focusChange(i, evt.target) }}
+                                        readOnly={props.showKeyboard}
+                                        type='text'
+                                        value={element.value ?? ''}
+                                    /></td>
                                 </tr>
                             case 'number':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={key} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={numberOnly} name={key} readOnly={props.showKeyboard} /></td>
+                                    <td><input
+                                        autoComplete="off"
+                                        autoFocus={(key == props.inputFocused) ? true : false}
+                                        className={key == props.inputFocused ? "focused" : ""}
+                                        id={key}
+                                        name={key}
+                                        onChange={(evt) => { change(i, evt.target) }}
+                                        onFocus={(evt) => { focusChange(i, evt.target) }}
+                                        onKeyDown={numberOnly}
+                                        readOnly={props.showKeyboard}
+                                        type='text'
+                                        value={element.value ?? ''}
+                                    /></td>
                                 </tr>
                             case 'decimal':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={key} type='text' onFocus={focusChange} autoComplete="off" onKeyDown={decimalOnly} name={key} readOnly={props.showKeyboard} /></td>
+                                    <td><input
+                                        autoComplete="off"
+                                        autoFocus={(key == props.inputFocused) ? true : false}
+                                        className={key == props.inputFocused ? "focused" : ""}
+                                        id={key}
+                                        name={key}
+                                        onChange={(evt) => { change(i, evt.target) }}
+                                        onFocus={(evt) => { focusChange(i, evt.target) }}
+                                        onKeyDown={decimalOnly}
+                                        readOnly={props.showKeyboard}
+                                        type='text'
+                                        value={element.value ?? ''}
+                                    /></td>
                                 </tr>
                             case 'date':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={key} type='date' onFocus={focusChange} autoComplete="off" name={key} onKeyDown={() => { }} /></td>
+                                    <td><input
+                                        autoComplete="off"
+                                        autoFocus={(key == props.inputFocused) ? true : false}
+                                        className={key == props.inputFocused ? "focused" : ""}
+                                        id={key}
+                                        name={key}
+                                        onChange={(evt) => { change(i, evt.target) }}
+                                        onFocus={(evt) => { focusChange(i, evt.target) }}
+                                        type='date'
+                                        value={element.value ?? ''}
+                                    /></td>
                                 </tr>
                             case 'password':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
-                                    <td><input id={key} type='password' onFocus={focusChange} autoComplete="off" name={key} readOnly={props.showKeyboard} onKeyDown={() => { }} /></td>
+                                    <td><input
+                                        autoComplete="off"
+                                        autoFocus={(key == props.inputFocused) ? true : false}
+                                        className={key == props.inputFocused ? "focused" : ""}
+                                        id={key}
+                                        name={key}
+                                        onChange={(evt) => { change(i, evt.target) }}
+                                        onFocus={(evt) => { focusChange(i, evt.target) }}
+                                        readOnly={props.showKeyboard}
+                                        type='password'
+                                        value={element.value ?? ''}
+                                    /></td>
                                 </tr>
                             case 'submit':
                                 return <tr key={key}>
-                                    <td colSpan='3'><input id={key} type='submit' value={element.value} className='primary' /></td>
+                                    <td colSpan='3'><input
+                                        className='primary'
+                                        id={key}
+                                        type='submit'
+                                        value={element.value}
+                                    /></td>
                                 </tr>
                             case 'button':
                                 return <tr key={key}>
                                     <td>{element.key}</td>
                                     <td>{element.value}</td>
-                                    <td><button type='button' data={element.key} onClick={buttonClick}>{element.label}</button></td>
+                                    <td><button
+                                        onClick={() => { formButtonClick(i) }}
+                                        type='button'
+                                    >
+                                        {element.label}
+                                    </button></td>
                                 </tr>
                             case 'image':
                                 if (element.image.substring(0, 5) == 'image') {
@@ -143,18 +192,38 @@ function Form(props) {
                                     <td>
                                         <div>{element.key}: {element.label}</div>
                                         <div>£{element.price.toFixed(2)}</div>
-                                        <button type='button' className='tertiary' onClick={removeProduct} name={element.key}>-</button>
+                                        <button
+                                            className='tertiary'
+                                            name={element.key} value='-1'
+                                            onClick={(evt) => { quantityChange(i, evt.target) }}
+                                            type='button'
+                                        >
+                                            -
+                                        </button>
                                         <span className='quantity'>{element.quantity}</span>
-                                        <button type='button' className='tertiary' onClick={addProduct} name={element.key}>+</button>
+                                        <button
+                                            className='tertiary'
+                                            name={element.key}
+                                            onClick={(evt) => { quantityChange(i, evt.target) }}
+                                            type='button'
+                                            value='1'
+                                        >
+                                            +
+                                        </button>
                                     </td>
                                 </tr>
                             case 'select':
                                 return <tr key={key}>
                                     <td>{element.label}</td>
                                     <td colSpan='2'>
-                                        <select name={element.key}>
+                                        <select
+                                            id={key}
+                                            name={element.key}
+                                            onChange={(evt) => { change(i, evt.target) }}
+                                            value={element.value}
+                                        >
                                             {element.options.map((option, i) => {
-                                                return <option key={key + ':' + i}>{option}</option>
+                                                return <option key={key + ':' + i}> {option}</option>
                                             })}
                                         </select>
                                     </td>
