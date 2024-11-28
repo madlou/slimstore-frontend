@@ -45,13 +45,13 @@ function Form(props) {
         }
         const element = props.response.view.form.elements.find((element) => {
             return [
-                "text",
-                "email",
-                "number",
-                "decimal",
-                "date",
-                "password",
-            ].includes(element.type.toLowerCase());
+                "TEXT",
+                "EMAIL",
+                "NUMBER",
+                "DECIMAL",
+                "DATE",
+                "PASSWORD",
+            ].includes(element.type);
         })
         if (element) {
             const id = props.response.view.name + ':' + element.key;
@@ -66,9 +66,9 @@ function Form(props) {
                 <table><tbody>
                     {props.formElements.map((element, i) => {
                         let key = props.response.view.name + ':' + element.key;
-                        switch (element.type.toLowerCase()) {
-                            case 'text':
-                            case 'email':
+                        switch (element.type) {
+                            case 'TEXT':
+                            case 'EMAIL':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
                                     <td><input
@@ -85,7 +85,7 @@ function Form(props) {
                                         value={element.value ?? ''}
                                     /></td>
                                 </tr>
-                            case 'number':
+                            case 'NUMBER':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
                                     <td><input
@@ -102,7 +102,7 @@ function Form(props) {
                                         value={element.value ?? ''}
                                     /></td>
                                 </tr>
-                            case 'decimal':
+                            case 'DECIMAL':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
                                     <td><input
@@ -119,7 +119,7 @@ function Form(props) {
                                         value={element.value ?? ''}
                                     /></td>
                                 </tr>
-                            case 'date':
+                            case 'DATE':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
                                     <td><input
@@ -134,7 +134,7 @@ function Form(props) {
                                         value={element.value ?? ''}
                                     /></td>
                                 </tr>
-                            case 'password':
+                            case 'PASSWORD':
                                 return <tr key={key}>
                                     <td colSpan='2'>{element.label}</td>
                                     <td><input
@@ -150,7 +150,7 @@ function Form(props) {
                                         value={element.value ?? ''}
                                     /></td>
                                 </tr>
-                            case 'submit':
+                            case 'SUBMIT':
                                 return <tr key={key}>
                                     <td colSpan='3'><input
                                         className='primary'
@@ -159,7 +159,7 @@ function Form(props) {
                                         value={element.value}
                                     /></td>
                                 </tr>
-                            case 'button':
+                            case 'BUTTON':
                                 return <tr key={key}>
                                     <td>{element.key}</td>
                                     <td>{element.value}</td>
@@ -170,7 +170,7 @@ function Form(props) {
                                         {element.label}
                                     </button></td>
                                 </tr>
-                            case 'image':
+                            case 'IMAGE':
                                 if (element.image.substring(0, 5) == 'image') {
                                     element.image = imageApi().getUrl(element.image);
                                 }
@@ -179,9 +179,9 @@ function Form(props) {
                                     <td>{element.key}</td>
                                     <td>{element.label}</td>
                                 </tr>
-                            case 'product':
-                            case 'product_web':
-                            case 'product_drink':
+                            case 'PRODUCT':
+                            case 'PRODUCT_WEB':
+                            case 'PRODUCT_DRINK':
                                 if (element.image.substring(0, 5) == 'image') {
                                     element.image = imageApi().getUrl(element.image);
                                 }
@@ -212,7 +212,7 @@ function Form(props) {
                                         </button>
                                     </td>
                                 </tr>
-                            case 'select':
+                            case 'SELECT':
                                 return <tr key={key}>
                                     <td>{element.label}</td>
                                     <td colSpan='2'>

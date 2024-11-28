@@ -9,12 +9,12 @@ export const postApi = () => {
         request: async (form) => {
             if (form.elements) {
                 form.elements = form.elements.filter((element) => {
-                    switch (element.type.toLowerCase()) {
-                        case 'submit':
+                    switch (element.type) {
+                        case 'SUBMIT':
                             return false;
-                        case 'product':
-                        case 'product_web':
-                        case 'product_drink':
+                        case 'PRODUCT':
+                        case 'PRODUCT_WEB':
+                        case 'PRODUCT_DRINK':
                             if (element.quantity == 0 || element.quantity == '') {
                                 return false;
                             }
