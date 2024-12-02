@@ -6,17 +6,17 @@ function Basket(props) {
     let lines = 0;
     let items = 0;
     let tenders = 0;
-    let change = null;
+    let difference = null;
     props.basket.map((line, i) => {
         total += line.quantity * line.unitValue * (line.type == 'RETURN' ? -1 : 1);
         items += line.quantity;
         lines++;
     })
     props.tender.map((line, i) => {
-        tenders += line.value > 0 ? line.value : 0;
+        tenders += line.value;
     })
-    if (tenders >= total) {
-        change = tenders - total;
+    if (tenders != 0) {
+        difference = tenders - total;
     }
     const basketBottomRef = useRef(null);
     const scrollToBottom = () => {
@@ -52,27 +52,20 @@ function Basket(props) {
                 </div>
             )}
             {props.tender.map((line, i) => {
-                return line.value > 0 ? (
-                    <div key={i} className='tender'>
-                        <div>{line.label} £{(line.value).toFixed(2)}</div>
-                    </div>
-                ) : "";
+                return <div key={i} className='tender'>
+                    <div>{line.label} £{(line.value).toFixed(2)}</div>
+                </div>
             })}
             {tenders == 0 ? "" : (
                 <div className='space-below space-above'>
                     <div>Tender Total: £{tenders.toFixed(2)}</div>
                 </div>
             )}
-            {tenders == 0 || tenders > total ? "" : (
+            {tenders == 0 || difference == null ? "" : (
                 <div>
-                    <div>To Pay: £{(total - tenders).toFixed(2)}</div>
+                    <div>Difference: £{difference.toFixed(2)}</div>
                 </div>
             )}
-            {/* {change == null || change <= 0 ? "" : (
-                <div>
-                    <div>Cash Change: £{change.toFixed(2)}</div>
-                </div>
-            )} */}
             <div ref={basketBottomRef}></div>
             {props.name == 'LOGIN' ? (
                 <div>

@@ -17,14 +17,20 @@ function FunctionButtons(props) {
             return true;
         }
         const condition = value.split(' ');
-        let first = '';
-        let second = condition[2];
+        let first = null;
+        let second = condition[2] * 1;
         switch (condition[0]) {
             case 'basket.length':
                 first = props.response.basket.length;
                 break;
             case 'tender.length':
                 first = props.response.tender.length;
+                break;
+            case 'basket.total':
+                first = 0;
+                props.response.basket.map((row) => {
+                    first += row.quantity * row.unitValue * (row.type == "RETURN" ? -1 : 1);
+                })
                 break;
         }
         switch (condition[1]) {
