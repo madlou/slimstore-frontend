@@ -8,7 +8,7 @@ function Basket(props) {
     let tenders = 0;
     let change = null;
     props.basket.map((line, i) => {
-        total += line.quantity * line.unitValue;
+        total += line.quantity * line.unitValue * (line.type == 'RETURN' ? -1 : 1);
         items += line.quantity;
         lines++;
     })
@@ -39,8 +39,8 @@ function Basket(props) {
                 return (
                     <div key={i} className='space-below'>
                         <div>{line.code} {line.name}</div>
-                        <div className='total'>£{(line.quantity * line.unitValue).toFixed(2)}</div>
-                        <div className='unit'>{line.quantity} @ £{line.unitValue.toFixed(2)}</div>
+                        <div className='total'>£{(line.quantity * (line.type == 'RETURN' ? -1 : 1) * line.unitValue).toFixed(2)}</div>
+                        <div className='unit'>{line.quantity * (line.type == 'RETURN' ? -1 : 1)} @ £{line.unitValue.toFixed(2)}</div>
                     </div>
                 );
             })}
@@ -48,7 +48,7 @@ function Basket(props) {
                 <div className='space-below'>
                     <div>Sub Total: £{total.toFixed(2)}</div>
                     <div>Transaction Lines: {lines}</div>
-                    <div>Total Items: {items}</div>
+                    <div>Items: {items}</div>
                 </div>
             )}
             {props.tender.map((line, i) => {
@@ -68,11 +68,11 @@ function Basket(props) {
                     <div>To Pay: £{(total - tenders).toFixed(2)}</div>
                 </div>
             )}
-            {change == null || change <= 0 ? "" : (
+            {/* {change == null || change <= 0 ? "" : (
                 <div>
                     <div>Cash Change: £{change.toFixed(2)}</div>
                 </div>
-            )}
+            )} */}
             <div ref={basketBottomRef}></div>
             {props.name == 'LOGIN' ? (
                 <div>

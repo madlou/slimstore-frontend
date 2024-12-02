@@ -15,6 +15,7 @@ export const postApi = () => {
                         case 'PRODUCT':
                         case 'PRODUCT_WEB':
                         case 'PRODUCT_DRINK':
+                        case 'RETURN':
                             if (element.quantity == 0 || element.quantity == '') {
                                 return false;
                             }

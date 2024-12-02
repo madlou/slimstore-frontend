@@ -19,10 +19,10 @@ function Form(props) {
         }
         props.setInputFocused(target.id);
     }
-    const quantityChange = (i, target) => {
+    const quantityChange = (i, target, max) => {
         props.updateFormElements((draft) => {
             const value = draft[i].quantity + target.value * 1;
-            if (value >= 0) {
+            if (value >= 0 && value <= max) {
                 draft[i].quantity = value;
             }
         })
@@ -195,7 +195,7 @@ function Form(props) {
                                         <button
                                             className='tertiary'
                                             name={element.key} value='-1'
-                                            onClick={(evt) => { quantityChange(i, evt.target) }}
+                                            onClick={(evt) => { quantityChange(i, evt.target, 99) }}
                                             type='button'
                                         >
                                             -
@@ -204,7 +204,36 @@ function Form(props) {
                                         <button
                                             className='tertiary'
                                             name={element.key}
-                                            onClick={(evt) => { quantityChange(i, evt.target) }}
+                                            onClick={(evt) => { quantityChange(i, evt.target, 99) }}
+                                            type='button'
+                                            value='1'
+                                        >
+                                            +
+                                        </button>
+                                    </td>
+                                </tr>
+                            case 'RETURN':
+                                return <tr key={key} id={key}>
+                                    <td>
+                                        <div>{element.value}x</div>
+                                    </td>
+                                    <td>
+                                        <div>{element.label} @ £{element.price.toFixed(2)}</div>
+                                    </td>
+                                    <td>
+                                        <button
+                                            className='tertiary'
+                                            name={element.key} value='-1'
+                                            onClick={(evt) => { quantityChange(i, evt.target, element.value * 1) }}
+                                            type='button'
+                                        >
+                                            -
+                                        </button>
+                                        <span className='quantity'>{element.quantity}</span>
+                                        <button
+                                            className='tertiary'
+                                            name={element.key}
+                                            onClick={(evt) => { quantityChange(i, evt.target, element.value * 1) }}
                                             type='button'
                                             value='1'
                                         >
