@@ -19,13 +19,19 @@ function App() {
     const [response, setResponse] = useState(dataSpec())
     const [requestForm, setRequestForm] = useState(dataSpec().view.form);
     const [formElements, updateFormElements] = useImmer([])
+    const [lang, setLang] = useState('en');
     const toggleKeyboard = () => {
         setShowKeyboard(!showKeyboard);
     }
     const request = async () => {
         if (requestForm.targetView != null) {
-            setResponse(await postApi().request(requestForm));
+            setResponse(await postApi().request(requestForm, lang));
         }
+    }
+    const langChange = (evt) => {
+        setViewName(null);
+        setLang(evt.target.value);
+        setRequestForm(dataSpec().view.form);
     }
     useEffect(() => {
         if (viewName != response.view.name) {
@@ -39,17 +45,34 @@ function App() {
     return (
         <>
             <div id='top' className='no-print'>
-                <h1>XJT</h1>
-                <h2>SlimStore POS - {response.view.title}</h2>
-                <button onClick={toggleKeyboard}>Keyboard Toggle</button>
+                <h1>{response.uiTranslations.logo}</h1>
+                <h2>{response.uiTranslations.header} - {response.view.title}</h2>
+                <button onClick={toggleKeyboard}>{response.uiTranslations.keyboard}</button>
+                {['HOME', 'LOGIN'].includes(viewName) ?
+                    <select id='lang' value={lang} onChange={langChange}>
+                        <option value='de'>DE</option>
+                        <option value='en'>EN</option>
+                        <option value='fr'>FR</option>
+                        <option value='pl'>PL</option>
+                    </select>
+                    : ""
+                }
             </div>
             <div id='middle'>
                 <div id='middle-top' className={showKeyboard ? 'middle-small' : 'middle-large'}>
                     <PrintHeader />
                     {response.report && response.report.length > 0 ?
-                        <Report report={response.report} />
+                        <Report
+                            report={response.report}
+                            uiTranslations={response.uiTranslations}
+                        />
                         :
-                        <Basket basket={response.basket} tender={response.tender} name={response.view.name} />
+                        <Basket
+                            basket={response.basket}
+                            name={response.view.name}
+                            tender={response.tender}
+                            uiTranslations={response.uiTranslations}
+                        />
                     }
                     <PrintFooter />
                     <Form
@@ -83,6 +106,7 @@ function App() {
                 <StatusBar
                     store={response.store}
                     register={response.register}
+                    uiTranslations={response.uiTranslations}
                     user={response.user}
                 />
             </div>

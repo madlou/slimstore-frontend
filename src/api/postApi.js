@@ -6,7 +6,7 @@ export const postApi = () => {
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     const logging = import.meta.env.VITE_LOG_TO_CONSOLE == "true" ? true : false;
     return {
-        request: async (form) => {
+        request: async (form, lang) => {
             if (form.elements) {
                 form.elements = form.elements.filter((element) => {
                     switch (element.type) {
@@ -32,6 +32,7 @@ export const postApi = () => {
                 body: JSON.stringify(form),
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8',
+                    'Accept-Language': lang
                 },
             })
             const response = await request.json();
@@ -52,6 +53,9 @@ export const postApi = () => {
             }
             if (response.view.form == null) {
                 response.view.form = dataSpec().view.form;
+            }
+            if (response.user == null) {
+                response.user = dataSpec().user;
             }
             if (logging) {
                 console.log('Response', response);

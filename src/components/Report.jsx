@@ -11,7 +11,12 @@ function Report(props) {
             <table><tbody>
                 <tr>
                     {Object.keys(props.report[0]).map((cell, i) => {
-                        return <th key={'report-header:' + i}>{camelToWords(cell)}</th>
+                        let title = cell;
+                        const lookup = cell.toCamelCase().replace(/ /g, "_");
+                        if (props.uiTranslations[lookup]) {
+                            title = props.uiTranslations[lookup];
+                        }
+                        return <th key={'report-header:' + i}>{camelToWords(title)}</th>
                     })}
                 </tr>
                 {props.report.map((line, i) => {

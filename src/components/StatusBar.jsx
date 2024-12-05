@@ -7,10 +7,10 @@ function StatusBar(props) {
     }
     return (
         <div id='status-bar'>
-            <div className='container'><label>Store-Register: </label><span>{pad(props.store.number, 4)}-{pad(props.register.number, 2)}</span></div>
-            <div className='container'><label>User: </label><span>{props.user.name}</span></div>
-            <div className='container'><label>Transaction: </label><span>{pad(props.register.lastTxnNumber + 1, 6)}</span></div>
-            <div className='container'><label>Status: </label><span>{props.register.status}</span></div>
+            <div className='container'><label>{props.uiTranslations.store}-{props.uiTranslations.register}: </label><span>{pad(props.store.number, 4)}-{pad(props.register.number, 2)}</span></div>
+            <div className='container'><label>{props.uiTranslations.user}: </label><span>{props.user.name}</span></div>
+            <div className='container'><label>{props.uiTranslations.transaction}: </label><span>{pad(props.register.lastTxnNumber + 1, 6)}</span></div>
+            <div className='container'><label>{props.uiTranslations.status}: </label><span>{props.register.status}</span></div>
         </div>
     )
 }

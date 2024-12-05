@@ -24,6 +24,7 @@ export const dataSpec = () => {
             },
             "functionButtons": [],
         },
+        "uiTranslations": {},
         "basket": [],
         "tender": [],
         "user": {

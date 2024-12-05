@@ -51,7 +51,7 @@ function Form(props) {
                 "DECIMAL",
                 "DATE",
                 "PASSWORD",
-            ].includes(element.type);
+            ].includes(element.type) && element.disabled != true;
         })
         if (element) {
             const id = props.response.view.name + ':' + element.key;
@@ -156,7 +156,7 @@ function Form(props) {
                                         className='primary'
                                         id={key}
                                         type='submit'
-                                        value={element.value}
+                                        value={element.label}
                                     /></td>
                                 </tr>
                             case 'BUTTON':
@@ -252,7 +252,8 @@ function Form(props) {
                                             value={element.value}
                                         >
                                             {element.options.map((option, i) => {
-                                                return <option key={key + ':' + i}> {option}</option>
+                                                const optionSplit = option.split("|");
+                                                return <option key={key + ':' + i} value={optionSplit[0]}> {optionSplit[1] ?? optionSplit[0]}</option>
                                             })}
                                         </select>
                                     </td>

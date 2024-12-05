@@ -20,9 +20,20 @@
 
 #top>button {
     float: right;
-    margin-top: 1vh;
+    margin-top: 0.7vh;
     margin-left: 0.8em;
     font-size: 1.5vh;
+}
+
+#top>select {
+    float: right;
+    margin-top: 0.7vh;
+    margin-left: 0.8em;
+    font-size: 1.5vh;
+    padding: 0.3em;
+    background-color: grey;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 
 #middle {

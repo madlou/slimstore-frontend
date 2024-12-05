@@ -69,16 +69,16 @@ function Basket(props) {
             <div ref={basketBottomRef}></div>
             {props.name == 'LOGIN' ? (
                 <div>
-                    <p>This is a personal development project.</p>
-                    <p>Please feel free to have a play, you can use the following for testing purposes:</p>
+                    <p>{props.uiTranslations.devmessage1}</p>
+                    <p>{props.uiTranslations.devmessage2}</p>
                     <table className="table-with-borders"><tbody>
-                        <tr><td>User</td><td>Password</td><td>Role</td></tr>
-                        <tr><td>1111</td><td>1234</td><td>Basic</td></tr>
-                        <tr><td>2222</td><td>1234</td><td>Basic</td></tr>
-                        <tr><td>3333</td><td>1234</td><td>Basic</td></tr>
-                        <tr><td>admin</td><td>4321</td><td>Administrator*</td></tr>
+                        <tr><td>{props.uiTranslations.user}</td><td>{props.uiTranslations.password}</td><td>{props.uiTranslations.role}</td></tr>
+                        <tr><td>1111</td><td>1234</td><td>{props.uiTranslations.user}</td></tr>
+                        <tr><td>2222</td><td>1234</td><td>{props.uiTranslations.user}</td></tr>
+                        <tr><td>3333</td><td>1234</td><td>{props.uiTranslations.user}</td></tr>
+                        <tr><td>admin</td><td>4321</td><td>{props.uiTranslations.administrator}*</td></tr>
                     </tbody></table>
-                    <p><i>*Can create new stores/registers via Register Setup</i></p>
+                    <p><i>*{props.uiTranslations.devmessage3}</i></p>
                 </div>
             ) : ""}
             {props.name == 'REGISTER_CHANGE' ? (
