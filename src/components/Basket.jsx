@@ -39,31 +39,31 @@ function Basket(props) {
                 return (
                     <div key={i} className='space-below'>
                         <div>{line.code} {line.name}</div>
-                        <div className='total'>£{(line.quantity * (line.type == 'RETURN' ? -1 : 1) * line.unitValue).toFixed(2)}</div>
-                        <div className='unit'>{line.quantity * (line.type == 'RETURN' ? -1 : 1)} @ £{line.unitValue.toFixed(2)}</div>
+                        <div className='total'>{props.uiTranslations.currencySymbol}{(line.quantity * (line.type == 'RETURN' ? -1 : 1) * line.unitValue).toFixed(2)}</div>
+                        <div className='unit'>{line.quantity * (line.type == 'RETURN' ? -1 : 1)} @ {props.uiTranslations.currencySymbol}{line.unitValue.toFixed(2)}</div>
                     </div>
                 );
             })}
             {props.basket.length < 1 ? "" : (
                 <div className='space-below'>
-                    <div>Sub Total: £{total.toFixed(2)}</div>
-                    <div>Transaction Lines: {lines}</div>
-                    <div>Items: {items}</div>
+                    <div>{props.uiTranslations.subtotal}: {props.uiTranslations.currencySymbol}{total.toFixed(2)}</div>
+                    <div>{props.uiTranslations.transactionLines}: {lines}</div>
+                    <div>{props.uiTranslations.items}: {items}</div>
                 </div>
             )}
             {props.tender.map((line, i) => {
                 return <div key={i} className='tender'>
-                    <div>{line.label} £{(line.value).toFixed(2)}</div>
+                    <div>{line.label} {props.uiTranslations.currencySymbol}{(line.value).toFixed(2)}</div>
                 </div>
             })}
             {tenders == 0 ? "" : (
                 <div className='space-below space-above'>
-                    <div>Tender Total: £{tenders.toFixed(2)}</div>
+                    <div>{props.uiTranslations.tenderTotal}: {props.uiTranslations.currencySymbol}{tenders.toFixed(2)}</div>
                 </div>
             )}
             {tenders == 0 || difference == null ? "" : (
                 <div>
-                    <div>Difference: £{difference.toFixed(2)}</div>
+                    <div>{props.uiTranslations.difference}: {props.uiTranslations.currencySymbol}{difference.toFixed(2)}</div>
                 </div>
             )}
             <div ref={basketBottomRef}></div>
@@ -83,10 +83,10 @@ function Basket(props) {
             ) : ""}
             {props.name == 'REGISTER_CHANGE' ? (
                 <div>
-                    <p>This is a personal development project.</p>
-                    <p>Please feel free to have a play, you can use the following for testing purposes:</p>
+                    <p>{props.uiTranslations.devmessage1}</p>
+                    <p>{props.uiTranslations.devmessage2}</p>
                     <table className="table-with-borders"><tbody>
-                        <tr><td>Store</td><td>Register</td></tr>
+                        <tr><td>{props.uiTranslations.store}</td><td>{props.uiTranslations.register}</td></tr>
                         <tr><td>423</td><td>1</td></tr>
                         <tr><td>423</td><td>2</td></tr>
                         <tr><td>423</td><td>3</td></tr>
