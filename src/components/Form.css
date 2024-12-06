@@ -28,6 +28,7 @@
     padding: 0.4em;
     width: 100%;
     color: black;
+    background-color: lightgrey;
 }
 
 #form input.focused {
