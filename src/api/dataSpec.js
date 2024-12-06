@@ -11,7 +11,7 @@ export const dataSpec = () => {
             "storeId": 0,
             "number": 0,
             "status": "",
-            "lastTxnNumber": 0
+            "lastTxnNumber": -1
         },
         "view": {
             "name": "",

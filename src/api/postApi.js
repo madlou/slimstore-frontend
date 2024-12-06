@@ -47,6 +47,12 @@ export const postApi = () => {
                     response.store.number + "-" + response.register.number,
                     cookieOptions,
                 );
+            } else if (cookies.get('store-register')) {
+                response.store = dataSpec().store;
+                response.register = dataSpec().register;
+                const cookieSplit = cookies.get('store-register').split('-');
+                response.store.number = cookieSplit[0];
+                response.register.number = cookieSplit[1] ?? '';
             } else {
                 response.store = dataSpec().store;
                 response.register = dataSpec().register;
