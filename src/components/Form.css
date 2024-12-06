@@ -29,6 +29,7 @@
     width: 100%;
     color: black;
     background-color: lightgrey;
+    margin: 0;
 }
 
 #form input.focused {
