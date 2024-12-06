@@ -88,7 +88,8 @@ input[type=password] {
 }
 
 button,
-input[type=submit] {
+input[type=submit],
+select {
     margin: 15px 0;
     border-radius: 8px;
     border: 1px solid transparent;
@@ -110,7 +111,8 @@ button:focus-visible {
 }
 
 input:focus,
-button:focus {
+button:focus,
+select:focus {
     outline: none;
     border: 1px solid black;
 }
