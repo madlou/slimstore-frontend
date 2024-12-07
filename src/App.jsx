@@ -98,7 +98,6 @@ function App() {
             </div>
             <div id='bottom' className='no-print'>
                 <FunctionButtons
-                    buttons={response.view.functionButtons}
                     formElements={formElements}
                     response={response}
                     setRequestForm={setRequestForm}

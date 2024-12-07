@@ -23,6 +23,15 @@ export const postApi = () => {
                             return true;
                     }
                 })
+                form.elements = form.elements.map((element) => {
+                    let newElement = {};
+                    for (const attributeKey in element) {
+                        if (element[attributeKey] != null) {
+                            newElement[attributeKey] = element[attributeKey];
+                        }
+                    }
+                    return newElement;
+                })
             }
             if (logging === true) {
                 console.log('Request', form);

@@ -252,8 +252,10 @@ function Form(props) {
                                             value={element.value}
                                         >
                                             {element.options.map((option, i) => {
-                                                const optionSplit = option.split("|");
-                                                return <option key={key + ':' + i} value={optionSplit[0]}> {optionSplit[1] ?? optionSplit[0]}</option>
+                                                if (option) {
+                                                    const optionSplit = option.split("|");
+                                                    return <option key={key + ':' + i} value={optionSplit[0]}> {optionSplit[1] ?? optionSplit[0]}</option>
+                                                }
                                             })}
                                         </select>
                                     </td>

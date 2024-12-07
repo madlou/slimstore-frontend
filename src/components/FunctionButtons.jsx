@@ -9,7 +9,7 @@ function FunctionButtons(props) {
             position: i + 1,
         };
     }
-    props.buttons.forEach(button => {
+    props.response.view.functionButtons.forEach(button => {
         fixedButtons[button.position] = button;
     });
     const checkCondition = (value) => {
@@ -18,8 +18,11 @@ function FunctionButtons(props) {
         }
         const condition = value.split(' ');
         let first = null;
-        let second = condition[2] * 1;
+        let second = condition[2];
         switch (condition[0]) {
+            case 'user.role':
+                first = props.response.user.role;
+                break;
             case 'basket.length':
                 first = props.response.basket.length;
                 break;
@@ -37,6 +40,8 @@ function FunctionButtons(props) {
             case '=':
             case '==':
                 return first == second;
+            case '!=':
+                return first != second;
             case '<':
                 return first < second;
             case '<=':

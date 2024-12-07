@@ -73,12 +73,12 @@ function Basket(props) {
                     <p>{props.uiTranslations.devmessage2}</p>
                     <table className="table-with-borders"><tbody>
                         <tr><td>{props.uiTranslations.user}</td><td>{props.uiTranslations.password}</td><td>{props.uiTranslations.role}</td></tr>
-                        <tr><td>1111</td><td>1234</td><td>{props.uiTranslations.user}</td></tr>
-                        <tr><td>2222</td><td>1234</td><td>{props.uiTranslations.user}</td></tr>
-                        <tr><td>3333</td><td>1234</td><td>{props.uiTranslations.user}</td></tr>
-                        <tr><td>admin</td><td>4321</td><td>{props.uiTranslations.administrator}*</td></tr>
+                        <tr><td>1111</td><td>1234</td><td>{props.uiTranslations.associate}</td></tr>
+                        <tr><td>2222</td><td>1234</td><td>{props.uiTranslations.manager}*</td></tr>
+                        <tr><td>3333</td><td>1234</td><td>{props.uiTranslations.administrator}**</td></tr>
                     </tbody></table>
-                    <p><i>*{props.uiTranslations.devmessage3}</i></p>
+                    <p><i>* {props.uiTranslations.devmessage3}</i></p>
+                    <p><i>** {props.uiTranslations.devmessage4}</i></p>
                 </div>
             ) : ""}
             {props.name == 'REGISTER_CHANGE' ? (
