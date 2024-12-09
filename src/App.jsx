@@ -50,10 +50,9 @@ function App() {
                 <button onClick={toggleKeyboard}>{response.uiTranslations.keyboard}</button>
                 {['HOME', 'LOGIN'].includes(viewName) ?
                     <select id='lang' value={lang} onChange={langChange}>
-                        <option value='de'>DE</option>
-                        <option value='en'>EN</option>
-                        <option value='fr'>FR</option>
-                        <option value='pl'>PL</option>
+                        {response.languages.map((language) => {
+                            return <option key={language} value={language.toLowerCase()}>{language}</option>;
+                        })}
                     </select>
                     : ""
                 }

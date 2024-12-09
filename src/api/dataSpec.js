@@ -75,6 +75,7 @@ export const dataSpec = () => {
         },
         "error": "",
         "report": null,
+        "languages": [],
     }
 }
 
