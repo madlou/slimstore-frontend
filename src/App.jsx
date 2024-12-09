@@ -60,7 +60,9 @@ function App() {
             </div>
             <div id='middle'>
                 <div id='middle-top' className={showKeyboard ? 'middle-small' : 'middle-large'}>
-                    <PrintHeader />
+                    <PrintHeader
+                        response={response}
+                    />
                     {response.report && response.report.length > 0 ?
                         <Report
                             report={response.report}
@@ -74,7 +76,9 @@ function App() {
                             uiTranslations={response.uiTranslations}
                         />
                     }
-                    <PrintFooter />
+                    <PrintFooter
+                        response={response}
+                    />
                     <Form
                         response={response}
                         formElements={formElements}

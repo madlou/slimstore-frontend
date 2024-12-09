@@ -57,43 +57,47 @@ function Basket(props) {
                 </div>
             })}
             {tenders == 0 ? "" : (
-                <div className='space-below space-above'>
+                <div className='space-above'>
                     <div>{props.uiTranslations.tenderTotal}: {props.uiTranslations.currencySymbol}{tenders.toFixed(2)}</div>
                 </div>
             )}
             {tenders == 0 || difference == null ? "" : (
-                <div>
+                <div className='space-above no-print'>
                     <div>{props.uiTranslations.difference}: {props.uiTranslations.currencySymbol}{difference.toFixed(2)}</div>
                 </div>
             )}
-            <div ref={basketBottomRef}></div>
-            {props.name == 'LOGIN' ? (
-                <div>
-                    <p>{props.uiTranslations.devmessage1}</p>
-                    <p>{props.uiTranslations.devmessage2}</p>
-                    <table className="table-with-borders"><tbody>
-                        <tr><td>{props.uiTranslations.user}</td><td>{props.uiTranslations.password}</td><td>{props.uiTranslations.role}</td></tr>
-                        <tr><td>1111</td><td>1234</td><td>{props.uiTranslations.associate}</td></tr>
-                        <tr><td>2222</td><td>1234</td><td>{props.uiTranslations.manager}*</td></tr>
-                        <tr><td>3333</td><td>1234</td><td>{props.uiTranslations.administrator}**</td></tr>
-                    </tbody></table>
-                    <p><i>* {props.uiTranslations.devmessage3}</i></p>
-                    <p><i>** {props.uiTranslations.devmessage4}</i></p>
-                </div>
-            ) : ""}
-            {props.name == 'REGISTER_CHANGE' ? (
-                <div>
-                    <p>{props.uiTranslations.devmessage1}</p>
-                    <p>{props.uiTranslations.devmessage2}</p>
-                    <table className="table-with-borders"><tbody>
-                        <tr><td>{props.uiTranslations.store}</td><td>{props.uiTranslations.register}</td></tr>
-                        <tr><td>423</td><td>1</td></tr>
-                        <tr><td>423</td><td>2</td></tr>
-                        <tr><td>423</td><td>3</td></tr>
-                    </tbody></table>
-                </div>
-            ) : ""}
-        </div>
+            <div ref={basketBottomRef} id='bottomReference'></div>
+            {
+                props.name == 'LOGIN' ? (
+                    <div>
+                        <p>{props.uiTranslations.devmessage1}</p>
+                        <p>{props.uiTranslations.devmessage2}</p>
+                        <table className="table-with-borders"><tbody>
+                            <tr><td>{props.uiTranslations.user}</td><td>{props.uiTranslations.password}</td><td>{props.uiTranslations.role}</td></tr>
+                            <tr><td>1111</td><td>1234</td><td>{props.uiTranslations.associate}</td></tr>
+                            <tr><td>2222</td><td>1234</td><td>{props.uiTranslations.manager}*</td></tr>
+                            <tr><td>3333</td><td>1234</td><td>{props.uiTranslations.administrator}**</td></tr>
+                        </tbody></table>
+                        <p><i>* {props.uiTranslations.devmessage3}</i></p>
+                        <p><i>** {props.uiTranslations.devmessage4}</i></p>
+                    </div>
+                ) : ""
+            }
+            {
+                props.name == 'REGISTER_CHANGE' ? (
+                    <div>
+                        <p>{props.uiTranslations.devmessage1}</p>
+                        <p>{props.uiTranslations.devmessage2}</p>
+                        <table className="table-with-borders"><tbody>
+                            <tr><td>{props.uiTranslations.store}</td><td>{props.uiTranslations.register}</td></tr>
+                            <tr><td>423</td><td>1</td></tr>
+                            <tr><td>423</td><td>2</td></tr>
+                            <tr><td>423</td><td>3</td></tr>
+                        </tbody></table>
+                    </div>
+                ) : ""
+            }
+        </div >
     )
 }
 

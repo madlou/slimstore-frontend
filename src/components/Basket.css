@@ -2,10 +2,6 @@
     max-width: 30em;
 }
 
-#basket>div {
-    margin-bottom: 1em;
-}
-
 #basket .unit {
     height: 1em;
     width: 50%;
@@ -36,6 +32,11 @@
 #basket .table-with-borders td {
     border: 1px solid white;
     padding: 0.5em;
+}
+
+#basket #bottomReference {
+    height: 1px;
+    margin: 0;
 }
 
 @media print {
