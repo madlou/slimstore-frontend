@@ -1,19 +1,3 @@
-# This is the newer version
-
-# FROM node:18-alpine
-# ENV REACT_PORT=3000
-# WORKDIR /app
-# COPY package.json .
-# RUN npm install
-# RUN npm i -g serve
-# COPY . .
-# RUN npm run build
-# EXPOSE $REACT_PORT
-# CMD [ "serve", "-s", "dist" ]
-
-
-
-## Dockerfile
 ################################
 ## BUILD ENVIRONMENT ###########
 ################################
