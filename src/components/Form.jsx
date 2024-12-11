@@ -69,7 +69,7 @@ function Form(props) {
                         switch (element.type) {
                             case 'TEXT':
                             case 'EMAIL':
-                                return <tr key={key}>
+                                return <tr key={key} style={{ display: element.hidden ? 'none' : 'table-row' }}>
                                     <td colSpan='2'>{element.label}</td>
                                     <td><input
                                         autoComplete="off"
@@ -92,6 +92,7 @@ function Form(props) {
                                         autoComplete="off"
                                         autoFocus={(key == props.inputFocused) ? true : false}
                                         className={key == props.inputFocused ? "focused" : ""}
+                                        disabled={element.disabled}
                                         id={key}
                                         name={key}
                                         onChange={(evt) => { change(i, evt.target) }}
@@ -103,12 +104,13 @@ function Form(props) {
                                     /></td>
                                 </tr>
                             case 'DECIMAL':
-                                return <tr key={key}>
+                                return <tr key={key} style={{ display: element.hidden ? 'none' : 'table-row' }}>
                                     <td colSpan='2'>{element.label}</td>
                                     <td><input
                                         autoComplete="off"
                                         autoFocus={(key == props.inputFocused) ? true : false}
                                         className={key == props.inputFocused ? "focused" : ""}
+                                        disabled={element.disabled}
                                         id={key}
                                         name={key}
                                         onChange={(evt) => { change(i, evt.target) }}
@@ -126,6 +128,7 @@ function Form(props) {
                                         autoComplete="off"
                                         autoFocus={(key == props.inputFocused) ? true : false}
                                         className={key == props.inputFocused ? "focused" : ""}
+                                        disabled={element.disabled}
                                         id={key}
                                         name={key}
                                         onChange={(evt) => { change(i, evt.target) }}
@@ -135,12 +138,13 @@ function Form(props) {
                                     /></td>
                                 </tr>
                             case 'PASSWORD':
-                                return <tr key={key}>
+                                return <tr key={key} style={{ display: element.hidden ? 'none' : 'table-row' }}>
                                     <td colSpan='2'>{element.label}</td>
                                     <td><input
                                         autoComplete="off"
                                         autoFocus={(key == props.inputFocused) ? true : false}
                                         className={key == props.inputFocused ? "focused" : ""}
+                                        disabled={element.disabled}
                                         id={key}
                                         name={key}
                                         onChange={(evt) => { change(i, evt.target) }}
@@ -151,19 +155,21 @@ function Form(props) {
                                     /></td>
                                 </tr>
                             case 'SUBMIT':
-                                return <tr key={key}>
+                                return <tr key={key} style={{ display: element.hidden ? 'none' : 'table-row' }}>
                                     <td colSpan='3'><input
                                         className='primary'
+                                        disabled={element.disabled}
                                         id={key}
                                         type='submit'
                                         value={element.label}
                                     /></td>
                                 </tr>
                             case 'BUTTON':
-                                return <tr key={key}>
+                                return <tr key={key} style={{ display: element.hidden ? 'none' : 'table-row' }}>
                                     <td>{element.key}</td>
                                     <td>{element.value}</td>
                                     <td><button
+                                        disabled={element.disabled}
                                         onClick={() => { formButtonClick(i) }}
                                         type='button'
                                     >
@@ -174,7 +180,7 @@ function Form(props) {
                                 if (element.image.substring(0, 5) == 'image') {
                                     element.image = imageApi().getUrl(element.image);
                                 }
-                                return <tr key={key}>
+                                return <tr key={key} style={{ display: element.hidden ? 'none' : 'table-row' }}>
                                     <td><img src={element.image} /></td>
                                     <td>{element.key}</td>
                                     <td>{element.label}</td>
@@ -185,7 +191,7 @@ function Form(props) {
                                 if (element.image.substring(0, 5) == 'image') {
                                     element.image = imageApi().getUrl(element.image);
                                 }
-                                return <tr key={key}>
+                                return <tr key={key} style={{ display: element.hidden ? 'none' : 'table-row' }}>
                                     <td className='imageBackground' colSpan='2'>
                                         <img src={element.image} />
                                     </td>
@@ -213,7 +219,7 @@ function Form(props) {
                                     </td>
                                 </tr>
                             case 'RETURN':
-                                return <tr key={key} id={key}>
+                                return <tr key={key} id={key} style={{ display: element.hidden ? 'none' : 'table-row' }}>
                                     <td>
                                         <div>{element.value}x</div>
                                     </td>
@@ -242,11 +248,12 @@ function Form(props) {
                                     </td>
                                 </tr>
                             case 'SELECT':
-                                return <tr key={key}>
-                                    <td>{element.label}</td>
+                                return <tr key={key} style={{ display: element.hidden ? 'none' : 'table-row' }}>
+                                    <td style={{ display: element.label ? 'block' : 'none' }}>{element.label}</td>
                                     <td colSpan='2'>
                                         <select
                                             id={key}
+                                            disabled={element.disabled}
                                             name={element.key}
                                             onChange={(evt) => { change(i, evt.target) }}
                                             value={element.value}
@@ -264,7 +271,7 @@ function Form(props) {
                     })}
                 </tbody></table>
             </form>
-        </div>
+        </div >
     )
 }
 

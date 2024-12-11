@@ -34,7 +34,7 @@ function App() {
         setRequestForm(dataSpec().view.form);
     }
     useEffect(() => {
-        if (viewName != response.view.name) {
+        if (['USER_LIST'].includes(viewName) || viewName != response.view.name) {
             updateFormElements(response.view.form.elements ?? []);
             setViewName(response.view.name)
         }

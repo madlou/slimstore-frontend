@@ -73,10 +73,10 @@ function Basket(props) {
                         <p>{props.uiTranslations.devmessage1}</p>
                         <p>{props.uiTranslations.devmessage2}</p>
                         <table className="table-with-borders"><tbody>
-                            <tr><td>{props.uiTranslations.user}</td><td>{props.uiTranslations.password}</td><td>{props.uiTranslations.role}</td></tr>
-                            <tr><td>1111</td><td>1234</td><td>{props.uiTranslations.associate}</td></tr>
-                            <tr><td>2222</td><td>1234</td><td>{props.uiTranslations.manager}*</td></tr>
-                            <tr><td>3333</td><td>1234</td><td>{props.uiTranslations.administrator}**</td></tr>
+                            <tr><td>{props.uiTranslations.user}</td><td>{props.uiTranslations.password}</td><td>{props.uiTranslations.role}</td><td>{props.uiTranslations.store}</td></tr>
+                            <tr><td>1111</td><td>1234</td><td>{props.uiTranslations.associate}</td><td>423</td></tr>
+                            <tr><td>2222</td><td>1234</td><td>{props.uiTranslations.manager}*</td><td>423</td></tr>
+                            <tr><td>3333</td><td>1234</td><td>{props.uiTranslations.administrator}**</td><td>600</td></tr>
                         </tbody></table>
                         <p><i>* {props.uiTranslations.devmessage3}</i></p>
                         <p><i>** {props.uiTranslations.devmessage4}</i></p>
@@ -93,6 +93,7 @@ function Basket(props) {
                             <tr><td>423</td><td>1</td></tr>
                             <tr><td>423</td><td>2</td></tr>
                             <tr><td>423</td><td>3</td></tr>
+                            <tr><td>600</td><td>1</td></tr>
                         </tbody></table>
                     </div>
                 ) : ""
