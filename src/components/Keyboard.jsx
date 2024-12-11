@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './Keyboard.css'
 
 function Keyboard(props) {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
+import imageApi from '../api/imageApi.js'
 import './Form.css'
-import { imageApi } from '../api/imageApi.js'
 
 function Form(props) {
     const numberOnly = (evt) => {

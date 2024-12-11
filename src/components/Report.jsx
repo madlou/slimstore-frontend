@@ -1,4 +1,3 @@
-import { useRef, useEffect } from 'react'
 import './Report.css'
 
 function Report(props) {

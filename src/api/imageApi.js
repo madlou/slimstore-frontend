@@ -1,4 +1,4 @@
-export const imageApi = () => {
+const imageApi = () => {
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -9,3 +9,5 @@ export const imageApi = () => {
     }
 
 }
+
+export default imageApi;

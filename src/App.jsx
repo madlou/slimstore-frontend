@@ -1,23 +1,23 @@
-import { useState, useEffect, useMemo } from 'react'
-import Keyboard from './components/Keyboard.jsx'
+import { useState, useEffect } from 'react'
+import { useImmer } from "use-immer";
+import postApi from './api/postApi.js'
+import dataSpec from './api/dataSpec.js'
 import Basket from './components/Basket.jsx'
-import Report from './components/Report.jsx'
+import Keyboard from './components/Keyboard.jsx'
 import Form from './components/Form.jsx'
 import FunctionButtons from './components/FunctionButtons.jsx'
-import StatusBar from './components/StatusBar.jsx'
-import { postApi } from './api/postApi.js'
-import { dataSpec } from './api/dataSpec.js'
-import './App.css'
 import PrintHeader from './components/PrintHeader.jsx'
 import PrintFooter from './components/PrintFooter.jsx'
-import { useImmer } from "use-immer";
+import Report from './components/Report.jsx'
+import StatusBar from './components/StatusBar.jsx'
+import './App.css'
 
 function App() {
     const [inputFocused, setInputFocused] = useState(null)
     const [showKeyboard, setShowKeyboard] = useState(false)
     const [viewName, setViewName] = useState('')
-    const [response, setResponse] = useState(dataSpec())
-    const [requestForm, setRequestForm] = useState(dataSpec().view.form);
+    const [response, setResponse] = useState(dataSpec)
+    const [requestForm, setRequestForm] = useState(dataSpec.view.form);
     const [formElements, updateFormElements] = useImmer([])
     const [lang, setLang] = useState('en');
     const toggleKeyboard = () => {
@@ -25,13 +25,21 @@ function App() {
     }
     const request = async () => {
         if (requestForm.targetView != null) {
-            setResponse(await postApi().request(requestForm, lang));
+            const response = await postApi(requestForm, lang);
+            if (response) {
+                setResponse(response);
+            } else {
+                setResponse(dataSpec);
+                setTimeout(() => {
+                    request();
+                }, 1000)
+            }
         }
     }
     const langChange = (evt) => {
         setViewName(null);
         setLang(evt.target.value);
-        setRequestForm(dataSpec().view.form);
+        setRequestForm(dataSpec.view.form);
     }
     useEffect(() => {
         if (['USER_LIST'].includes(viewName) || viewName != response.view.name) {
