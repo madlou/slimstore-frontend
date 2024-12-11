@@ -258,7 +258,7 @@ function Form(props) {
                                             onChange={(evt) => { change(i, evt.target) }}
                                             value={element.value}
                                         >
-                                            {element.options.map((option, i) => {
+                                            {Array.isArray(element.options) && element.options.map((option, i) => {
                                                 if (option) {
                                                     const optionSplit = option.split("|");
                                                     return <option key={key + ':' + i} value={optionSplit[0]}> {optionSplit[1] ?? optionSplit[0]}</option>
