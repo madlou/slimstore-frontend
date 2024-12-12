@@ -37,15 +37,12 @@ function App() {
         }
     }
     const langChange = (evt) => {
-        setViewName(null);
         setLang(evt.target.value);
-        setRequestForm(dataSpec.view.form);
+        setRequestForm({ ...dataSpec.view.form });
     }
     useEffect(() => {
-        if (['USER_LIST'].includes(viewName) || viewName != response.view.name) {
-            updateFormElements(response.view.form.elements ?? []);
-            setViewName(response.view.name)
-        }
+        updateFormElements(response.view.form.elements ?? []);
+        setViewName(response.view.name)
     }, [response]);
     useEffect(() => {
         request();
