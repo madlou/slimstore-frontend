@@ -4,10 +4,11 @@ import dataSpec from './dataSpec.js';
 const postApi = async (form, lang) => {
     const cookies = new Cookies();
     const backendURL = import.meta.env.VITE_BACKEND_URL;
-    const logging = import.meta.env.VITE_LOG_TO_CONSOLE == "true" ? true : false;
+    const logging = import.meta.env.VITE_LOG_TO_CONSOLE == 'true' ? true : false;
     if (form.elements) {
         form.elements = form.elements.filter((element) => {
             switch (element.type) {
+                case 'ERROR':
                 case 'SUBMIT':
                     return false;
                 case 'PRODUCT':
@@ -54,7 +55,7 @@ const postApi = async (form, lang) => {
         };
         cookies.set(
             'store-register',
-            response.store.number + "-" + response.register.number,
+            response.store.number + '-' + response.register.number,
             cookieOptions,
         );
     } else if (cookies.get('store-register')) {

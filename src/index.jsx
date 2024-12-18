@@ -1,18 +1,10 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import App from './App.jsx'
-import './index.css'
 
 document.addEventListener('touchmove', function (event) {
     if (event.scale !== 1) { event.preventDefault(); }
 }, { passive: false });
-
-
-createRoot(document.getElementById('root')).render(
-    <StrictMode>
-        <App />
-    </StrictMode>
-)
 
 String.prototype.toCamelCase = function () {
     return this.valueOf()
@@ -20,3 +12,9 @@ String.prototype.toCamelCase = function () {
         .replace(/\s/g, '')
         .replace(/^(.)/, function ($1) { return $1.toLowerCase(); });
 }
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);

@@ -1,14 +1,14 @@
-import './Keyboard.css'
+import { Button, Container, Group, Paper } from '@mantine/core';
 
 function Keyboard(props) {
     const tap = (evt) => {
         props.updateFormElements((draft) => {
             const idx = draft.findIndex((element) => {
-                return props.viewName + ":" + element.key == props.inputFocused
+                return props.viewName + ':' + element.key == props.inputFocused
             });
             if (idx >= 0) {
-                let value = draft[idx].value ?? '';
-                const character = evt.target.innerHTML;
+                let value = '' + draft[idx].value;
+                const character = evt.target.textContent;
                 if (character === 'DEL') {
                     value = value.substr(0, value.length - 1);
                 } else if (character === 'SPACE') {
@@ -20,57 +20,61 @@ function Keyboard(props) {
             }
         })
     }
+    const display = props.showKeyboard ? 'block' : 'none';
     return (
-        <div id='keyboard' className='container'>
-            <div>
-                <button onClick={tap}>1</button>
-                <button onClick={tap}>2</button>
-                <button onClick={tap}>3</button>
-                <button onClick={tap}>4</button>
-                <button onClick={tap}>5</button>
-                <button onClick={tap}>6</button>
-                <button onClick={tap}>7</button>
-                <button onClick={tap}>8</button>
-                <button onClick={tap}>9</button>
-                <button onClick={tap}>0</button>
-                <button onClick={tap}>DEL</button>
-            </div>
-            <div>
-                <button onClick={tap}>Q</button>
-                <button onClick={tap}>W</button>
-                <button onClick={tap}>E</button>
-                <button onClick={tap}>R</button>
-                <button onClick={tap}>T</button>
-                <button onClick={tap}>Y</button>
-                <button onClick={tap}>U</button>
-                <button onClick={tap}>I</button>
-                <button onClick={tap}>O</button>
-                <button onClick={tap}>P</button>
-            </div>
-            <div>
-                <button onClick={tap}>A</button>
-                <button onClick={tap}>S</button>
-                <button onClick={tap}>D</button>
-                <button onClick={tap}>F</button>
-                <button onClick={tap}>G</button>
-                <button onClick={tap}>H</button>
-                <button onClick={tap}>J</button>
-                <button onClick={tap}>K</button>
-                <button onClick={tap}>L</button>
-            </div>
-            <div>
-                <button onClick={tap}>Z</button>
-                <button onClick={tap}>X</button>
-                <button onClick={tap}>C</button>
-                <button onClick={tap}>V</button>
-                <button onClick={tap}>B</button>
-                <button onClick={tap}>N</button>
-                <button onClick={tap}>M</button>
-                <button onClick={tap}>,</button>
-                <button onClick={tap}>.</button>
-                <button onClick={tap} style={{ width: '10%' }}>SPACE</button>
-            </div>
-        </div>
+        <Container
+            id='keyboard'
+            style={{ display: display, width: '100%' }}
+        >
+            <Group m={8} justify={'center'}>
+                <Button onClick={tap}>1</Button>
+                <Button onClick={tap}>2</Button>
+                <Button onClick={tap}>3</Button>
+                <Button onClick={tap}>4</Button>
+                <Button onClick={tap}>5</Button>
+                <Button onClick={tap}>6</Button>
+                <Button onClick={tap}>7</Button>
+                <Button onClick={tap}>8</Button>
+                <Button onClick={tap}>9</Button>
+                <Button onClick={tap}>0</Button>
+                <Button onClick={tap}>DEL</Button>
+            </Group>
+            <Group m={8} justify={'center'}>
+                <Button onClick={tap}>Q</Button>
+                <Button onClick={tap}>W</Button>
+                <Button onClick={tap}>E</Button>
+                <Button onClick={tap}>R</Button>
+                <Button onClick={tap}>T</Button>
+                <Button onClick={tap}>Y</Button>
+                <Button onClick={tap}>U</Button>
+                <Button onClick={tap}>I</Button>
+                <Button onClick={tap}>O</Button>
+                <Button onClick={tap}>P</Button>
+            </Group>
+            <Group m={8} justify={'center'}>
+                <Button onClick={tap}>A</Button>
+                <Button onClick={tap}>S</Button>
+                <Button onClick={tap}>D</Button>
+                <Button onClick={tap}>F</Button>
+                <Button onClick={tap}>G</Button>
+                <Button onClick={tap}>H</Button>
+                <Button onClick={tap}>J</Button>
+                <Button onClick={tap}>K</Button>
+                <Button onClick={tap}>L</Button>
+            </Group>
+            <Group m={8} justify={'center'}>
+                <Button onClick={tap}>Z</Button>
+                <Button onClick={tap}>X</Button>
+                <Button onClick={tap}>C</Button>
+                <Button onClick={tap}>V</Button>
+                <Button onClick={tap}>B</Button>
+                <Button onClick={tap}>N</Button>
+                <Button onClick={tap}>M</Button>
+                <Button onClick={tap}>,</Button>
+                <Button onClick={tap}>.</Button>
+                <Button onClick={tap}>SPACE</Button>
+            </Group>
+        </Container>
 
     )
 }

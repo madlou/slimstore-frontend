@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import './FunctionButtons.css'
+import { Flex, Button, Tooltip } from '@mantine/core';
 
 function FunctionButtons(props) {
     const fixedButtons = [];
     for (let i = 0; i < 8; i++) {
         fixedButtons[i + 1] = {
-            label: "",
+            label: '',
             position: i + 1,
         };
     }
@@ -32,7 +32,7 @@ function FunctionButtons(props) {
             case 'basket.total':
                 first = 0;
                 props.response.basket.map((row) => {
-                    first += row.quantity * row.unitValue * (row.type == "RETURN" ? -1 : 1);
+                    first += row.quantity * row.unitValue * (row.type == 'RETURN' ? -1 : 1);
                 })
                 break;
         }
@@ -61,30 +61,57 @@ function FunctionButtons(props) {
         }
     }
     useEffect(() => {
-        document.addEventListener("keydown", (e) => {
-            if (["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"].includes(e.key)) {
+        document.addEventListener('keydown', (e) => {
+            if (['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8'].includes(e.key)) {
                 e.preventDefault();
                 document.getElementById(e.key).click();
             }
         }, false);
     }, []);
     return (
-        <div id="function-buttons">
-            {fixedButtons.map((button, i) => {
-                return (
-                    <button
-                        key={"F" + i}
-                        id={"F" + button.position}
-                        className={'secondary' + (button.label ? '' : ' invisible')}
-                        onClick={(evt) => { submit(i, evt) }}
-                        disabled={!checkCondition(button.condition)}
-                    >
-                        <div>{"F" + button.position}</div>
-                        <div>{button.label}</div>
-                    </button>
-                )
-            })}
-        </div>
+        <Flex
+            id='function-buttons'
+            gap='md'
+            justify='space-around'
+            align='center'
+            direction='row'
+            wrap='nowrap'
+            pt='sm'
+            pb='sm'
+            pl='md'
+            pr='md'
+        >
+            {
+                fixedButtons.map((button, i) => {
+                    return (
+                        <Tooltip
+                            label={'F' + button.position + ' - ' + button.label}
+                            key={'F' + i}
+                        >
+                            <Button
+                                id={'F' + button.position}
+                                style={{ visibility: (button.label && checkCondition(button.condition)) ? '' : ' hidden' }}
+                                onClick={(evt) => { submit(i, evt) }}
+                                disabled={!checkCondition(button.condition)}
+                                flex={1}
+                                mih={48}
+                                mah={48}
+                                styles={{
+                                    root: {
+                                        padding: '0.2rem'
+                                    },
+                                    label: { textWrap: 'balance' },
+                                }}
+
+                            >
+                                {/* <div>{'F' + button.position}</div> */}
+                                {button.label}
+                            </Button>
+                        </Tooltip>
+                    )
+                })
+            }
+        </Flex >
     )
 }
 

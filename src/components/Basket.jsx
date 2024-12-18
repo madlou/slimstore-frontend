@@ -1,5 +1,9 @@
 import { useRef, useEffect } from 'react'
-import './Basket.css'
+import { Text, Box, Group, Divider } from '@mantine/core';
+import PrintHeader from './PrintHeader.jsx'
+import PrintFooter from './PrintFooter.jsx'
+import DemoInstructions from './DemoInstructions.jsx';
+import moneyConverter from '../util/moneyConverter.js';
 
 function Basket(props) {
     let total = 0;
@@ -34,71 +38,116 @@ function Basket(props) {
         }, 100)
     }, [props.basket]);
     return (
-        <div id='basket' className='document container'>
+        <Box
+            w={'95%'}
+        >
+            <PrintHeader
+                response={props.response}
+            />
+            <DemoInstructions
+                name={props.name}
+                uiTranslations={props.uiTranslations}
+            />
             {props.basket.map((line, i) => {
                 return (
-                    <div key={i} className='space-below'>
-                        <div>{line.code} {line.name}</div>
-                        <div className='total'>{props.uiTranslations.currencySymbol}{(line.quantity * (line.type == 'RETURN' ? -1 : 1) * line.unitValue).toFixed(2)}</div>
-                        <div className='unit'>{line.quantity * (line.type == 'RETURN' ? -1 : 1)} @ {props.uiTranslations.currencySymbol}{line.unitValue.toFixed(2)}</div>
-                    </div>
+                    <Box mb={8}>
+                        <Text>{line.code} {line.name}</Text>
+                        <Group
+                            justify='space-between'
+                        >
+                            <Text>
+                                {line.quantity * (line.type == 'RETURN' ? -1 : 1)}
+                                &nbsp;@&nbsp;
+                                {moneyConverter(
+                                    props.response.store.countryCode,
+                                    props.response.store.currencyCode,
+                                    line.unitValue,
+                                )}
+                            </Text>
+                            <Text>
+                                {moneyConverter(
+                                    props.response.store.countryCode,
+                                    props.response.store.currencyCode,
+                                    (line.quantity * (line.type == 'RETURN' ? -1 : 1) * line.unitValue),
+                                )}
+                            </Text>
+                        </Group>
+                    </Box>
                 );
             })}
-            {props.basket.length < 1 ? "" : (
-                <div className='space-below'>
-                    <div>{props.uiTranslations.subtotal}: {props.uiTranslations.currencySymbol}{total.toFixed(2)}</div>
-                    <div>{props.uiTranslations.transactionLines}: {lines}</div>
-                    <div>{props.uiTranslations.items}: {items}</div>
-                </div>
+            {props.basket.length < 1 ? '' : (
+                <Box mb={8}>
+                    <Divider mb={8} size='md' variant='dotted' />
+                    <Text>
+                        {props.uiTranslations.subtotal}
+                        :&nbsp;
+                        {moneyConverter(
+                            props.response.store.countryCode,
+                            props.response.store.currencyCode,
+                            total,
+                        )}
+                    </Text>
+                    <Text>
+                        {props.uiTranslations.transactionLines}
+                        :&nbsp;
+                        {lines}
+                    </Text>
+                    <Text>
+                        {props.uiTranslations.items}
+                        :&nbsp;
+                        {items}
+                    </Text>
+                </Box>
             )}
-            {props.tender.map((line, i) => {
-                return <div key={i} className='tender'>
-                    <div>{line.label} {props.uiTranslations.currencySymbol}{(line.value).toFixed(2)}</div>
-                </div>
-            })}
-            {tenders == 0 ? "" : (
-                <div className='space-above'>
-                    <div>{props.uiTranslations.tenderTotal}: {props.uiTranslations.currencySymbol}{tenders.toFixed(2)}</div>
-                </div>
+            {props.tender && props.tender.length > 0 ? (
+                <Box mb={8}>
+                    <Divider mb={8} size='md' variant='dotted' />
+                    {props.tender.map((line, i) => {
+                        return <Text>
+                            {line.label}
+                            &nbsp;
+                            {moneyConverter(
+                                props.response.store.countryCode,
+                                props.response.store.currencyCode,
+                                line.value,
+                            )}
+                        </Text>
+
+                    })}
+                </Box>
+            ) : ''}
+            {tenders == 0 ? '' : (
+                <Box mb={8}>
+                    <Divider mb={8} size='md' variant='dotted' />
+                    <Text>
+                        {props.uiTranslations.tenderTotal}
+                        :&nbsp;
+                        {moneyConverter(
+                            props.response.store.countryCode,
+                            props.response.store.currencyCode,
+                            tenders,
+                        )}
+                    </Text>
+                </Box>
             )}
-            {tenders == 0 || difference == null ? "" : (
-                <div className='space-above no-print'>
-                    <div>{props.uiTranslations.difference}: {props.uiTranslations.currencySymbol}{difference.toFixed(2)}</div>
-                </div>
+            {tenders == 0 || difference == 0 ? '' : (
+                <Box mb={8}>
+                    <Text>
+                        {props.uiTranslations.difference}
+                        :&nbsp;
+                        {moneyConverter(
+                            props.response.store.countryCode,
+                            props.response.store.currencyCode,
+                            difference,
+                        )}
+                    </Text>
+                </Box>
             )}
+            <PrintFooter
+                response={props.response}
+            />
             <div ref={basketBottomRef} id='bottomReference'></div>
-            {
-                props.name == 'LOGIN' ? (
-                    <div>
-                        <p>{props.uiTranslations.devmessage1}</p>
-                        <p>{props.uiTranslations.devmessage2}</p>
-                        <table className="table-with-borders"><tbody>
-                            <tr><td>{props.uiTranslations.user}</td><td>{props.uiTranslations.password}</td><td>{props.uiTranslations.role}</td><td>{props.uiTranslations.store}</td></tr>
-                            <tr><td>1111</td><td>1234</td><td>{props.uiTranslations.associate}</td><td>423</td></tr>
-                            <tr><td>2222</td><td>1234</td><td>{props.uiTranslations.manager}*</td><td>423</td></tr>
-                            <tr><td>3333</td><td>1234</td><td>{props.uiTranslations.administrator}**</td><td>600</td></tr>
-                        </tbody></table>
-                        <p><i>* {props.uiTranslations.devmessage3}</i></p>
-                        <p><i>** {props.uiTranslations.devmessage4}</i></p>
-                    </div>
-                ) : ""
-            }
-            {
-                props.name == 'REGISTER_CHANGE' ? (
-                    <div>
-                        <p>{props.uiTranslations.devmessage1}</p>
-                        <p>{props.uiTranslations.devmessage2}</p>
-                        <table className="table-with-borders"><tbody>
-                            <tr><td>{props.uiTranslations.store}</td><td>{props.uiTranslations.register}</td></tr>
-                            <tr><td>423</td><td>1</td></tr>
-                            <tr><td>423</td><td>2</td></tr>
-                            <tr><td>423</td><td>3</td></tr>
-                            <tr><td>600</td><td>1</td></tr>
-                        </tbody></table>
-                    </div>
-                ) : ""
-            }
-        </div >
+        </Box>
     )
 }
 
