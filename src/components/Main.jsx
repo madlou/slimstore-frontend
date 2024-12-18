@@ -44,9 +44,9 @@ function Main() {
                     return;
                 }
                 setResponse(dataSpec);
-                // setTimeout(() => {
-                //     request(retryCounter + 1);
-                // }, 1000)
+                setTimeout(() => {
+                    request(retryCounter + 1);
+                }, 1000)
             }
         }
     }
@@ -60,7 +60,6 @@ function Main() {
     useEffect(() => {
         document.documentElement.style.fontSize = fontSize + 'px';
     }, [fontSize]);
-    console.log(layout)
     return (
         <>
             <AppShell
