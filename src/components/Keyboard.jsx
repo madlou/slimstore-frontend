@@ -24,58 +24,61 @@ function Keyboard(props) {
         })
     }
     const display = props.showKeyboard ? 'block' : 'none';
+    const bw = { base: 30, xs: 40, sm: 50, md: 60 };
+    const bs = { root: { padding: '0' }, };
+    const gap = 5;
     return (
         <Container
             id='keyboard'
             style={{ display: display, width: '100%' }}
         >
-            <Group m={8} justify={'center'}>
-                <Button onClick={tap}>1</Button>
-                <Button onClick={tap}>2</Button>
-                <Button onClick={tap}>3</Button>
-                <Button onClick={tap}>4</Button>
-                <Button onClick={tap}>5</Button>
-                <Button onClick={tap}>6</Button>
-                <Button onClick={tap}>7</Button>
-                <Button onClick={tap}>8</Button>
-                <Button onClick={tap}>9</Button>
-                <Button onClick={tap}>0</Button>
-                <Button onClick={tap}>DEL</Button>
+            <Group m={8} justify={'center'} wrap='nowrap' gap={gap}>
+                <Button onClick={tap} w={bw} styles={bs}>1</Button>
+                <Button onClick={tap} w={bw} styles={bs}>2</Button>
+                <Button onClick={tap} w={bw} styles={bs}>3</Button>
+                <Button onClick={tap} w={bw} styles={bs}>4</Button>
+                <Button onClick={tap} w={bw} styles={bs}>5</Button>
+                <Button onClick={tap} w={bw} styles={bs}>6</Button>
+                <Button onClick={tap} w={bw} styles={bs}>7</Button>
+                <Button onClick={tap} w={bw} styles={bs}>8</Button>
+                <Button onClick={tap} w={bw} styles={bs}>9</Button>
+                <Button onClick={tap} w={bw} styles={bs}>0</Button>
+                <Button onClick={tap} w={bw} styles={bs}>DEL</Button>
             </Group>
-            <Group m={8} justify={'center'}>
-                <Button onClick={tap}>Q</Button>
-                <Button onClick={tap}>W</Button>
-                <Button onClick={tap}>E</Button>
-                <Button onClick={tap}>R</Button>
-                <Button onClick={tap}>T</Button>
-                <Button onClick={tap}>Y</Button>
-                <Button onClick={tap}>U</Button>
-                <Button onClick={tap}>I</Button>
-                <Button onClick={tap}>O</Button>
-                <Button onClick={tap}>P</Button>
+            <Group m={8} justify={'center'} wrap='nowrap' gap={gap}>
+                <Button onClick={tap} w={bw} styles={bs}>Q</Button>
+                <Button onClick={tap} w={bw} styles={bs}>W</Button>
+                <Button onClick={tap} w={bw} styles={bs}>E</Button>
+                <Button onClick={tap} w={bw} styles={bs}>R</Button>
+                <Button onClick={tap} w={bw} styles={bs}>T</Button>
+                <Button onClick={tap} w={bw} styles={bs}>Y</Button>
+                <Button onClick={tap} w={bw} styles={bs}>U</Button>
+                <Button onClick={tap} w={bw} styles={bs}>I</Button>
+                <Button onClick={tap} w={bw} styles={bs}>O</Button>
+                <Button onClick={tap} w={bw} styles={bs}>P</Button>
             </Group>
-            <Group m={8} justify={'center'}>
-                <Button onClick={tap}>A</Button>
-                <Button onClick={tap}>S</Button>
-                <Button onClick={tap}>D</Button>
-                <Button onClick={tap}>F</Button>
-                <Button onClick={tap}>G</Button>
-                <Button onClick={tap}>H</Button>
-                <Button onClick={tap}>J</Button>
-                <Button onClick={tap}>K</Button>
-                <Button onClick={tap}>L</Button>
+            <Group m={8} justify={'center'} wrap='nowrap' gap={gap}>
+                <Button onClick={tap} w={bw} styles={bs}>A</Button>
+                <Button onClick={tap} w={bw} styles={bs}>S</Button>
+                <Button onClick={tap} w={bw} styles={bs}>D</Button>
+                <Button onClick={tap} w={bw} styles={bs}>F</Button>
+                <Button onClick={tap} w={bw} styles={bs}>G</Button>
+                <Button onClick={tap} w={bw} styles={bs}>H</Button>
+                <Button onClick={tap} w={bw} styles={bs}>J</Button>
+                <Button onClick={tap} w={bw} styles={bs}>K</Button>
+                <Button onClick={tap} w={bw} styles={bs}>L</Button>
             </Group>
-            <Group m={8} justify={'center'}>
-                <Button onClick={tap}>Z</Button>
-                <Button onClick={tap}>X</Button>
-                <Button onClick={tap}>C</Button>
-                <Button onClick={tap}>V</Button>
-                <Button onClick={tap}>B</Button>
-                <Button onClick={tap}>N</Button>
-                <Button onClick={tap}>M</Button>
-                <Button onClick={tap}>,</Button>
-                <Button onClick={tap}>.</Button>
-                <Button onClick={tap}>SPACE</Button>
+            <Group m={8} justify={'center'} wrap='nowrap' gap={gap}>
+                <Button onClick={tap} w={bw} styles={bs}>Z</Button>
+                <Button onClick={tap} w={bw} styles={bs}>X</Button>
+                <Button onClick={tap} w={bw} styles={bs}>C</Button>
+                <Button onClick={tap} w={bw} styles={bs}>V</Button>
+                <Button onClick={tap} w={bw} styles={bs}>B</Button>
+                <Button onClick={tap} w={bw} styles={bs}>N</Button>
+                <Button onClick={tap} w={bw} styles={bs}>M</Button>
+                <Button onClick={tap} w={bw} styles={bs}>,</Button>
+                <Button onClick={tap} w={bw} styles={bs}>.</Button>
+                <Button onClick={tap} w={bw} styles={bs}>SPACE</Button>
             </Group>
         </Container>
 

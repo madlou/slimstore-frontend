@@ -1,9 +1,10 @@
 import { useEffect, useRef, useCallback } from 'react'
-import '@mantine/dates/styles.css';
+import { useViewportSize } from '@mantine/hooks';
 import { DatePickerInput } from '@mantine/dates';
 import { TextInput, NumberInput, Paper, ScrollArea, Button, Box, Text, Group, Select, Image } from '@mantine/core';
 import imageApi from '../util/imageApi.js'
 import moneyConverter from '../util/moneyConverter.js';
+import '@mantine/dates/styles.css';
 
 function Form(props) {
     const focusChange = (i, id) => {
@@ -32,6 +33,14 @@ function Form(props) {
         evt.preventDefault();
         props.setRequestForm({ ...props.response.view.form, elements: props.formElements });
     }
+    const { width, height } = useViewportSize();
+    const mobileFix = height < 900 ? '112px ' : '80px';
+    const scrollHeight = props.layout[1] == 12 ?
+        'calc((100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px) - ' + mobileFix + ')/2)' :
+        'calc(100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px) - 48px)';
+    const scrollWidth = props.layout[1] == 12 ?
+        'calc(100vw - 48px)' :
+        'calc((100vw * ' + (props.layout[1] / 12) + ') - 96px )';
     useEffect(() => {
         if (!props.response.view.form.elements) {
             return;
@@ -51,12 +60,6 @@ function Form(props) {
             props.setInputFocused(id);
         }
     }, [props.response.view]);
-    const scrollHeight = props.layout[1] == 12 ?
-        'calc((100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px) - 80px)/2)' :
-        'calc(100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px) - 48px)';
-    const scrollWidth = props.layout[1] == 12 ?
-        'calc(100vw - 48px)' :
-        'calc((100vw * ' + (props.layout[1] / 12) + ') - 96px )';
     return (
         <Paper
             shadow='md'

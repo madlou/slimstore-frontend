@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { AppShell, SimpleGrid, Group, Button, ActionIcon, Container, Box, Slider, Title, Grid, Select, Stack, Burger, Drawer, Flex } from '@mantine/core';
+import { AppShell, SimpleGrid, Group, Button, ActionIcon, Container, Box, Slider, Title, Grid, Select, Stack, Burger, Drawer, Flex, useMatches } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import ColorSchemeContext from '../ColorSchemeContext.jsx';
 import { RxSun, RxMoon, RxZoomIn, RxZoomOut } from 'react-icons/rx';
@@ -30,8 +30,8 @@ function Main() {
     const [footerHeight, setFooterHeight] = useState(96);
     const [fontSize, setFontSize] = useState(24);
     const [layout, setLayout] = useState([6, 6]);
+    const kbHeight = 184;
     const toggleKeyboard = () => {
-        const kbHeight = 184;
         const toggle = !showKeyboard
         setFooterHeight(toggle ? footerHeight + kbHeight : footerHeight - kbHeight);
         setShowKeyboard(toggle);
@@ -63,25 +63,33 @@ function Main() {
     useEffect(() => {
         document.documentElement.style.fontSize = fontSize + 'px';
     }, [fontSize]);
+    const breakpoint = {
+        xs: 576,
+        sm: 768,
+        md: 992,
+        lg: 1200,
+        xl: 1408,
+    }
     useEffect(() => {
-        if (width < 576) { // xs | 36em
+        // setShowKeyboard(false)
+        if (width < breakpoint.xs) {
             setFontSize(14);
-            setFooterHeight(160)
-        } else if (width < 768) {// sm | 48em
+            setFooterHeight(160 + (showKeyboard ? kbHeight : 0))
+        } else if (width < breakpoint.sm) {
             setFontSize(16)
-            setFooterHeight(160)
-        } else if (width < 992) {// md | 62em
+            setFooterHeight(160 + (showKeyboard ? kbHeight : 0))
+        } else if (width < breakpoint.md) {
             setFontSize(16)
-            setFooterHeight(96)
-        } else if (width < 1200) {// lg | 75em
+            setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
+        } else if (width < breakpoint.lg) {
             setFontSize(18)
-            setFooterHeight(96)
-        } else if (width < 1408) {// xl | 90em
+            setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
+        } else if (width < breakpoint.xl) {
             setFontSize(22)
-            setFooterHeight(96)
+            setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
         } else {
             setFontSize(24)
-            setFooterHeight(96)
+            setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
         }
         if (width < height) {
             setLayout([12, 12])
