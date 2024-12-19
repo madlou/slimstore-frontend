@@ -1,4 +1,4 @@
-import { Box, Table, Text } from '@mantine/core'
+import { Anchor, Box, List, Table, Text, Title } from '@mantine/core'
 import React from 'react'
 
 const DemoInstructions = (props) => {
@@ -7,7 +7,7 @@ const DemoInstructions = (props) => {
             {
                 props.name == 'LOGIN' ? (
                     <Box>
-                        <Text>{props.uiTranslations.devmessage1}</Text>
+                        <Text mb={12}>{props.uiTranslations.devmessage1}</Text>
                         <Text>{props.uiTranslations.devmessage2}</Text>
                         <Table withTableBorder withColumnBorders>
                             <Table.Thead>
@@ -74,6 +74,31 @@ const DemoInstructions = (props) => {
                                 </Table.Tr>
                             </Table.Tbody>
                         </Table>
+                    </Box>
+                ) : ''
+            }
+            {
+                props.name == 'ABOUT' ? (
+                    <Box>
+                        <Text>{props.uiTranslations.devmessage1}</Text>
+                        <Title order={3} mt={12}>{props.uiTranslations.sourceCode}</Title>
+                        <List>
+                            <List.Item>
+                                <Anchor href="https://github.com/madlou/Slimstore-Infrastructure/" target="_blank">
+                                    https://github.com/madlou/Slimstore-Infrastructure/
+                                </Anchor>
+                            </List.Item>
+                            <List.Item>
+                                <Anchor href="https://github.com/madlou/Slimstore-Backend" target="_blank">
+                                    https://github.com/madlou/Slimstore-Backend
+                                </Anchor>
+                            </List.Item>
+                            <List.Item>
+                                <Anchor href="https://github.com/madlou/Slimstore-Frontend/" target="_blank">
+                                    https://github.com/madlou/Slimstore-Frontend/
+                                </Anchor>
+                            </List.Item>
+                        </List>
                     </Box>
                 ) : ''
             }

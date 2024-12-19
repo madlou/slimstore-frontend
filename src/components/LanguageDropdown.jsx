@@ -1,12 +1,10 @@
 import { Select } from '@mantine/core';
-import dataSpec from '../util/dataSpec.js';
 
 function LanguageDropdown(props) {
     const langChange = (value) => {
         props.setLang(value);
-        props.setRequestForm({ ...dataSpec.view.form });
+        props.setRequestForm(JSON.parse(JSON.stringify(props.requestForm)));
     }
-    const display = ['HOME', 'LOGIN'].includes(props.viewName) ? 'block' : 'none';
     return (
         <>
             <Select
