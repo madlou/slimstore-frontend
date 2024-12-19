@@ -73,10 +73,10 @@ function Main() {
     useEffect(() => {
         // setShowKeyboard(false)
         if (width < breakpoint.xs) {
-            setFontSize(14);
+            setFontSize(12);
             setFooterHeight(160 + (showKeyboard ? kbHeight : 0))
         } else if (width < breakpoint.sm) {
-            setFontSize(16)
+            setFontSize(14)
             setFooterHeight(160 + (showKeyboard ? kbHeight : 0))
         } else if (width < breakpoint.md) {
             setFontSize(16)
