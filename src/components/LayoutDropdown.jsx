@@ -29,7 +29,7 @@ const LayoutDropdown = (props) => {
     );
     return (
         <Select
-            w={90}
+            w={props.menuOpened ? '100%' : 90}
             data={[
                 { value: 'L_6_6', label: '50|50' },
                 { value: 'L_9_3', label: '75|25' },

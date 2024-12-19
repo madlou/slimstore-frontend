@@ -75,7 +75,7 @@ function FunctionButtons(props) {
             justify='space-around'
             align='center'
             direction='row'
-            wrap='nowrap'
+            wrap='wrap'
             pt='sm'
             pb='sm'
             pl='md'
@@ -96,6 +96,7 @@ function FunctionButtons(props) {
                                 flex={1}
                                 mih={48}
                                 mah={48}
+                                miw={{ base: '20%', sm: 'auto' }}
                                 styles={{
                                     root: {
                                         padding: '0.2rem'

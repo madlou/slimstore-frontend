@@ -7,7 +7,10 @@ function Keyboard(props) {
                 return props.viewName + ':' + element.key == props.inputFocused
             });
             if (idx >= 0) {
-                let value = '' + draft[idx].value;
+                let value = '';
+                if (draft[idx].value) {
+                    value += draft[idx].value;
+                };
                 const character = evt.target.textContent;
                 if (character === 'DEL') {
                     value = value.substr(0, value.length - 1);

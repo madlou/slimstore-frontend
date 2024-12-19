@@ -13,7 +13,7 @@ function LanguageDropdown(props) {
                 data={props.languages}
                 onChange={langChange}
                 value={props.lang}
-                maw={70}
+                w={props.menuOpened ? '100%' : 70}
             />
         </>
     )

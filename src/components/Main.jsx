@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from 'react'
-import { AppShell, SimpleGrid, Group, Button, ActionIcon, Container, Box, Slider, Title, Grid, Select, Stack } from '@mantine/core';
+import { AppShell, SimpleGrid, Group, Button, ActionIcon, Container, Box, Slider, Title, Grid, Select, Stack, Burger, Drawer, Flex } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 import ColorSchemeContext from '../ColorSchemeContext.jsx';
 import { RxSun, RxMoon, RxZoomIn, RxZoomOut } from 'react-icons/rx';
-import { TbKeyboard } from "react-icons/tb";
+import { TbKeyboard } from 'react-icons/tb';
 import { useImmer } from 'use-immer';
 import postApi from '../util/postApi.js'
 import dataSpec from '../util/dataSpec.js'
@@ -15,6 +16,8 @@ import StatusBar from './StatusBar.jsx'
 import LayoutDropdown from './LayoutDropdown.jsx';
 
 function Main() {
+    const { width, height } = useViewportSize();
+    const [menuOpened, setMenuOpened] = useState(false);
     const [inputFocused, setInputFocused] = useState(null)
     const [showKeyboard, setShowKeyboard] = useState(false)
     const [viewName, setViewName] = useState('')
@@ -25,7 +28,7 @@ function Main() {
     const colorSchemeContext = useContext(ColorSchemeContext);
     const dark = colorSchemeContext.colorScheme === 'dark';
     const [footerHeight, setFooterHeight] = useState(96);
-    const [fontSize, setFontSize] = useState(26);
+    const [fontSize, setFontSize] = useState(24);
     const [layout, setLayout] = useState([6, 6]);
     const toggleKeyboard = () => {
         const kbHeight = 184;
@@ -60,6 +63,89 @@ function Main() {
     useEffect(() => {
         document.documentElement.style.fontSize = fontSize + 'px';
     }, [fontSize]);
+    useEffect(() => {
+        if (width < 576) { // xs | 36em
+            setFontSize(14);
+            setFooterHeight(160)
+        } else if (width < 768) {// sm | 48em
+            setFontSize(16)
+            setFooterHeight(160)
+        } else if (width < 992) {// md | 62em
+            setFontSize(16)
+            setFooterHeight(96)
+        } else if (width < 1200) {// lg | 75em
+            setFontSize(18)
+            setFooterHeight(96)
+        } else if (width < 1408) {// xl | 90em
+            setFontSize(22)
+            setFooterHeight(96)
+        } else {
+            setFontSize(24)
+            setFooterHeight(96)
+        }
+        if (width < height) {
+            setLayout([12, 12])
+        } else {
+            setLayout([6, 6])
+        }
+    }, [width]);
+    const MenuButtons = () => {
+        return (
+            <Flex
+                wrap='nowrap'
+                gap='md'
+                justify='flex-start'
+                align='flex-start'
+                direction={menuOpened ? 'column-reverse' : 'row'}
+            >
+                <LayoutDropdown
+                    layout={layout}
+                    setLayout={setLayout}
+                    menuOpened={menuOpened}
+                />
+                <LanguageDropdown
+                    lang={lang}
+                    languages={response.languages}
+                    menuOpened={menuOpened}
+                    setLang={setLang}
+                    setRequestForm={setRequestForm}
+                    viewName={viewName}
+                />
+                <Button
+                    onClick={toggleKeyboard}
+                    title='Toggle keyboard'
+                    w={menuOpened ? '100%' : 'auto'}
+                >
+                    <TbKeyboard style={{ width: '1.6rem', height: '1.6rem' }} />
+                </Button>
+                <Button
+                    onClick={() => { colorSchemeContext.onChange(dark ? 'light' : 'dark') }}
+                    title='Toggle color scheme'
+                    w={menuOpened ? '100%' : 'auto'}
+                >
+                    {dark ? (
+                        <RxSun style={{ width: '1.4rem', height: '1.4rem' }} />
+                    ) : (
+                        <RxMoon style={{ width: '1.4rem', height: '1.4rem' }} />
+                    )}
+                </Button>
+                <Button
+                    onClick={() => { setFontSize(Math.floor(fontSize * 0.95)) }}
+                    title='Zoom Out'
+                    w={menuOpened ? '100%' : 'auto'}
+                >
+                    <RxZoomOut style={{ width: '1.6rem', height: '1.6rem' }} />
+                </Button>
+                <Button
+                    onClick={() => { setFontSize(Math.ceil(fontSize * 1.05)) }}
+                    title='Zoom In'
+                    w={menuOpened ? '100%' : 'auto'}
+                >
+                    <RxZoomIn style={{ width: '1.6rem', height: '1.6rem' }} />
+                </Button>
+            </Flex>
+        )
+    }
     return (
         <>
             <AppShell
@@ -78,6 +164,7 @@ function Main() {
                     >
                         <Group
                             style={{ flexWrap: 'nowrap' }}
+
                         >
                             <Title
                                 order={1}
@@ -89,53 +176,31 @@ function Main() {
                                 pt={10}
                                 fz={22}
                                 textWrap='nowrap'
-                            >{response.uiTranslations.header} - {response.view.title}</Title>
+                                visibleFrom='lg'
+                            >{response.uiTranslations.header} - </Title>
+                            <Title
+                                order={2}
+                                pt={10}
+                                fz={22}
+                                textWrap='nowrap'
+                            >{response.view.title}</Title>
                         </Group>
-                        <Group
-                            style={{ flexWrap: 'nowrap' }}
+                        <Box visibleFrom='sm'>
+                            <MenuButtons />
+                        </Box>
+                        <Drawer
+                            opened={menuOpened}
+                            onClose={() => { setMenuOpened(false) }}
+                            size='40%'
+                            padding='md'
+                            position='right'
+                            title={response.uiTranslations.header}
+                            hiddenFrom='sm'
+                            zIndex={100}
                         >
-                            <LayoutDropdown
-                                layout={layout}
-                                setLayout={setLayout}
-                            />
-                            <LanguageDropdown
-                                setRequestForm={setRequestForm}
-                                lang={lang}
-                                setLang={setLang}
-                                languages={response.languages}
-                                viewName={viewName}
-                            />
-                            <Button
-                                onClick={toggleKeyboard}
-                                title='Toggle keyboard'
-                            >
-                                <TbKeyboard style={{ width: '1.6rem', height: '1.6rem' }} />
-                            </Button>
-                            <Button
-                                onClick={() => { colorSchemeContext.onChange(dark ? 'light' : 'dark') }}
-                                title='Toggle color scheme'
-                            >
-                                {dark ? (
-                                    <RxSun style={{ width: '1.4rem', height: '1.4rem' }} />
-                                ) : (
-                                    <RxMoon style={{ width: '1.4rem', height: '1.4rem' }} />
-                                )}
-                            </Button>
-                            <Button
-                                onClick={() => { setFontSize(fontSize - 4) }}
-                                title='Zoom Out'
-                                disabled={fontSize < 20}
-                            >
-                                <RxZoomOut style={{ width: '1.6rem', height: '1.6rem' }} />
-                            </Button>
-                            <Button
-                                onClick={() => { setFontSize(fontSize + 4) }}
-                                title='Zoom In'
-                                disabled={fontSize > 30}
-                            >
-                                <RxZoomIn style={{ width: '1.6rem', height: '1.6rem' }} />
-                            </Button>
-                        </Group>
+                            <MenuButtons />
+                        </Drawer>
+                        <Burger opened={menuOpened} onClick={() => { setMenuOpened(!menuOpened) }} hiddenFrom='sm' size='md' />
                     </Group>
                 </AppShell.Header>
                 <AppShell.Main
@@ -166,13 +231,13 @@ function Main() {
                             flex={1}
                             display={layout[0] == 12 ? 'flex' : 'flex'}
                         >
-                            <Grid.Col span={layout[0]} display={layout[0] == 12 ? 'block' : 'flex'} flex={layout[0] == 12 ? "unset" : 1}>
+                            <Grid.Col span={layout[0]} display={layout[0] == 12 ? 'block' : 'flex'} flex={layout[0] == 12 ? 'unset' : 1}>
                                 <Display
                                     layout={layout}
                                     response={response}
                                 />
                             </Grid.Col>
-                            <Grid.Col span={layout[1]} display={layout[1] == 12 ? 'block' : 'flex'} flex={layout[0] == 12 ? "unset" : 1}>
+                            <Grid.Col span={layout[1]} display={layout[1] == 12 ? 'block' : 'flex'} flex={layout[0] == 12 ? 'unset' : 1}>
                                 <Form
                                     response={response}
                                     formElements={formElements}
