@@ -84,8 +84,8 @@ const DemoInstructions = (props) => {
                         <Title order={3} mt={12}>{props.uiTranslations.sourceCode}</Title>
                         <List>
                             <List.Item>
-                                <Anchor href="https://github.com/madlou/Slimstore-Infrastructure/" target="_blank">
-                                    https://github.com/madlou/Slimstore-Infrastructure/
+                                <Anchor href="https://github.com/madlou/Slimstore-Infrastructure" target="_blank">
+                                    https://github.com/madlou/Slimstore-Infrastructure
                                 </Anchor>
                             </List.Item>
                             <List.Item>
@@ -94,8 +94,8 @@ const DemoInstructions = (props) => {
                                 </Anchor>
                             </List.Item>
                             <List.Item>
-                                <Anchor href="https://github.com/madlou/Slimstore-Frontend/" target="_blank">
-                                    https://github.com/madlou/Slimstore-Frontend/
+                                <Anchor href="https://github.com/madlou/Slimstore-Frontend" target="_blank">
+                                    https://github.com/madlou/Slimstore-Frontend
                                 </Anchor>
                             </List.Item>
                         </List>

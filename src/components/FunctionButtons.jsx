@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Flex, Button, Tooltip } from '@mantine/core';
+import moneyConverter from '../util/moneyConverter';
 
 function FunctionButtons(props) {
     const fixedButtons = [];
@@ -60,6 +61,12 @@ function FunctionButtons(props) {
             props.setRequestForm(button.form);
         }
     }
+    const isNumeric = (str) => {
+        if (typeof str != "string") {
+            return false;
+        }
+        return !isNaN(str) && !isNaN(parseFloat(str));
+    }
     useEffect(() => {
         document.addEventListener('keydown', (e) => {
             if (['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8'].includes(e.key)) {
@@ -106,7 +113,17 @@ function FunctionButtons(props) {
 
                             >
                                 {/* <div>{'F' + button.position}</div> */}
-                                {button.label}
+                                {
+
+                                    props.response.view.name.substring(0, 6) == 'TENDER' && isNumeric(button.label) ?
+                                        moneyConverter(
+                                            props.response.store.countryCode,
+                                            props.response.store.currencyCode,
+                                            button.label,
+                                        ) :
+                                        button.label
+                                }
+
                             </Button>
                         </Tooltip>
                     )
