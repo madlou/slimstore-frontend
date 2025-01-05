@@ -31,7 +31,7 @@ function Main() {
     const [fontSize, setFontSize] = useState(24);
     const [layout, setLayout] = useState([6, 6]);
     const logoutTimer = useRef(null);
-    const autoLogoutMinutes = 0.5;
+    const autoLogoutMinutes = 10;
     const kbHeight = 184;
     const toggleKeyboard = () => {
         const toggle = !showKeyboard
