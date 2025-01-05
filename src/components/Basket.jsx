@@ -33,10 +33,13 @@ function Basket(props) {
         }
     }
     useEffect(() => {
+        if (['LOGIN', 'ABOUT'].includes(props.response.view.name)) {
+            return;
+        }
         setTimeout(() => {
             scrollToBottom()
         }, 100)
-    }, [props.basket]);
+    }, [props.basket, props.tender]);
     return (
         <Box
             w={'95%'}

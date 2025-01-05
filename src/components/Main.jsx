@@ -85,10 +85,10 @@ function Main() {
             setFontSize(18)
             setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
         } else if (width < breakpoint.xl) {
-            setFontSize(22)
+            setFontSize(20)
             setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
         } else {
-            setFontSize(24)
+            setFontSize(22)
             setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
         }
         if (width < height) {

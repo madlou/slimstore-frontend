@@ -2,6 +2,7 @@ import { Anchor, Box, List, Table, Text, Title } from '@mantine/core'
 import React from 'react'
 
 const DemoInstructions = (props) => {
+    const customerDisplay = import.meta.env.VITE_CUSTOMER_DISPLAY_URL;
     return (
         <Box>
             {
@@ -39,7 +40,10 @@ const DemoInstructions = (props) => {
                             </Table.Tbody>
                         </Table>
                         <Text fs="italic">* {props.uiTranslations.devmessage3}</Text>
-                        <Text fs="italic">** {props.uiTranslations.devmessage4}</Text>
+                        <Text fs="italic" mb={16}>** {props.uiTranslations.devmessage4}</Text>
+                        <Text>{props.uiTranslations.devmessage5}:&nbsp;
+                            <Anchor href={customerDisplay} target="_blank">{props.uiTranslations.customerDisplay}</Anchor>
+                        </Text>
                     </Box>
                 ) : ''
             }
@@ -84,18 +88,23 @@ const DemoInstructions = (props) => {
                         <Title order={3} mt={12}>{props.uiTranslations.sourceCode}</Title>
                         <List>
                             <List.Item>
-                                <Anchor href="https://github.com/madlou/Slimstore-Infrastructure" target="_blank">
-                                    https://github.com/madlou/Slimstore-Infrastructure
+                                <Anchor href="https://github.com/madlou/slimstore-infrastructure" target="_blank">
+                                    https://github.com/madlou/slimstore-infrastructure
                                 </Anchor>
                             </List.Item>
                             <List.Item>
-                                <Anchor href="https://github.com/madlou/Slimstore-Backend" target="_blank">
-                                    https://github.com/madlou/Slimstore-Backend
+                                <Anchor href="https://github.com/madlou/slimstore-backend" target="_blank">
+                                    https://github.com/madlou/slimstore-backend
                                 </Anchor>
                             </List.Item>
                             <List.Item>
-                                <Anchor href="https://github.com/madlou/Slimstore-Frontend" target="_blank">
-                                    https://github.com/madlou/Slimstore-Frontend
+                                <Anchor href="https://github.com/madlou/slimstore-frontend" target="_blank">
+                                    https://github.com/madlou/slimstore-frontend
+                                </Anchor>
+                            </List.Item>
+                            <List.Item>
+                                <Anchor href="https://github.com/madlou/slimstore-customerdisplay" target="_blank">
+                                    https://github.com/madlou/slimstore-customerdisplay
                                 </Anchor>
                             </List.Item>
                         </List>
