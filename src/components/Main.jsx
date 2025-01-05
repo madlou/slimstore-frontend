@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import { AppShell, SimpleGrid, Group, Button, ActionIcon, Container, Box, Slider, Title, Grid, Select, Stack, Burger, Drawer, Flex, useMatches } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import ColorSchemeContext from '../ColorSchemeContext.jsx';
@@ -30,6 +30,8 @@ function Main() {
     const [footerHeight, setFooterHeight] = useState(96);
     const [fontSize, setFontSize] = useState(24);
     const [layout, setLayout] = useState([6, 6]);
+    const logoutTimer = useRef(null);
+    const autoLogoutMinutes = 0.5;
     const kbHeight = 184;
     const toggleKeyboard = () => {
         const toggle = !showKeyboard
@@ -41,6 +43,14 @@ function Main() {
             const response = await postApi(requestForm, lang);
             if (response) {
                 setResponse(response);
+                clearTimeout(logoutTimer.current);
+                logoutTimer.current = setTimeout(() => {
+                    setRequestForm({
+                        ...response.view.form,
+                        targetView: 'LOGIN',
+                        serverProcess: 'LOGOUT'
+                    })
+                }, autoLogoutMinutes * 60 * 1000)
             } else {
                 if (retryCounter > 5) {
                     window.location.reload();
