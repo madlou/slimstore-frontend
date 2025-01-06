@@ -38,7 +38,7 @@ function Main() {
                 setRequestForm({ ...requestForm });
             }, 5000)
         },
-    })).current;
+    }));
     useEffect(() => {
         updateFormElements(response.view.form.elements ?? []);
         setViewName(response.view.name);
@@ -52,7 +52,7 @@ function Main() {
         }, import.meta.env.VITE_AUTO_LOGOUT * 60 * 1000);
     }, [response]);
     useEffect(() => {
-        api.post(setResponse, requestForm, lang);
+        api.current.post(setResponse, requestForm, lang);
     }, [requestForm]);
     return (
         <AppShell

@@ -211,7 +211,7 @@ function Form({ api, response, formElements, inputFocused, layout, setInputFocus
                                     key={key}
                                     w={'95%'}
                                 >
-                                    <img src={api.image(element.image)} />
+                                    <img src={api.current.image(element.image)} />
                                     <Text>{element.key}</Text>
                                     <Text>{element.label}</Text>
                                 </Box>
@@ -231,7 +231,7 @@ function Form({ api, response, formElements, inputFocused, layout, setInputFocus
                                         bg='white'
                                     >
                                         <Image
-                                            src={api.image(element.image)}
+                                            src={api.current.image(element.image)}
                                             h={16 * 5}
                                             w={16 * 5}
                                             m={16 * 0.5}
