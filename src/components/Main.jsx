@@ -1,59 +1,58 @@
 import { useState, useEffect, useRef } from 'react'
-import { AppShell, Group, Box, Title, Grid, Stack, Burger, Drawer } from '@mantine/core';
+import { AppShell, Box, Burger, Drawer, Grid, Group, Stack, Title } from '@mantine/core';
 import { useImmer } from 'use-immer';
-import postApi from '../util/postApi.js'
+import { createApi } from '../util/createApi';
+import { createLogger } from '../util/createLogger';
 import dataSpec from '../util/dataSpec.js'
-import Keyboard from './Keyboard.jsx'
+import Display from './Display.jsx'
 import Form from './Form.jsx'
 import FunctionButtons from './FunctionButtons.jsx'
-import Display from './Display.jsx'
-import StatusBar from './StatusBar.jsx'
+import Keyboard from './Keyboard.jsx'
 import MenuButtons from './MenuButtons.jsx';
+import StatusBar from './StatusBar.jsx'
 
 function Main() {
-    const [menuOpened, setMenuOpened] = useState(false);
-    const [inputFocused, setInputFocused] = useState(null)
-    const [showKeyboard, setShowKeyboard] = useState(false)
-    const [viewName, setViewName] = useState('')
-    const [response, setResponse] = useState(dataSpec)
-    const [requestForm, setRequestForm] = useState(dataSpec.view.form);
-    const [formElements, updateFormElements] = useImmer([])
-    const [lang, setLang] = useState('EN');
+    const [inputFocused, setInputFocused] = useState(null);
+    const errorCount = useRef(0);
+    const [formElements, updateFormElements] = useImmer([]);
     const [footerHeight, setFooterHeight] = useState(96);
+    const [lang, setLang] = useState('EN');
     const [layout, setLayout] = useState([6, 6]);
+    const logger = createLogger();
     const logoutTimer = useRef(null);
-    const autoLogoutMinutes = 10;
-    const request = async (retryCounter = 0) => {
-        if (requestForm.targetView != null) {
-            const response = await postApi(requestForm, lang);
-            if (response) {
-                setResponse(response);
-                clearTimeout(logoutTimer.current);
-                logoutTimer.current = setTimeout(() => {
-                    setRequestForm({
-                        ...response.view.form,
-                        targetView: 'LOGIN',
-                        serverProcess: 'LOGOUT'
-                    })
-                }, autoLogoutMinutes * 60 * 1000)
-            } else {
-                if (retryCounter > 5) {
-                    window.location.reload();
-                    return;
-                }
-                setResponse(dataSpec);
-                setTimeout(() => {
-                    request(retryCounter + 1);
-                }, 1000)
+    const [menuOpened, setMenuOpened] = useState(false);
+    const [requestForm, setRequestForm] = useState(dataSpec.view.form);
+    const [response, setResponse] = useState(dataSpec);
+    const [showKeyboard, setShowKeyboard] = useState(false);
+    const [viewName, setViewName] = useState('');
+    const api = createApi({
+        logger: logger,
+        onError: () => {
+            if (errorCount.current > 10) {
+                window.location.reload();
+                return;
             }
-        }
-    }
+            setResponse(dataSpec);
+            setTimeout(() => {
+                errorCount.current++;
+                setRequestForm({ ...requestForm });
+            }, 5000)
+        },
+    });
     useEffect(() => {
         updateFormElements(response.view.form.elements ?? []);
-        setViewName(response.view.name)
+        setViewName(response.view.name);
+        errorCount.current = 0;
+        clearTimeout(logoutTimer.current);
+        logoutTimer.current = setTimeout(() => {
+            setRequestForm({
+                ...response.view.form,
+                serverProcess: 'LOGOUT'
+            });
+        }, import.meta.env.VITE_AUTO_LOGOUT * 60 * 1000);
     }, [response]);
     useEffect(() => {
-        request();
+        api.post(setResponse, requestForm, lang);
     }, [requestForm]);
     return (
         <>
@@ -155,6 +154,7 @@ function Main() {
                                 response={response}
                             />
                             <Form
+                                api={api}
                                 response={response}
                                 formElements={formElements}
                                 inputFocused={inputFocused}

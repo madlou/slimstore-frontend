@@ -2,11 +2,10 @@ import { useEffect } from 'react'
 import { TextInput, NumberInput, Paper, ScrollArea, Button, Box, Text, Group, Select, Image } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { DatePickerInput } from '@mantine/dates';
-import imageApi from '../util/imageApi.js'
 import moneyConverter from '../util/moneyConverter.js';
 import '@mantine/dates/styles.css';
 
-function Form({ response, formElements, inputFocused, layout, setInputFocused, setRequestForm, showKeyboard, updateFormElements }) {
+function Form({ api, response, formElements, inputFocused, layout, setInputFocused, setRequestForm, showKeyboard, updateFormElements }) {
     const focusChange = (i, id) => {
         if (id == inputFocused) {
             return false;
@@ -212,7 +211,7 @@ function Form({ response, formElements, inputFocused, layout, setInputFocused, s
                                     key={key}
                                     w={'95%'}
                                 >
-                                    <img src={imageApi(element.image)} />
+                                    <img src={api.image(element.image)} />
                                     <Text>{element.key}</Text>
                                     <Text>{element.label}</Text>
                                 </Box>
@@ -232,7 +231,7 @@ function Form({ response, formElements, inputFocused, layout, setInputFocused, s
                                         bg='white'
                                     >
                                         <Image
-                                            src={imageApi(element.image)}
+                                            src={api.image(element.image)}
                                             h={16 * 5}
                                             w={16 * 5}
                                             m={16 * 0.5}
