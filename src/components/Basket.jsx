@@ -53,7 +53,7 @@ function Basket({ basket, response, tender, uiTranslations }) {
             />
             {basket.map((line, i) => {
                 return (
-                    <Box mb={8}>
+                    <Box mb={8} key={i}>
                         <Text>{line.code} {line.name}</Text>
                         <Group
                             justify='space-between'
@@ -106,7 +106,7 @@ function Basket({ basket, response, tender, uiTranslations }) {
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
                     {tender.map((line, i) => {
-                        return <Text>
+                        return <Text key={i}>
                             {line.label}
                             &nbsp;
                             {moneyConverter(
