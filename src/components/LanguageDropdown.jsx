@@ -1,17 +1,17 @@
 import { Select } from '@mantine/core';
 
-function LanguageDropdown(props) {
+function LanguageDropdown({ lang, languages, menuOpened, requestForm, setLang, setRequestForm }) {
     const langChange = (value) => {
-        props.setLang(value);
-        props.setRequestForm(JSON.parse(JSON.stringify(props.requestForm)));
+        setLang(value);
+        setRequestForm(JSON.parse(JSON.stringify(requestForm)));
     }
     return (
         <>
             <Select
-                data={props.languages}
+                data={languages}
                 onChange={langChange}
-                value={props.lang}
-                w={props.menuOpened ? '100%' : 70}
+                value={lang}
+                w={menuOpened ? '100%' : 70}
             />
         </>
     )

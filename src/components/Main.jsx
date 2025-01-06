@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef } from 'react'
-import { AppShell, SimpleGrid, Group, Button, ActionIcon, Container, Box, Slider, Title, Grid, Select, Stack, Burger, Drawer, Flex, useMatches } from '@mantine/core';
+import { AppShell, Group, Button, Box, Title, Grid, Stack, Burger, Drawer, Flex } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import ColorSchemeContext from '../ColorSchemeContext.jsx';
 import { RxSun, RxMoon, RxZoomIn, RxZoomOut } from 'react-icons/rx';
@@ -128,7 +128,6 @@ function Main() {
                     requestForm={requestForm}
                     setLang={setLang}
                     setRequestForm={setRequestForm}
-                    viewName={viewName}
                 />
                 <Button
                     onClick={toggleKeyboard}
@@ -276,7 +275,6 @@ function Main() {
                 >
                     <Keyboard
                         inputFocused={inputFocused}
-                        setInputFocused={setInputFocused}
                         updateFormElements={updateFormElements}
                         viewName={viewName}
                         showKeyboard={showKeyboard}

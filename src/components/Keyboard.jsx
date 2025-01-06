@@ -1,10 +1,10 @@
-import { Button, Container, Group, Paper } from '@mantine/core';
+import { Button, Container, Group } from '@mantine/core';
 
-function Keyboard(props) {
+function Keyboard({ inputFocused, updateFormElements, viewName, showKeyboard }) {
     const tap = (evt) => {
-        props.updateFormElements((draft) => {
+        updateFormElements((draft) => {
             const idx = draft.findIndex((element) => {
-                return props.viewName + ':' + element.key == props.inputFocused
+                return viewName + ':' + element.key == inputFocused
             });
             if (idx >= 0) {
                 let value = '';
@@ -23,7 +23,7 @@ function Keyboard(props) {
             }
         })
     }
-    const display = props.showKeyboard ? 'block' : 'none';
+    const display = showKeyboard ? 'block' : 'none';
     const bw = { base: 30, xs: 40, sm: 50, md: 60 };
     const bs = { root: { padding: '0' }, };
     const gap = 5;

@@ -1,20 +1,20 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect } from 'react'
+import { TextInput, NumberInput, Paper, ScrollArea, Button, Box, Text, Group, Select, Image } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { DatePickerInput } from '@mantine/dates';
-import { TextInput, NumberInput, Paper, ScrollArea, Button, Box, Text, Group, Select, Image } from '@mantine/core';
 import imageApi from '../util/imageApi.js'
 import moneyConverter from '../util/moneyConverter.js';
 import '@mantine/dates/styles.css';
 
-function Form(props) {
+function Form({ response, formElements, inputFocused, layout, setInputFocused, setRequestForm, showKeyboard, updateFormElements }) {
     const focusChange = (i, id) => {
-        if (id == props.inputFocused) {
+        if (id == inputFocused) {
             return false;
         }
-        props.setInputFocused(id);
+        setInputFocused(id);
     }
     const quantityChange = (i, add, max) => {
-        props.updateFormElements((draft) => {
+        updateFormElements((draft) => {
             const value = draft[i].quantity + add * 1;
             if (value >= 0 && value <= max) {
                 draft[i].quantity = value;
@@ -22,30 +22,30 @@ function Form(props) {
         })
     }
     const valueChange = (i, value) => {
-        props.updateFormElements((draft) => {
+        updateFormElements((draft) => {
             draft[i].value = value;
         })
     }
     const formButtonClick = (i) => {
-        props.setRequestForm(props.formElements[i].button.form);
+        setRequestForm(formElements[i].button.form);
     }
     const submit = (evt) => {
         evt.preventDefault();
-        props.setRequestForm({ ...props.response.view.form, elements: props.formElements });
+        setRequestForm({ ...response.view.form, elements: formElements });
     }
     const { width, height } = useViewportSize();
     const mobileFix = height < 900 ? '112px ' : '80px';
-    const scrollHeight = props.layout[1] == 12 ?
+    const scrollHeight = layout[1] == 12 ?
         'calc((100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px) - ' + mobileFix + ')/2)' :
         'calc(100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px) - 48px)';
-    const scrollWidth = props.layout[1] == 12 ?
+    const scrollWidth = layout[1] == 12 ?
         'calc(100vw - 48px)' :
-        'calc((100vw * ' + (props.layout[1] / 12) + ') - 96px )';
+        'calc((100vw * ' + (layout[1] / 12) + ') - 96px )';
     useEffect(() => {
-        if (!props.response.view.form.elements) {
+        if (!response.view.form.elements) {
             return;
         }
-        const element = props.response.view.form.elements.find((element) => {
+        const element = response.view.form.elements.find((element) => {
             return [
                 'TEXT',
                 'EMAIL',
@@ -56,10 +56,10 @@ function Form(props) {
             ].includes(element.type) && element.disabled != true;
         })
         if (element) {
-            const id = props.response.view.name + ':' + element.key;
-            props.setInputFocused(id);
+            const id = response.view.name + ':' + element.key;
+            setInputFocused(id);
         }
-    }, [props.response.view]);
+    }, [response.view]);
     return (
         <Paper
             shadow='md'
@@ -74,11 +74,11 @@ function Form(props) {
                 pl='xl'
                 mah={scrollHeight}
             >
-                {props.response.error ? <Text c={'salmon'}>{props.response.error}</Text> : ''}
-                <Text id='message'>{props.response.view.message}</Text>
+                {response.error ? <Text c={'salmon'}>{response.error}</Text> : ''}
+                <Text id='message'>{response.view.message}</Text>
                 <form onSubmit={submit}>
-                    {props.formElements.map((element, i) => {
-                        let key = props.response.view.name + ':' + element.key;
+                    {formElements.map((element, i) => {
+                        let key = response.view.name + ':' + element.key;
                         switch (element.type) {
                             case 'ERROR':
                                 return <Text
@@ -92,8 +92,8 @@ function Form(props) {
                             case 'EMAIL':
                                 return <TextInput
                                     autoComplete='off'
-                                    autoFocus={(key == props.inputFocused) ? true : false}
-                                    className={key == props.inputFocused ? 'focused' : ''}
+                                    autoFocus={(key == inputFocused) ? true : false}
+                                    className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
                                     id={key}
@@ -103,7 +103,7 @@ function Form(props) {
                                     name={key}
                                     onChange={(evt) => { valueChange(i, evt.currentTarget.value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
-                                    readOnly={props.showKeyboard}
+                                    readOnly={showKeyboard}
                                     type='text'
                                     value={element.value ?? ''}
                                     w={'95%'}
@@ -111,8 +111,8 @@ function Form(props) {
                             case 'NUMBER':
                                 return <NumberInput
                                     autoComplete='off'
-                                    autoFocus={(key == props.inputFocused) ? true : false}
-                                    className={key == props.inputFocused ? 'focused' : ''}
+                                    autoFocus={(key == inputFocused) ? true : false}
+                                    className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
                                     id={key}
@@ -122,7 +122,7 @@ function Form(props) {
                                     name={key}
                                     onChange={(value) => { valueChange(i, value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
-                                    readOnly={props.showKeyboard}
+                                    readOnly={showKeyboard}
                                     type='text'
                                     value={element.value ?? ''}
                                     w={'95%'}
@@ -130,8 +130,8 @@ function Form(props) {
                             case 'DECIMAL':
                                 return <NumberInput
                                     autoComplete='off'
-                                    autoFocus={(key == props.inputFocused) ? true : false}
-                                    className={key == props.inputFocused ? 'focused' : ''}
+                                    autoFocus={(key == inputFocused) ? true : false}
+                                    className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
                                     id={key}
@@ -141,7 +141,7 @@ function Form(props) {
                                     name={key}
                                     onChange={(value) => { valueChange(i, value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
-                                    readOnly={props.showKeyboard}
+                                    readOnly={showKeyboard}
                                     type='text'
                                     value={element.value ?? ''}
                                     w={'95%'}
@@ -149,7 +149,7 @@ function Form(props) {
                             case 'DATE':
                                 return <DatePickerInput
                                     autoComplete='off'
-                                    className={key == props.inputFocused ? 'focused' : ''}
+                                    className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
                                     id={key}
@@ -157,7 +157,7 @@ function Form(props) {
                                     label={element.label}
                                     mt='md'
                                     name={key}
-                                    valueFormat={props.response.uiTranslations.dateFormat.toUpperCase()}
+                                    valueFormat={response.uiTranslations.dateFormat.toUpperCase()}
                                     onChange={(value) => { valueChange(i, value.toISOString().slice(0, 10)) }}
                                     value={element.value ? new Date(element.value) : null}
                                     w={'95%'}
@@ -165,8 +165,8 @@ function Form(props) {
                             case 'PASSWORD':
                                 return <TextInput
                                     autoComplete='off'
-                                    autoFocus={(key == props.inputFocused) ? true : false}
-                                    className={key == props.inputFocused ? 'focused' : ''}
+                                    autoFocus={(key == inputFocused) ? true : false}
+                                    className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
                                     id={key}
@@ -176,7 +176,7 @@ function Form(props) {
                                     name={key}
                                     onChange={(evt) => { valueChange(i, evt.currentTarget.value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
-                                    readOnly={props.showKeyboard}
+                                    readOnly={showKeyboard}
                                     type='password'
                                     value={element.value ?? ''}
                                     w={'95%'}
@@ -243,8 +243,8 @@ function Form(props) {
                                             style={{ textWrap: 'nowrap' }}
                                         >{element.key}  {element.label}</Box>
                                         <Text>{moneyConverter(
-                                            props.response.store.countryCode,
-                                            props.response.store.currencyCode,
+                                            response.store.countryCode,
+                                            response.store.currencyCode,
                                             element.price,
                                         )}</Text>
                                         <Group>
@@ -274,8 +274,8 @@ function Form(props) {
                                     >
                                         <Box>{element.key}  {element.label}</Box>
                                         <Text>{element.value + 'x ' + moneyConverter(
-                                            props.response.store.countryCode,
-                                            props.response.store.currencyCode,
+                                            response.store.countryCode,
+                                            response.store.currencyCode,
                                             element.price,
                                         )}</Text>
                                         <Group>

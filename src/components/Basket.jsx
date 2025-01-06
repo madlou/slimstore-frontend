@@ -5,18 +5,18 @@ import PrintFooter from './PrintFooter.jsx'
 import DemoInstructions from './DemoInstructions.jsx';
 import moneyConverter from '../util/moneyConverter.js';
 
-function Basket(props) {
+function Basket({ basket, response, tender, uiTranslations }) {
     let total = 0;
     let lines = 0;
     let items = 0;
     let tenders = 0;
     let difference = null;
-    props.basket.map((line, i) => {
+    basket.map((line, i) => {
         total += line.quantity * line.unitValue * (line.type == 'RETURN' ? -1 : 1);
         items += line.quantity;
         lines++;
     })
-    props.tender.map((line, i) => {
+    tender.map((line, i) => {
         tenders += line.value;
     })
     if (tenders != 0) {
@@ -33,25 +33,25 @@ function Basket(props) {
         }
     }
     useEffect(() => {
-        if (['LOGIN', 'ABOUT'].includes(props.response.view.name)) {
+        if (['LOGIN', 'ABOUT'].includes(response.view.name)) {
             return;
         }
         setTimeout(() => {
             scrollToBottom()
         }, 100)
-    }, [props.basket, props.tender]);
+    }, [basket, tender]);
     return (
         <Box
             w={'95%'}
         >
             <PrintHeader
-                response={props.response}
+                response={response}
             />
             <DemoInstructions
-                name={props.name}
-                uiTranslations={props.uiTranslations}
+                name={response.view.name}
+                uiTranslations={uiTranslations}
             />
-            {props.basket.map((line, i) => {
+            {basket.map((line, i) => {
                 return (
                     <Box mb={8}>
                         <Text>{line.code} {line.name}</Text>
@@ -62,15 +62,15 @@ function Basket(props) {
                                 {line.quantity * (line.type == 'RETURN' ? -1 : 1)}
                                 &nbsp;@&nbsp;
                                 {moneyConverter(
-                                    props.response.store.countryCode,
-                                    props.response.store.currencyCode,
+                                    response.store.countryCode,
+                                    response.store.currencyCode,
                                     line.unitValue,
                                 )}
                             </Text>
                             <Text>
                                 {moneyConverter(
-                                    props.response.store.countryCode,
-                                    props.response.store.currencyCode,
+                                    response.store.countryCode,
+                                    response.store.currencyCode,
                                     (line.quantity * (line.type == 'RETURN' ? -1 : 1) * line.unitValue),
                                 )}
                             </Text>
@@ -78,40 +78,40 @@ function Basket(props) {
                     </Box>
                 );
             })}
-            {props.basket.length < 1 ? '' : (
+            {basket.length < 1 ? '' : (
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
                     <Text>
-                        {props.uiTranslations.subtotal}
+                        {uiTranslations.subtotal}
                         :&nbsp;
                         {moneyConverter(
-                            props.response.store.countryCode,
-                            props.response.store.currencyCode,
+                            response.store.countryCode,
+                            response.store.currencyCode,
                             total,
                         )}
                     </Text>
                     <Text>
-                        {props.uiTranslations.transactionLines}
+                        {uiTranslations.transactionLines}
                         :&nbsp;
                         {lines}
                     </Text>
                     <Text>
-                        {props.uiTranslations.items}
+                        {uiTranslations.items}
                         :&nbsp;
                         {items}
                     </Text>
                 </Box>
             )}
-            {props.tender && props.tender.length > 0 ? (
+            {tender && tender.length > 0 ? (
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
-                    {props.tender.map((line, i) => {
+                    {tender.map((line, i) => {
                         return <Text>
                             {line.label}
                             &nbsp;
                             {moneyConverter(
-                                props.response.store.countryCode,
-                                props.response.store.currencyCode,
+                                response.store.countryCode,
+                                response.store.currencyCode,
                                 line.value,
                             )}
                         </Text>
@@ -123,11 +123,11 @@ function Basket(props) {
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
                     <Text>
-                        {props.uiTranslations.tenderTotal}
+                        {uiTranslations.tenderTotal}
                         :&nbsp;
                         {moneyConverter(
-                            props.response.store.countryCode,
-                            props.response.store.currencyCode,
+                            response.store.countryCode,
+                            response.store.currencyCode,
                             tenders,
                         )}
                     </Text>
@@ -136,18 +136,18 @@ function Basket(props) {
             {tenders == 0 || difference == 0 ? '' : (
                 <Box mb={8}>
                     <Text>
-                        {props.uiTranslations.difference}
+                        {uiTranslations.difference}
                         :&nbsp;
                         {moneyConverter(
-                            props.response.store.countryCode,
-                            props.response.store.currencyCode,
+                            response.store.countryCode,
+                            response.store.currencyCode,
                             difference,
                         )}
                     </Text>
                 </Box>
             )}
             <PrintFooter
-                response={props.response}
+                response={response}
             />
             <div ref={basketBottomRef} id='bottomReference'></div>
         </Box>

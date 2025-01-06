@@ -1,18 +1,17 @@
 import { Paper, ScrollArea } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
-
 import Basket from './Basket.jsx'
 import Report from './Report.jsx'
 
-function Display(props) {
+function Display({ layout, response }) {
     const { width, height } = useViewportSize();
     const mobileFix = height < 900 ? '112px ' : '80px';
-    const scrollHeight = props.layout[0] == 12 ?
+    const scrollHeight = layout[0] == 12 ?
         'calc((100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px) - ' + mobileFix + ')/2)' :
         'calc(100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px) - 48px)';
-    const scrollWidth = props.layout[0] == 12 ?
+    const scrollWidth = layout[0] == 12 ?
         'calc(100vw - 48px)' :
-        'calc((100vw * ' + (props.layout[0] / 12) + ') - 96px )';
+        'calc((100vw * ' + (layout[0] / 12) + ') - 96px )';
     return (
         <Paper
             shadow='md'
@@ -28,18 +27,17 @@ function Display(props) {
                 pb='xl'
                 pl='xl'
             >
-                {props.response.report && props.response.report.length > 0 ?
+                {response.report && response.report.length > 0 ?
                     <Report
-                        report={props.response.report}
-                        uiTranslations={props.response.uiTranslations}
+                        report={response.report}
+                        uiTranslations={response.uiTranslations}
                     />
                     :
                     <Basket
-                        response={props.response}
-                        basket={props.response.basket}
-                        name={props.response.view.name}
-                        tender={props.response.tender}
-                        uiTranslations={props.response.uiTranslations}
+                        response={response}
+                        basket={response.basket}
+                        tender={response.tender}
+                        uiTranslations={response.uiTranslations}
                     />
                 }
             </ScrollArea.Autosize>

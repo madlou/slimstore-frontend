@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Flex, Button, Tooltip } from '@mantine/core';
 import moneyConverter from '../util/moneyConverter';
 
-function FunctionButtons(props) {
+function FunctionButtons({ formElements, response, setRequestForm }) {
     const fixedButtons = [];
     for (let i = 0; i < 8; i++) {
         fixedButtons[i + 1] = {
@@ -10,7 +10,7 @@ function FunctionButtons(props) {
             position: i + 1,
         };
     }
-    props.response.view.functionButtons.forEach(button => {
+    response.view.functionButtons.forEach(button => {
         fixedButtons[button.position] = button;
     });
     const checkCondition = (value) => {
@@ -22,17 +22,17 @@ function FunctionButtons(props) {
         let second = condition[2];
         switch (condition[0]) {
             case 'user.role':
-                first = props.response.user.role;
+                first = response.user.role;
                 break;
             case 'basket.length':
-                first = props.response.basket.length;
+                first = response.basket.length;
                 break;
             case 'tender.length':
-                first = props.response.tender.length;
+                first = response.tender.length;
                 break;
             case 'basket.total':
                 first = 0;
-                props.response.basket.map((row) => {
+                response.basket.map((row) => {
                     first += row.quantity * row.unitValue * (row.type == 'RETURN' ? -1 : 1);
                 })
                 break;
@@ -56,9 +56,9 @@ function FunctionButtons(props) {
     const submit = (i, evt) => {
         const button = fixedButtons[i];
         if (button.primaryFormSubmit) {
-            props.setRequestForm({ ...props.response.view.form, elements: props.formElements });
+            setRequestForm({ ...response.view.form, elements: formElements });
         } else {
-            props.setRequestForm(button.form);
+            setRequestForm(button.form);
         }
     }
     const isNumeric = (str) => {
@@ -115,10 +115,10 @@ function FunctionButtons(props) {
                                 {/* <div>{'F' + button.position}</div> */}
                                 {
 
-                                    props.response.view.name.substring(0, 6) == 'TENDER' && isNumeric(button.label) ?
+                                    response.view.name.substring(0, 6) == 'TENDER' && isNumeric(button.label) ?
                                         moneyConverter(
-                                            props.response.store.countryCode,
-                                            props.response.store.currencyCode,
+                                            response.store.countryCode,
+                                            response.store.currencyCode,
                                             button.label,
                                         ) :
                                         button.label

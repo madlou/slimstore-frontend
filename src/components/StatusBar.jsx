@@ -1,6 +1,6 @@
 import { Flex, Container, Text } from '@mantine/core';
 
-function StatusBar(props) {
+function StatusBar({ store, register, uiTranslations, user }) {
     const pad = (value, width, character = '0') => {
         value = value + '';
         return value.length >= width ? value : new Array(width - value.length + 1).join(character) + value;
@@ -16,20 +16,20 @@ function StatusBar(props) {
             wrap='nowrap'
         >
             <Container>
-                <Text span visibleFrom='sm'>{props.uiTranslations.store}-{props.uiTranslations.register}: </Text>
-                <Text span>{pad(props.store.number, 4)}-{pad(props.register.number, 2)}</Text>
+                <Text span visibleFrom='sm'>{uiTranslations.store}-{uiTranslations.register}: </Text>
+                <Text span>{pad(store.number, 4)}-{pad(register.number, 2)}</Text>
             </Container>
             <Container>
-                <Text span visibleFrom='sm'>{props.uiTranslations.user}: </Text>
-                <Text span>{props.user.name}</Text>
+                <Text span visibleFrom='sm'>{uiTranslations.user}: </Text>
+                <Text span>{user.name}</Text>
             </Container>
             <Container>
-                <Text span visibleFrom='sm'>{props.uiTranslations.transaction}: </Text>
-                <Text span>{pad(props.register.lastTxnNumber + 1, 6)}</Text>
+                <Text span visibleFrom='sm'>{uiTranslations.transaction}: </Text>
+                <Text span>{pad(register.lastTxnNumber + 1, 6)}</Text>
             </Container>
             <Container>
-                <Text span visibleFrom='sm'>{props.uiTranslations.status}: </Text>
-                <Text span>{props.register.status}</Text>
+                <Text span visibleFrom='sm'>{uiTranslations.status}: </Text>
+                <Text span>{register.status}</Text>
             </Container>
         </Flex>
     )
