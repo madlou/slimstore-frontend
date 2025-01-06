@@ -101,11 +101,5 @@ export function createApi({ logger, onError }) {
             logger.info('Response', json);
             callback(json);
         },
-        image: (url) => {
-            if (url.substring(0, 5) == 'image') {
-                return backendURL + url;
-            }
-            return url;
-        }
     };
 }

@@ -28,6 +28,12 @@ function Form({ api, response, formElements, inputFocused, layout, setInputFocus
     const formButtonClick = (i) => {
         setRequestForm(formElements[i].button.form);
     }
+    const getImageUrl = (url) => {
+        if (url.substring(0, 5) == 'image') {
+            return import.meta.env.VITE_BACKEND_URL + url;
+        }
+        return url;
+    }
     const submit = (evt) => {
         evt.preventDefault();
         setRequestForm({ ...response.view.form, elements: formElements });
@@ -211,7 +217,7 @@ function Form({ api, response, formElements, inputFocused, layout, setInputFocus
                                     key={key}
                                     w={'95%'}
                                 >
-                                    <img src={api.current.image(element.image)} />
+                                    <img src={getImageUrl(element.image)} />
                                     <Text>{element.key}</Text>
                                     <Text>{element.label}</Text>
                                 </Box>
@@ -231,7 +237,7 @@ function Form({ api, response, formElements, inputFocused, layout, setInputFocus
                                         bg='white'
                                     >
                                         <Image
-                                            src={api.current.image(element.image)}
+                                            src={getImageUrl(element.image)}
                                             h={16 * 5}
                                             w={16 * 5}
                                             m={16 * 0.5}

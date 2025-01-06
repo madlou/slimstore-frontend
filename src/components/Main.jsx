@@ -25,7 +25,7 @@ function Main() {
     const [response, setResponse] = useState(dataSpec);
     const [showKeyboard, setShowKeyboard] = useState(false);
     const [viewName, setViewName] = useState('');
-    const api = useRef(createApi({
+    const api = createApi({
         logger: logger,
         onError: () => {
             if (errorCount.current > 10) {
@@ -38,7 +38,7 @@ function Main() {
                 setRequestForm({ ...requestForm });
             }, 5000)
         },
-    }));
+    });
     useEffect(() => {
         updateFormElements(response.view.form.elements ?? []);
         setViewName(response.view.name);
@@ -52,7 +52,7 @@ function Main() {
         }, import.meta.env.VITE_AUTO_LOGOUT * 60 * 1000);
     }, [response]);
     useEffect(() => {
-        api.current.post(setResponse, requestForm, lang);
+        api.post(setResponse, requestForm, lang);
     }, [requestForm]);
     return (
         <AppShell
@@ -153,7 +153,6 @@ function Main() {
                             response={response}
                         />
                         <Form
-                            api={api}
                             response={response}
                             formElements={formElements}
                             inputFocused={inputFocused}
