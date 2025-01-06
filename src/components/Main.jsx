@@ -25,7 +25,7 @@ function Main() {
     const [response, setResponse] = useState(dataSpec);
     const [showKeyboard, setShowKeyboard] = useState(false);
     const [viewName, setViewName] = useState('');
-    const api = createApi({
+    const api = useRef(createApi({
         logger: logger,
         onError: () => {
             if (errorCount.current > 10) {
@@ -38,7 +38,7 @@ function Main() {
                 setRequestForm({ ...requestForm });
             }, 5000)
         },
-    });
+    })).current;
     useEffect(() => {
         updateFormElements(response.view.form.elements ?? []);
         setViewName(response.view.name);
