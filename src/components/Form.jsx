@@ -202,6 +202,7 @@ function Form({ formElements, inputFocused, layout, response, setInputFocused, s
                                 return <Group
                                     mt='sm'
                                     w={'95%'}
+                                    key={key}
                                 >
                                     <Button
                                         disabled={element.disabled}

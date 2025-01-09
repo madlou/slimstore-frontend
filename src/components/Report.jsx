@@ -13,7 +13,7 @@ function Report({ report, uiTranslations }) {
             if (uiTranslations[lookup]) {
                 title = uiTranslations[lookup];
             }
-            return <th key={'report-header:' + i}>{camelToWords(title)}</th>
+            return camelToWords(title)
         }),
         body: report.map((line, i) => {
             return Object.values(line).map((cell, j) => {
