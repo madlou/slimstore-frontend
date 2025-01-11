@@ -88,14 +88,14 @@ export function createApi({ logger, onError }) {
                 onError();
                 return;
             }
-            const json = await response.json();
+            let json = await response.json();
+            json.store ??= dataSpec.store;
+            json.register ??= dataSpec.register;
             if (json.store?.number && json.register?.number) {
                 setCookie(json);
             } else {
-                getCookie();
+                json = getCookie(json);
             }
-            json.store ??= dataSpec.store;
-            json.register ??= dataSpec.register;
             json.view.form ??= dataSpec.view.form;
             json.user ??= dataSpec.user;
             logger.info('Response', json);
