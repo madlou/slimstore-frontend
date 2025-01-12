@@ -1,25 +1,21 @@
 import { useState, useEffect, useContext } from 'react'
 import { Button, Flex } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
-import ColorSchemeContext from '../ColorSchemeContext.jsx';
+import { SchemeContext } from '../context/SchemeContext.jsx';
 import LanguageDropdown from './LanguageDropdown.jsx'
 import LayoutDropdown from './LayoutDropdown.jsx';
 import { RxSun, RxMoon, RxZoomIn, RxZoomOut } from 'react-icons/rx';
 import { TbKeyboard } from 'react-icons/tb';
+import { LayoutContext } from '../context/LayoutProvider.jsx';
+import { FormContext } from '../context/FormProvider.jsx';
 
-const MenuButtons = ({
-    footerHeight, setFooterHeight,
-    menuOpened,
-    layout, setLayout,
-    lang, setLang,
-    response,
-    requestForm, setRequestForm,
-    showKeyboard, setShowKeyboard
-}) => {
+const MenuButtons = () => {
+    const { layout, setLayout, menuOpened, showKeyboard, setShowKeyboard, footerHeight, setFooterHeight } = useContext(LayoutContext);
+    const { lang, setLang, requestForm, setRequestForm, response } = useContext(FormContext);
     const [fontSize, setFontSize] = useState(24);
     const { width, height } = useViewportSize();
-    const colorSchemeContext = useContext(ColorSchemeContext);
-    const dark = colorSchemeContext.colorScheme === 'dark';
+    const schemeContext = useContext(SchemeContext);
+    const dark = schemeContext.colorScheme === 'dark';
     const kbHeight = 184;
     const toggleKeyboard = () => {
         const toggle = !showKeyboard

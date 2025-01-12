@@ -1,6 +1,9 @@
 import { Box, Divider, Text } from "@mantine/core"
+import { FormContext } from '../context/FormProvider.jsx';
+import { useContext } from "react";
 
-function PrintHeader({ response }) {
+function PrintHeader() {
+    const { response } = useContext(FormContext);
     return (
         <Box
             display={'none'}

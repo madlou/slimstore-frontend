@@ -1,8 +1,10 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Flex, Button, Tooltip } from '@mantine/core';
 import moneyConverter from '../util/moneyConverter';
+import { FormContext } from '../context/FormProvider.jsx';
 
-function FunctionButtons({ formElements, response, setRequestForm }) {
+function FunctionButtons() {
+    const { formElements, setRequestForm, response } = useContext(FormContext);
     const fixedButtons = [];
     for (let i = 0; i < 8; i++) {
         fixedButtons[i + 1] = {

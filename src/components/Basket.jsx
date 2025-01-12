@@ -1,22 +1,24 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useContext } from 'react'
 import { Text, Box, Group, Divider } from '@mantine/core';
 import PrintHeader from './PrintHeader.jsx'
 import PrintFooter from './PrintFooter.jsx'
 import DemoInstructions from './DemoInstructions.jsx';
 import moneyConverter from '../util/moneyConverter.js';
+import { FormContext } from '../context/FormProvider.jsx';
 
-function Basket({ basket, response, tender, uiTranslations }) {
+function Basket() {
+    const { response } = useContext(FormContext);
     let total = 0;
     let lines = 0;
     let items = 0;
     let tenders = 0;
     let difference = null;
-    basket.map((line, i) => {
+    response.basket.map((line, i) => {
         total += line.quantity * line.unitValue * (line.type == 'RETURN' ? -1 : 1);
         items += line.quantity;
         lines++;
     })
-    tender.map((line, i) => {
+    response.tender.map((line, i) => {
         tenders += line.value;
     })
     if (tenders != 0) {
@@ -39,19 +41,14 @@ function Basket({ basket, response, tender, uiTranslations }) {
         setTimeout(() => {
             scrollToBottom()
         }, 100)
-    }, [basket, tender]);
+    }, [response.basket, response.tender]);
     return (
         <Box
             w={'95%'}
         >
-            <PrintHeader
-                response={response}
-            />
-            <DemoInstructions
-                name={response.view.name}
-                uiTranslations={uiTranslations}
-            />
-            {basket.map((line, i) => {
+            <PrintHeader />
+            <DemoInstructions />
+            {response.basket.map((line, i) => {
                 return (
                     <Box mb={8} key={i}>
                         <Text>{line.code} {line.name}</Text>
@@ -78,11 +75,11 @@ function Basket({ basket, response, tender, uiTranslations }) {
                     </Box>
                 );
             })}
-            {basket.length < 1 ? '' : (
+            {response.basket.length < 1 ? '' : (
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
                     <Text>
-                        {uiTranslations.subtotal}
+                        {response.uiTranslations.subtotal}
                         :&nbsp;
                         {moneyConverter(
                             response.store.countryCode,
@@ -91,23 +88,23 @@ function Basket({ basket, response, tender, uiTranslations }) {
                         )}
                     </Text>
                     <Text>
-                        {uiTranslations.transactionLines}
+                        {response.uiTranslations.transactionLines}
                         :&nbsp;
                         {lines}
                     </Text>
                     <Text>
-                        {uiTranslations.items}
+                        {response.uiTranslations.items}
                         :&nbsp;
                         {items}
                     </Text>
                 </Box>
             )}
-            {tender && tender.length > 0 ? (
+            {response.tender && response.tender.length > 0 ? (
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
-                    {tender.map((line, i) => {
+                    {response.tender.map((line, i) => {
                         return <Text key={i}>
-                            {uiTranslations[line.label.toCamelCase()]}
+                            {response.uiTranslations[line.label.toCamelCase()]}
                             &nbsp;
                             {moneyConverter(
                                 response.store.countryCode,
@@ -123,7 +120,7 @@ function Basket({ basket, response, tender, uiTranslations }) {
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
                     <Text>
-                        {uiTranslations.tenderTotal}
+                        {response.uiTranslations.tenderTotal}
                         :&nbsp;
                         {moneyConverter(
                             response.store.countryCode,
@@ -136,7 +133,7 @@ function Basket({ basket, response, tender, uiTranslations }) {
             {tenders == 0 || difference == 0 ? '' : (
                 <Box mb={8}>
                     <Text>
-                        {uiTranslations.difference}
+                        {response.uiTranslations.difference}
                         :&nbsp;
                         {moneyConverter(
                             response.store.countryCode,
@@ -146,9 +143,7 @@ function Basket({ basket, response, tender, uiTranslations }) {
                     </Text>
                 </Box>
             )}
-            <PrintFooter
-                response={response}
-            />
+            <PrintFooter />
             <div ref={basketBottomRef} id='bottomReference'></div>
         </Box>
     )

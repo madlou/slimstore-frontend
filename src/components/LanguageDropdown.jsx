@@ -1,6 +1,11 @@
 import { Select } from '@mantine/core';
+import { LayoutContext } from '../context/LayoutProvider.jsx';
+import { FormContext } from '../context/FormProvider.jsx';
+import { useContext } from 'react';
 
-function LanguageDropdown({ lang, languages, menuOpened, requestForm, setLang, setRequestForm }) {
+function LanguageDropdown() {
+    const { menuOpened } = useContext(LayoutContext);
+    const { lang, setLang, response, requestForm, setRequestForm } = useContext(FormContext);
     const langChange = (value) => {
         setLang(value);
         setRequestForm(JSON.parse(JSON.stringify(requestForm)));
@@ -8,7 +13,7 @@ function LanguageDropdown({ lang, languages, menuOpened, requestForm, setLang, s
     return (
         <>
             <Select
-                data={languages}
+                data={response.languages}
                 onChange={langChange}
                 value={lang}
                 w={menuOpened ? '100%' : 70}

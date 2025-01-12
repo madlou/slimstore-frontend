@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Box, Button, Group, Image, NumberInput, Paper, ScrollArea, Select, Text, TextInput } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useViewportSize } from '@mantine/hooks';
 import moneyConverter from '../util/moneyConverter.js';
 import '@mantine/dates/styles.css';
+import { LayoutContext } from '../context/LayoutProvider.jsx';
+import { FormContext } from '../context/FormProvider.jsx';
 
-function Form({ formElements, inputFocused, layout, response, setInputFocused, setRequestForm, showKeyboard, updateFormElements }) {
+function Form() {
+    const { inputFocused, setInputFocused, layout, showKeyboard } = useContext(LayoutContext);
+    const { formElements, updateFormElements, setRequestForm, response } = useContext(FormContext);
     const focusChange = (i, id) => {
         if (id == inputFocused) {
             return false;

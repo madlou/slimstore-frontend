@@ -1,10 +1,15 @@
 import { Button, Container, Group } from '@mantine/core';
+import { LayoutContext } from '../context/LayoutProvider.jsx';
+import { FormContext } from '../context/FormProvider.jsx';
+import { useContext } from 'react';
 
-function Keyboard({ inputFocused, updateFormElements, viewName, showKeyboard }) {
+function Keyboard() {
+    const { inputFocused, showKeyboard } = useContext(LayoutContext);
+    const { updateFormElements, response } = useContext(FormContext);
     const tap = (evt) => {
         updateFormElements((draft) => {
             const idx = draft.findIndex((element) => {
-                return viewName + ':' + element.key == inputFocused
+                return response.view.name + ':' + element.key == inputFocused
             });
             if (idx >= 0) {
                 let value = '';

@@ -1,6 +1,9 @@
 import { Flex, Container, Text } from '@mantine/core';
+import { FormContext } from '../context/FormProvider.jsx';
+import { useContext } from 'react';
 
-function StatusBar({ store, register, uiTranslations, user }) {
+function StatusBar() {
+    const { response } = useContext(FormContext);
     const pad = (value, width, character = '0') => {
         value = value + '';
         return value.length >= width ? value : new Array(width - value.length + 1).join(character) + value;
@@ -16,20 +19,20 @@ function StatusBar({ store, register, uiTranslations, user }) {
             wrap='nowrap'
         >
             <Container>
-                <Text span visibleFrom='sm'>{uiTranslations.store}-{uiTranslations.register}: </Text>
-                <Text span>{pad(store.number, 4)}-{pad(register.number, 2)}</Text>
+                <Text span visibleFrom='sm'>{response.uiTranslations.store}-{response.uiTranslations.register}: </Text>
+                <Text span>{pad(response.store.number, 4)}-{pad(response.register.number, 2)}</Text>
             </Container>
             <Container>
-                <Text span visibleFrom='sm'>{uiTranslations.user}: </Text>
-                <Text span>{user.name}</Text>
+                <Text span visibleFrom='sm'>{response.uiTranslations.user}: </Text>
+                <Text span>{response.user.name}</Text>
             </Container>
             <Container>
-                <Text span visibleFrom='sm'>{uiTranslations.transaction}: </Text>
-                <Text span>{pad(register.lastTxnNumber + 1, 6)}</Text>
+                <Text span visibleFrom='sm'>{response.uiTranslations.transaction}: </Text>
+                <Text span>{pad(response.register.lastTxnNumber + 1, 6)}</Text>
             </Container>
             <Container>
-                <Text span visibleFrom='sm'>{uiTranslations.status}: </Text>
-                <Text span>{register.status}</Text>
+                <Text span visibleFrom='sm'>{response.uiTranslations.status}: </Text>
+                <Text span>{response.register.status}</Text>
             </Container>
         </Flex>
     )

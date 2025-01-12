@@ -1,6 +1,9 @@
 import { Box, Divider } from "@mantine/core";
+import { FormContext } from '../context/FormProvider.jsx';
+import { useContext } from "react";
 
-function PrintFooter({ response }) {
+function PrintFooter() {
+    const { response } = useContext(FormContext);
     const date = new Date();
     const dateString = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
     const timeString = date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();

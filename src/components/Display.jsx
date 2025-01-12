@@ -2,8 +2,13 @@ import { Paper, ScrollArea } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import Basket from './Basket.jsx'
 import Report from './Report.jsx'
+import { LayoutContext } from '../context/LayoutProvider.jsx';
+import { FormContext } from '../context/FormProvider.jsx';
+import { useContext } from 'react';
 
-function Display({ layout, response }) {
+function Display() {
+    const { layout } = useContext(LayoutContext);
+    const { response } = useContext(FormContext);
     const { width, height } = useViewportSize();
     const mobileFix = height < 900 ? '112px ' : '80px';
     const scrollHeight = layout[0] == 12 ?
@@ -28,17 +33,9 @@ function Display({ layout, response }) {
                 pl='xl'
             >
                 {response.report && response.report.length > 0 ?
-                    <Report
-                        report={response.report}
-                        uiTranslations={response.uiTranslations}
-                    />
+                    <Report />
                     :
-                    <Basket
-                        response={response}
-                        basket={response.basket}
-                        tender={response.tender}
-                        uiTranslations={response.uiTranslations}
-                    />
+                    <Basket />
                 }
             </ScrollArea.Autosize>
         </Paper >

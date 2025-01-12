@@ -1,24 +1,27 @@
 import { Table } from "@mantine/core";
+import { FormContext } from '../context/FormProvider.jsx';
+import { useContext } from "react";
 
-function Report({ report, uiTranslations }) {
+function Report() {
+    const { response } = useContext(FormContext);
     const camelToWords = (value) => {
         const step = value.replace(/([A-Z])/g, " $1");
         return step.charAt(0).toUpperCase() + step.slice(1);
     }
-    const headers = Object.keys(report[0]);
+    const headers = Object.keys(response.report[0]);
     const tableData = {
         head: headers.map((cell, i) => {
             let title = cell;
             const lookup = cell.toCamelCase().replace(/ /g, '_');
-            if (uiTranslations[lookup]) {
-                title = uiTranslations[lookup];
+            if (response.uiTranslations[lookup]) {
+                title = response.uiTranslations[lookup];
             }
             return camelToWords(title)
         }),
-        body: report.map((line, i) => {
+        body: response.report.map((line, i) => {
             return Object.values(line).map((cell, j) => {
                 if (headers[j] == 'type') {
-                    return uiTranslations[cell.toLowerCase()]
+                    return response.uiTranslations[cell.toLowerCase()]
                 }
                 return cell
             });
