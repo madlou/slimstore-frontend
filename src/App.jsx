@@ -5,7 +5,7 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { SchemeContext } from './context/SchemeContext';
 import { FormProvider } from './context/FormProvider';
 import { LayoutProvider } from './context/LayoutProvider';
-import Main from './components/Main'
+import Shell from './components/Shell'
 
 function App() {
     const [colorScheme, setColorScheme] = useState('dark');
@@ -15,7 +15,7 @@ function App() {
             <MantineProvider forceColorScheme={colorScheme} withGlobalStyles withNormalizeCSS >
                 <FormProvider>
                     <LayoutProvider>
-                        <Main />
+                        <Shell />
                     </LayoutProvider>
                 </FormProvider>
             </MantineProvider>
