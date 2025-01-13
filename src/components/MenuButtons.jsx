@@ -88,7 +88,7 @@ const MenuButtons = () => {
                 <TbKeyboard style={{ width: '1.6rem', height: '1.6rem' }} />
             </Button>
             <Button
-                onClick={() => { colorSchemeContext.onChange(dark ? 'light' : 'dark') }}
+                onClick={() => { schemeContext.onChange(dark ? 'light' : 'dark') }}
                 title='Toggle color scheme'
                 w={menuOpened ? '100%' : 'auto'}
             >
