@@ -1,4 +1,4 @@
-import { Box, Divider } from "@mantine/core";
+import { Box, Divider, Group, Text } from "@mantine/core";
 import { FormContext } from '../context/FormProvider.jsx';
 import { useContext } from "react";
 
@@ -9,14 +9,22 @@ function PrintFooter() {
     const timeString = date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
     return (
         <Box
-            display={'none'}
+            className="printonly"
         >
             <Divider mb={8} size='md' variant='dotted' />
-            {/* <Text>{response.uiTranslations.store}: {response.store.number}</Text>
-            <Text>{response.uiTranslations.register}: {response.register.number}</Text>
-            <Text>{response.uiTranslations.transaction_number}: {response.register.lastTxnNumber + 1}</Text>
-            <Text>{response.uiTranslations.date}: {dateString}</Text>
-            <Text>{response.uiTranslations.time}: {timeString}</Text> */}
+            <Group
+                justify={'space-between'}
+            >
+                <Text>{response.uiTranslations.store}: {response.store.number}</Text>
+                <Text>{response.uiTranslations.register}: {response.register.number}</Text>
+                <Text>{response.uiTranslations.transaction}: {response.register.lastTxnNumber + 1}</Text>
+            </Group>
+            <Group
+                justify={'space-between'}
+            >
+                <Text>{response.uiTranslations.date}: {dateString}</Text>
+                <Text>{response.uiTranslations.time}: {timeString}</Text>
+            </Group>
             <Divider mb={8} size='md' variant='dotted' />
         </Box >
     )

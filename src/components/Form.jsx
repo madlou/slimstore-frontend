@@ -74,6 +74,7 @@ function Form() {
             shadow='md'
             radius='md'
             flex={1}
+            className='noprint'
         >
             <ScrollArea.Autosize
                 mx='auto'

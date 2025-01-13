@@ -1,0 +1,25 @@
+@page {
+    size: 0;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    max-width: 250px;
+    padding: 10px !important;
+}
+
+.noprint {
+    display: none !important;
+}
+
+.printonly {
+    display: block !important;
+}
+
+* {
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0.8rem !important;
+}

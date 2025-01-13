@@ -6,17 +6,23 @@ function PrintHeader() {
     const { response } = useContext(FormContext);
     return (
         <Box
-            display={'none'}
+            className="printonly"
         >
-            <Divider mb={8} size='md' variant='dotted' />
-            <Text><b>{response.uiTranslations.logo}</b></Text>
-            <Text>{response.store.name}</Text>
-            <Text>{response.store.address1}</Text>
-            <Text>{response.store.address2}</Text>
-            <Text>{response.store.city}</Text>
-            <Text>{response.store.postCode}</Text>
-            <Text>{response.store.countryCode}</Text>
-            <Text>{response.store.phoneNumber}</Text>
+            <Text fw={700}>
+                {response.uiTranslations.logo}
+                {response.store.name}
+            </Text>
+            <Text>
+                {response.store.address1}
+                {response.store.address2 ? ', ' + response.store.address2 : ''}
+            </Text>
+            <Text>
+                {response.store.city}
+                {response.store.postCode ? ', ' + response.store.postCode : ''}
+            </Text>
+            <Text>
+                {response.store.phoneNumber}
+            </Text>
             <Divider mb={8} size='md' variant='dotted' />
         </Box>
     )

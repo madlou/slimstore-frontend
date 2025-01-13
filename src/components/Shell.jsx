@@ -15,6 +15,7 @@ function Shell() {
         >
             <AppShell.Header
                 bg='rgba(0, 0, 0, .04)'
+                className='noprint'
             >
                 <Header />
             </AppShell.Header>
@@ -26,6 +27,7 @@ function Shell() {
             </AppShell.Main>
             <AppShell.Footer
                 bg='rgba(0, 0, 0, .05)'
+                className='noprint'
             >
                 <Footer />
             </AppShell.Footer>

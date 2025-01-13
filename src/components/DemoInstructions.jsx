@@ -6,7 +6,9 @@ const DemoInstructions = () => {
     const { response } = useContext(FormContext);
     const customerDisplay = import.meta.env.VITE_CUSTOMER_DISPLAY_URL;
     return (
-        <Box>
+        <Box
+            className='noprint'
+        >
             {
                 response.view.name == 'LOGIN' ? (
                     <Box>
