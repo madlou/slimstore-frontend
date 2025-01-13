@@ -56,6 +56,7 @@ export const LayoutProvider = ({ children }) => {
     return (
         <LayoutContext.Provider
             value={{
+                fontSize, setFontSize,
                 inputFocused, setInputFocused,
                 layout, setLayout,
                 menuOpened, setMenuOpened,

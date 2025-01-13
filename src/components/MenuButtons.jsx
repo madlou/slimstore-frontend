@@ -8,7 +8,7 @@ import LayoutDropdown from './LayoutDropdown.jsx';
 
 const MenuButtons = () => {
     const schemeContext = useContext(SchemeContext);
-    const { menuOpened, toggleKeyboard } = useContext(LayoutContext);
+    const { menuOpened, toggleKeyboard, fontSize, setFontSize } = useContext(LayoutContext);
     const dark = schemeContext.colorScheme === 'dark';
     return (
         <Flex
