@@ -6,7 +6,7 @@ import dataSpec from '../util/dataSpec.js'
 
 export const FormContext = createContext();
 
-export const FormProvider = props => {
+export const FormProvider = ({ children }) => {
     const logger = createLogger();
     const errorCount = useRef(0);
     const logoutTimer = useRef(null);
@@ -51,7 +51,7 @@ export const FormProvider = props => {
                 response, setResponse,
             }}
         >
-            {props.children}
+            {children}
         </FormContext.Provider>
     );
 };
