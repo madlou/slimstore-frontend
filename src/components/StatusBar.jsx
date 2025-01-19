@@ -32,7 +32,7 @@ function StatusBar() {
             </Container>
             <Container>
                 <Text span visibleFrom='sm'>{response.uiTranslations.status}: </Text>
-                <Text span>{response.uiTranslations[response.register.status.toLowerCase()]}</Text>
+                <Text span>{response.uiTranslations[response.register?.status.toLowerCase() ?? '']}</Text>
             </Container>
         </Flex>
     )

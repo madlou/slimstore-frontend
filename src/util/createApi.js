@@ -96,6 +96,7 @@ export function createApi({ logger, onError }) {
             } else {
                 json = getCookie(json);
             }
+            json.view.name ??= 'HOME'
             json.view.form ??= dataSpec.view.form;
             json.user ??= dataSpec.user;
             logger.info('Response', json);

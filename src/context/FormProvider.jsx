@@ -21,7 +21,7 @@ export const FormProvider = ({ children }) => {
             setTimeout(() => {
                 errorCount.current++;
                 setRequestForm({ ...requestForm });
-            }, 5000)
+            }, 5 * 1000)
         },
     });
     const [lang, setLang] = useState('EN');
