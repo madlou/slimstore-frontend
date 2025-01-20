@@ -40,7 +40,15 @@ function Form() {
     }
     const submit = (evt) => {
         evt.preventDefault();
-        setRequestForm({ ...response.view.form, elements: formElements });
+        let validForm = true;
+        formElements.map((element) => {
+            if (element.required && !element.value) {
+                validForm = false;
+            }
+        });
+        if (validForm) {
+            setRequestForm({ ...response.view.form, elements: formElements });
+        }
     }
     const { width, height } = useViewportSize();
     const mobileFix = height < 900 ? '112px ' : '80px';
@@ -114,6 +122,7 @@ function Form() {
                                     onChange={(evt) => { valueChange(i, evt.currentTarget.value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
                                     readOnly={showKeyboard}
+                                    required={element.required}
                                     type='text'
                                     value={element.value ?? ''}
                                     w={'95%'}
@@ -133,6 +142,7 @@ function Form() {
                                     onChange={(value) => { valueChange(i, value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
                                     readOnly={showKeyboard}
+                                    required={element.required}
                                     type='text'
                                     value={element.value ?? ''}
                                     w={'95%'}
@@ -152,6 +162,7 @@ function Form() {
                                     onChange={(value) => { valueChange(i, value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
                                     readOnly={showKeyboard}
+                                    required={element.required}
                                     type='text'
                                     value={element.value ?? ''}
                                     w={'95%'}
@@ -167,6 +178,7 @@ function Form() {
                                     label={element.label}
                                     mt='md'
                                     name={key}
+                                    required={element.required}
                                     valueFormat={response.uiTranslations.dateFormat.toUpperCase()}
                                     onChange={(value) => { valueChange(i, value.toISOString().slice(0, 10)) }}
                                     value={element.value ? new Date(element.value) : null}
@@ -187,6 +199,7 @@ function Form() {
                                     onChange={(evt) => { valueChange(i, evt.currentTarget.value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
                                     readOnly={showKeyboard}
+                                    required={element.required}
                                     type='password'
                                     value={element.value ?? ''}
                                     w={'95%'}
@@ -328,6 +341,7 @@ function Form() {
                                     mt='lg'
                                     name={element.key}
                                     onChange={(value) => { valueChange(i, value) }}
+                                    required={element.required}
                                     value={element.value}
                                     w={'95%'}
                                 />

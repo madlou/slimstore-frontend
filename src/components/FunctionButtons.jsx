@@ -58,7 +58,15 @@ function FunctionButtons() {
     const submit = (i, evt) => {
         const button = fixedButtons[i];
         if (button.primaryFormSubmit) {
-            setRequestForm({ ...response.view.form, elements: formElements });
+            let validForm = true;
+            formElements.map((element) => {
+                if (element.required && !element.value) {
+                    validForm = false;
+                }
+            });
+            if (validForm) {
+                setRequestForm({ ...response.view.form, elements: formElements });
+            }
         } else {
             setRequestForm(button.form);
         }
