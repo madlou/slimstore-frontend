@@ -104,7 +104,7 @@ function Basket() {
                     <Divider mb={8} size='md' variant='dotted' />
                     {response.tender.map((line, i) => {
                         return <Text key={i}>
-                            {response.uiTranslations[line.label.toCamelCase()]}
+                            {response.uiTranslations[line.type.toLowerCase().toCamelCase()]}
                             &nbsp;
                             {moneyConverter(
                                 response.store.countryCode,
