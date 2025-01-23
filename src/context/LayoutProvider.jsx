@@ -10,12 +10,21 @@ export const LayoutProvider = ({ children }) => {
     const [menuOpened, setMenuOpened] = useState(false);
     const [showKeyboard, setShowKeyboard] = useState(false);
     const [footerHeight, setFooterHeight] = useState(96);
+    const [fullscreen, setFullscreen] = useState(false);
     const [fontSize, setFontSize] = useState(24);
     const kbHeight = 184;
     const toggleKeyboard = () => {
         const toggle = !showKeyboard
         setFooterHeight(toggle ? footerHeight + kbHeight : footerHeight - kbHeight);
         setShowKeyboard(toggle);
+    }
+    const toggleFullscreen = () => {
+        if (fullscreen == false) {
+            document.body.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+        setFullscreen(!fullscreen);
     }
     const breakpoint = {
         xs: 576,
@@ -62,7 +71,8 @@ export const LayoutProvider = ({ children }) => {
                 menuOpened, setMenuOpened,
                 showKeyboard, setShowKeyboard,
                 footerHeight, setFooterHeight,
-                toggleKeyboard
+                toggleKeyboard,
+                fullscreen, toggleFullscreen,
             }}
         >
             {children}

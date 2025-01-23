@@ -1,6 +1,6 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Button, Flex } from '@mantine/core';
-import { RxSun, RxMoon, RxZoomIn, RxZoomOut, RxKeyboard } from 'react-icons/rx';
+import { RxSun, RxMoon, RxZoomIn, RxZoomOut, RxKeyboard, RxEnterFullScreen, RxExitFullScreen } from 'react-icons/rx';
 import { SchemeContext } from '../context/SchemeProvider.jsx';
 import { LayoutContext } from '../context/LayoutProvider.jsx';
 import LanguageDropdown from './LanguageDropdown.jsx'
@@ -8,7 +8,7 @@ import LayoutDropdown from './LayoutDropdown.jsx';
 
 const MenuButtons = () => {
     const schemeContext = useContext(SchemeContext);
-    const { menuOpened, toggleKeyboard, fontSize, setFontSize } = useContext(LayoutContext);
+    const { menuOpened, toggleKeyboard, fontSize, setFontSize, fullscreen, toggleFullscreen } = useContext(LayoutContext);
     const dark = schemeContext.colorScheme === 'dark';
     return (
         <Flex
@@ -20,6 +20,17 @@ const MenuButtons = () => {
         >
             <LayoutDropdown />
             <LanguageDropdown />
+            <Button
+                onClick={toggleFullscreen}
+                title='Toggle Fullscreen'
+                w={menuOpened ? '100%' : 'auto'}
+            >
+                {fullscreen ? (
+                    <RxExitFullScreen style={{ width: '1.6rem', height: '1.6rem' }} />
+                ) : (
+                    <RxEnterFullScreen style={{ width: '1.6rem', height: '1.6rem' }} />
+                )}
+            </Button>
             <Button
                 onClick={toggleKeyboard}
                 title='Toggle keyboard'
