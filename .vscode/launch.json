@@ -3,7 +3,7 @@
     "configurations": [
         {
             "command": "npm run dev",
-            "name": "Run npm dev",
+            "name": "Slimstore Frontend",
             "request": "launch",
             "type": "node-terminal"
         }
