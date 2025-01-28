@@ -15,6 +15,12 @@ function FunctionButtons() {
     response.view.functionButtons.forEach(button => {
         fixedButtons[button.position] = button;
     });
+    const isReturn = (line) => {
+        if (['RETURN', 'RETURN_MANUAL'].includes(line.type)) {
+            return true;
+        }
+        return false;
+    }
     const checkCondition = (value) => {
         if (!value) {
             return true;
@@ -34,8 +40,8 @@ function FunctionButtons() {
                 break;
             case 'basket.total':
                 first = 0;
-                response.basket.map((row) => {
-                    first += row.quantity * row.unitValue * (row.type == 'RETURN' ? -1 : 1);
+                response.basket.map((line) => {
+                    first += line.quantity * line.unitValue * (isReturn(line) ? -1 : 1);
                 })
                 break;
         }
