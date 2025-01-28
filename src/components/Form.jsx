@@ -217,6 +217,7 @@ function Form() {
                                     {element.label}
                                 </Button>
                             case 'BUTTON':
+                                const elementLabel = response.uiTranslations[element.label.toLowerCase()] ?? element.label;
                                 return <Group
                                     mt='sm'
                                     w={'95%'}
@@ -227,8 +228,12 @@ function Form() {
                                         display={element.hidden ? 'none' : 'block'}
                                         onClick={() => { formButtonClick(i) }}
                                         key={key}
-                                    >{element.label}</Button>
-                                    <Text>{element.key + ' - ' + element.value}</Text>
+                                    >{element.button.label}</Button>
+                                    <Text>{
+                                        element.key + ' - ' + 
+                                        elementLabel + ' - ' + 
+                                        element.value
+                                    }</Text>
                                 </Group>
                             case 'IMAGE':
                                 return <Box
