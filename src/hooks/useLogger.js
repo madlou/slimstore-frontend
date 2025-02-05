@@ -1,14 +1,20 @@
-export function createLogger() {
+export function useLogger() {
     let logDebug = false;
     let logInfo = false;
     let logError = false;
     switch (import.meta.env.VITE_LOG_TO_CONSOLE) {
         case 'debug':
             logDebug = true;
+            logInfo = true;
+            logError = true;
+            break;
         case 'info':
             logInfo = true;
+            logError = true;
+            break;
         case 'error':
             logError = true;
+            break;
     }
     return {
         debug: (key, value) => {

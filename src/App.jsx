@@ -2,10 +2,10 @@ import '@mantine/core/styles.css';
 
 import { useState } from 'react'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import { FormProvider } from './context/FormProvider';
-import { LayoutProvider } from './context/LayoutProvider';
+import { FormProvider } from './providers/FormProvider';
+import { LayoutProvider } from './providers/LayoutProvider';
 import Shell from './components/Shell'
-import { SchemeProvider } from './context/SchemeProvider';
+import { SchemeProvider } from './providers/SchemeProvider';
 
 function App() {
     const [colorScheme, setColorScheme] = useState('dark');

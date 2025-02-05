@@ -1,17 +1,16 @@
 import { useContext, useEffect } from 'react'
 import { Flex, Button, Tooltip } from '@mantine/core';
-import moneyConverter from '../util/moneyConverter';
-import { FormContext } from '../context/FormProvider.jsx';
+import { LayoutContext } from '../providers/LayoutProvider.jsx';
+import { FormContext } from '../providers/FormProvider.jsx';
 
 function FunctionButtons() {
-    const { formElements, setRequestForm, response } = useContext(FormContext);
-    const fixedButtons = [];
-    for (let i = 0; i < 8; i++) {
-        fixedButtons[i + 1] = {
+    const { formatMoney, formElements, setRequestForm, response } = useContext(FormContext);
+    const { showFunctionNumbers } = useContext(LayoutContext);
+    const fixedButtons = new Array(8).fill({}, 1, 8).map((e, i) => {return {
             label: '',
             position: i + 1,
-        };
-    }
+        }
+    });
     response.view.functionButtons.forEach(button => {
         fixedButtons[button.position] = button;
     });
@@ -61,7 +60,7 @@ function FunctionButtons() {
                 return first >= second;
         }
     }
-    const submit = (i, evt) => {
+    const submit = (i) => {
         const button = fixedButtons[i];
         if (button.primaryFormSubmit) {
             let validForm = true;
@@ -106,6 +105,8 @@ function FunctionButtons() {
         >
             {
                 fixedButtons.map((button, i) => {
+                    const label = response.view.name.substring(0, 6) == 'TENDER' && isNumeric(button.label) ?
+                        formatMoney(button.label) : button.label;
                     return (
                         <Tooltip
                             label={'F' + button.position + ' - ' + button.label}
@@ -126,20 +127,9 @@ function FunctionButtons() {
                                     },
                                     label: { textWrap: 'balance' },
                                 }}
-
                             >
-                                {/* <div>{'F' + button.position}</div> */}
-                                {
-
-                                    response.view.name.substring(0, 6) == 'TENDER' && isNumeric(button.label) ?
-                                        moneyConverter(
-                                            response.store.countryCode,
-                                            response.store.currencyCode,
-                                            button.label,
-                                        ) :
-                                        button.label
-                                }
-
+                                { showFunctionNumbers ? <div>{'F' + button.position}&nbsp;-&nbsp;</div> : ''}
+                                <div>{label}</div>
                             </Button>
                         </Tooltip>
                     )

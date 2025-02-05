@@ -1,17 +1,21 @@
-import { createContext, useState, useEffect, useRef } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useViewportSize } from '@mantine/hooks';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const LayoutContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const LayoutProvider = ({ children }) => {
     const { width, height } = useViewportSize();
     const [inputFocused, setInputFocused] = useState(null);
     const [layout, setLayout] = useState([6, 6]);
+    const [portrait, setPortrait] = useState(false);
     const [menuOpened, setMenuOpened] = useState(false);
     const [showKeyboard, setShowKeyboard] = useState(false);
     const [footerHeight, setFooterHeight] = useState(96);
     const [fullscreen, setFullscreen] = useState(false);
     const [fontSize, setFontSize] = useState(24);
+    const [showFunctionNumbers, setShowFunctionNumbers] = useState(true);
     const kbHeight = 184;
     const toggleKeyboard = () => {
         const toggle = !showKeyboard
@@ -37,27 +41,35 @@ export const LayoutProvider = ({ children }) => {
         if (width < breakpoint.xs) {
             setFontSize(12);
             setFooterHeight(160 + (showKeyboard ? kbHeight : 0))
+            setShowFunctionNumbers(false);
         } else if (width < breakpoint.sm) {
             setFontSize(14)
             setFooterHeight(160 + (showKeyboard ? kbHeight : 0))
+            setShowFunctionNumbers(false);
         } else if (width < breakpoint.md) {
             setFontSize(16)
             setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
+            setShowFunctionNumbers(true);
         } else if (width < breakpoint.lg) {
             setFontSize(18)
             setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
+            setShowFunctionNumbers(true);
         } else if (width < breakpoint.xl) {
             setFontSize(20)
             setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
+            setShowFunctionNumbers(true);
         } else {
             setFontSize(22)
             setFooterHeight(96 + (showKeyboard ? kbHeight : 0))
+            setShowFunctionNumbers(true);
         }
         if (width < height) {
-            setLayout([12, 12])
+            setPortrait(true);
+            setShowFunctionNumbers(false);
         } else {
-            setLayout([6, 6])
+            setPortrait(false);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [width]);
     useEffect(() => {
         document.documentElement.style.fontSize = fontSize + 'px';
@@ -73,6 +85,8 @@ export const LayoutProvider = ({ children }) => {
                 footerHeight, setFooterHeight,
                 toggleKeyboard,
                 fullscreen, toggleFullscreen,
+                showFunctionNumbers,
+                portrait,
             }}
         >
             {children}

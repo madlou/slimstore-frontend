@@ -1,5 +1,5 @@
 import { Flex, Container, Text } from '@mantine/core';
-import { FormContext } from '../context/FormProvider.jsx';
+import { FormContext } from '../providers/FormProvider.jsx';
 import { useContext } from 'react';
 
 function StatusBar() {

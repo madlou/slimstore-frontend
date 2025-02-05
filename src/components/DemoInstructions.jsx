@@ -1,6 +1,6 @@
 import { Anchor, Box, List, Table, Text, Title } from '@mantine/core'
 import { useContext } from 'react'
-import { FormContext } from '../context/FormProvider.jsx';
+import { FormContext } from '../providers/FormProvider.jsx';
 
 const DemoInstructions = () => {
     const { response } = useContext(FormContext);

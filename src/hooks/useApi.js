@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
-import dataSpec from "./dataSpec";
+import apiDefault from "../data/apiDefault";
 
-export function createApi({ logger, onError }) {
+export function useApi({ logger, onError }) {
     const cookies = new Cookies();
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     const cookieOptions = {
@@ -23,6 +23,7 @@ export function createApi({ logger, onError }) {
                         if (element.quantity == 0 || element.quantity == '') {
                             return false;
                         }
+                        return true
                     default:
                         return true;
                 }
@@ -73,7 +74,7 @@ export function createApi({ logger, onError }) {
                 logger.info(query, json);
                 callback(json);
             } catch {
-                logger.error(url, 'ERROR!!', true);
+                logger.error(query, 'ERROR!!', true);
                 setTimeout(onError, 1000)
             }
         },
@@ -89,16 +90,16 @@ export function createApi({ logger, onError }) {
                 return;
             }
             let json = await response.json();
-            json.store ??= dataSpec.store;
-            json.register ??= dataSpec.register;
+            json.store ??= apiDefault.store;
+            json.register ??= apiDefault.register;
             if (json.store?.number && json.register?.number) {
                 setCookie(json);
             } else {
                 json = getCookie(json);
             }
             json.view.name ??= 'HOME'
-            json.view.form ??= dataSpec.view.form;
-            json.user ??= dataSpec.user;
+            json.view.form ??= apiDefault.view.form;
+            json.user ??= apiDefault.user;
             logger.info('Response', json);
             callback(json);
         },

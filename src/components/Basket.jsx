@@ -3,11 +3,10 @@ import { Text, Box, Group, Divider } from '@mantine/core';
 import PrintHeader from './PrintHeader.jsx'
 import PrintFooter from './PrintFooter.jsx'
 import DemoInstructions from './DemoInstructions.jsx';
-import moneyConverter from '../util/moneyConverter.js';
-import { FormContext } from '../context/FormProvider.jsx';
+import { FormContext } from '../providers/FormProvider.jsx';
 
 function Basket() {
-    const { response } = useContext(FormContext);
+    const { formatMoney, response } = useContext(FormContext);
     let total = 0;
     let lines = 0;
     let items = 0;
@@ -19,12 +18,12 @@ function Basket() {
         }
         return false;
     }
-    response.basket.map((line, i) => {
+    response.basket.map((line) => {
         total += line.quantity * line.unitValue * (isReturn(line) ? -1 : 1);
         items += line.quantity;
         lines++;
     })
-    response.tender.map((line, i) => {
+    response.tender.map((line) => {
         tenders += line.value;
     })
     if (tenders != 0) {
@@ -47,6 +46,7 @@ function Basket() {
         setTimeout(() => {
             scrollToBottom()
         }, 100)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [response.basket, response.tender]);
     return (
         <Box
@@ -64,18 +64,10 @@ function Basket() {
                             <Text>
                                 {line.quantity * (isReturn(line) ? -1 : 1)}
                                 &nbsp;@&nbsp;
-                                {moneyConverter(
-                                    response.store.countryCode,
-                                    response.store.currencyCode,
-                                    line.unitValue,
-                                )}
+                                {formatMoney(line.unitValue)}
                             </Text>
                             <Text>
-                                {moneyConverter(
-                                    response.store.countryCode,
-                                    response.store.currencyCode,
-                                    (line.quantity * (isReturn(line) ? -1 : 1) * line.unitValue),
-                                )}
+                                {formatMoney((line.quantity * (isReturn(line) ? -1 : 1) * line.unitValue))}
                             </Text>
                         </Group>
                     </Box>
@@ -87,11 +79,7 @@ function Basket() {
                     <Text>
                         {response.uiTranslations.subtotal}
                         :&nbsp;
-                        {moneyConverter(
-                            response.store.countryCode,
-                            response.store.currencyCode,
-                            total,
-                        )}
+                        {formatMoney(total)}
                     </Text>
                     <Text>
                         {response.uiTranslations.transactionLines}
@@ -112,11 +100,7 @@ function Basket() {
                         return <Text key={i}>
                             {response.uiTranslations[line.type.toLowerCase().toCamelCase()]}
                             &nbsp;
-                            {moneyConverter(
-                                response.store.countryCode,
-                                response.store.currencyCode,
-                                line.value,
-                            )}
+                            {formatMoney(line.value)}
                         </Text>
 
                     })}
@@ -128,11 +112,7 @@ function Basket() {
                     <Text>
                         {response.uiTranslations.tenderTotal}
                         :&nbsp;
-                        {moneyConverter(
-                            response.store.countryCode,
-                            response.store.currencyCode,
-                            tenders,
-                        )}
+                        {formatMoney(tenders)}
                     </Text>
                 </Box>
             )}
@@ -141,11 +121,7 @@ function Basket() {
                     <Text>
                         {response.uiTranslations.difference}
                         :&nbsp;
-                        {moneyConverter(
-                            response.store.countryCode,
-                            response.store.currencyCode,
-                            difference,
-                        )}
+                        {formatMoney(difference)}
                     </Text>
                 </Box>
             )}

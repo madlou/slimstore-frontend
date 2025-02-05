@@ -1,4 +1,4 @@
-const dataSpec = {
+const apiDefault = {
     'store': {
         'id': 0,
         'number': 0,
@@ -77,4 +77,4 @@ const dataSpec = {
     'languages': [],
 }
 
-export default dataSpec;
+export default apiDefault;

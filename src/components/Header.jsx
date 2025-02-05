@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import { Box, Burger, Drawer, Group, Title } from '@mantine/core';
 import MenuButtons from './MenuButtons.jsx';
-import { LayoutContext } from '../context/LayoutProvider.jsx';
-import { FormContext } from '../context/FormProvider.jsx';
+import { LayoutContext } from '../providers/LayoutProvider.jsx';
+import { FormContext } from '../providers/FormProvider.jsx';
 
 function Header() {
     const { menuOpened, setMenuOpened } = useContext(LayoutContext);

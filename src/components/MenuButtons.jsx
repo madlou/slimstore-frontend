@@ -1,10 +1,9 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { Button, Flex } from '@mantine/core';
 import { RxSun, RxMoon, RxZoomIn, RxZoomOut, RxKeyboard, RxEnterFullScreen, RxExitFullScreen } from 'react-icons/rx';
-import { SchemeContext } from '../context/SchemeProvider.jsx';
-import { LayoutContext } from '../context/LayoutProvider.jsx';
+import { SchemeContext } from '../providers/SchemeProvider.jsx';
+import { LayoutContext } from '../providers/LayoutProvider.jsx';
 import LanguageDropdown from './LanguageDropdown.jsx'
-import LayoutDropdown from './LayoutDropdown.jsx';
 
 const MenuButtons = () => {
     const schemeContext = useContext(SchemeContext);
@@ -18,7 +17,6 @@ const MenuButtons = () => {
             align='flex-start'
             direction={menuOpened ? 'column-reverse' : 'row'}
         >
-            <LayoutDropdown />
             <LanguageDropdown />
             <Button
                 onClick={toggleFullscreen}

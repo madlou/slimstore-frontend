@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { AppShell } from '@mantine/core';
-import { LayoutContext } from '../context/LayoutProvider.jsx';
+import { LayoutContext } from '../providers/LayoutProvider.jsx';
 import Header from './Header.jsx';
 import Main from './Main.jsx';
 import Footer from './Footer.jsx';

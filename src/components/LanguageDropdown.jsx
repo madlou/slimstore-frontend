@@ -1,6 +1,6 @@
 import { Select } from '@mantine/core';
-import { LayoutContext } from '../context/LayoutProvider.jsx';
-import { FormContext } from '../context/FormProvider.jsx';
+import { LayoutContext } from '../providers/LayoutProvider.jsx';
+import { FormContext } from '../providers/FormProvider.jsx';
 import { useContext } from 'react';
 
 function LanguageDropdown() {
