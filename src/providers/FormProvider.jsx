@@ -29,10 +29,10 @@ export const FormProvider = ({ children }) => {
             }, 5 * 1000)
         },
     });
-    const [lang, setLang] = useState('EN');
-    const [formElements, updateFormElements] = useImmer([]);
-    const [requestForm, setRequestForm] = useState(apiDefault.view.form);
-    const [response, setResponse] = useState(apiDefault);
+    const [ lang, setLang ] = useState('EN');
+    const [ formElements, updateFormElements] = useImmer([]);
+    const [ requestForm, setRequestForm ] = useState(apiDefault.view.form);
+    const [ response, setResponse ] = useState(apiDefault);
     const { updateMoney, formatMoney } = useMoney();
     useEffect(() => {
         updateFormElements(response.view.form.elements ?? []);
@@ -43,10 +43,10 @@ export const FormProvider = ({ children }) => {
         errorCount.current = 0;
         clearTimeout(logoutTimer.current);
         logoutTimer.current = setTimeout(logout.current, import.meta.env.VITE_AUTO_LOGOUT * 60 * 1000);
-    }, [response]);
+    }, [ response ]);
     useEffect(() => {
         api.post(setResponse, requestForm, lang);
-    }, [requestForm]);
+    }, [ requestForm ]);
     useEffect(()=>{
         logout.current = ()=>{
             setRequestForm({
@@ -67,7 +67,7 @@ export const FormProvider = ({ children }) => {
                 formatMoney,
             }}
         >
-            {children}
+            { children }
         </FormContext.Provider>
     );
 };

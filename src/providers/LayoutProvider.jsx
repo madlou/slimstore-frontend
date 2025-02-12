@@ -7,15 +7,15 @@ export const LayoutContext = createContext();
 // eslint-disable-next-line react/prop-types
 export const LayoutProvider = ({ children }) => {
     const { width, height } = useViewportSize();
-    const [inputFocused, setInputFocused] = useState(null);
-    const [layout, setLayout] = useState([6, 6]);
-    const [portrait, setPortrait] = useState(false);
-    const [menuOpened, setMenuOpened] = useState(false);
-    const [showKeyboard, setShowKeyboard] = useState(false);
-    const [footerHeight, setFooterHeight] = useState(96);
-    const [fullscreen, setFullscreen] = useState(false);
-    const [fontSize, setFontSize] = useState(24);
-    const [showFunctionNumbers, setShowFunctionNumbers] = useState(true);
+    const [ inputFocused, setInputFocused ] = useState(null);
+    const [ layout, setLayout] = useState([6, 6 ]);
+    const [ portrait, setPortrait ] = useState(false);
+    const [ menuOpened, setMenuOpened ] = useState(false);
+    const [ showKeyboard, setShowKeyboard ] = useState(false);
+    const [ footerHeight, setFooterHeight ] = useState(96);
+    const [ fullscreen, setFullscreen ] = useState(false);
+    const [ fontSize, setFontSize ] = useState(24);
+    const [ showFunctionNumbers, setShowFunctionNumbers ] = useState(true);
     const kbHeight = 184;
     const toggleKeyboard = () => {
         const toggle = !showKeyboard
@@ -70,10 +70,10 @@ export const LayoutProvider = ({ children }) => {
             setPortrait(false);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [width]);
+    }, [ width ]);
     useEffect(() => {
         document.documentElement.style.fontSize = fontSize + 'px';
-    }, [fontSize]);
+    }, [ fontSize ]);
     return (
         <LayoutContext.Provider
             value={{
@@ -89,7 +89,7 @@ export const LayoutProvider = ({ children }) => {
                 portrait,
             }}
         >
-            {children}
+            { children }
         </LayoutContext.Provider>
     );
 };

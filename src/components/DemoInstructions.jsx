@@ -46,7 +46,7 @@ const DemoInstructions = () => {
                         <Text fs="italic">* {response.uiTranslations.devmessage3}</Text>
                         <Text fs="italic" mb={16}>** {response.uiTranslations.devmessage4}</Text>
                         <Text>{response.uiTranslations.devmessage5}:&nbsp;
-                            <Anchor href={customerDisplay} target="_blank">{response.uiTranslations.customerDisplay}</Anchor>
+                            <Anchor href={ customerDisplay } target="_blank">{response.uiTranslations.customerDisplay}</Anchor>
                         </Text>
                     </Box>
                 ) : ''

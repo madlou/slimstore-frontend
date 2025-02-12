@@ -19,7 +19,7 @@ const MenuButtons = () => {
         >
             <LanguageDropdown />
             <Button
-                onClick={toggleFullscreen}
+                onClick={ toggleFullscreen }
                 title='Toggle Fullscreen'
                 w={menuOpened ? '100%' : 'auto'}
             >
@@ -30,7 +30,7 @@ const MenuButtons = () => {
                 )}
             </Button>
             <Button
-                onClick={toggleKeyboard}
+                onClick={ toggleKeyboard }
                 title='Toggle keyboard'
                 w={menuOpened ? '100%' : 'auto'}
             >

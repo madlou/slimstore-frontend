@@ -29,7 +29,7 @@ function Report() {
     };
     return (
         <Table
-            data={tableData}
+            data={ tableData }
             stickyHeader
         />
     )

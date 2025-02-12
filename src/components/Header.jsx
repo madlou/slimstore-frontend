@@ -40,7 +40,7 @@ function Header() {
                 <MenuButtons />
             </Box>
             <Drawer
-                opened={menuOpened}
+                opened={ menuOpened }
                 onClose={() => { setMenuOpened(false) }}
                 size='40%'
                 padding='md'
@@ -52,7 +52,7 @@ function Header() {
                 <MenuButtons />
             </Drawer>
             <Burger
-                opened={menuOpened}
+                opened={ menuOpened }
                 onClick={() => { setMenuOpened(!menuOpened) }}
                 hiddenFrom='sm'
                 size='md'

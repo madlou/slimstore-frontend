@@ -14,8 +14,8 @@ function LanguageDropdown() {
         <>
             <Select
                 data={response.languages}
-                onChange={langChange}
-                value={lang}
+                onChange={ langChange }
+                value={ lang }
                 w={menuOpened ? '100%' : 70}
             />
         </>

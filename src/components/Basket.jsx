@@ -84,12 +84,12 @@ function Basket() {
                     <Text>
                         {response.uiTranslations.transactionLines}
                         :&nbsp;
-                        {lines}
+                        { lines }
                     </Text>
                     <Text>
                         {response.uiTranslations.items}
                         :&nbsp;
-                        {items}
+                        { items }
                     </Text>
                 </Box>
             )}
@@ -126,7 +126,7 @@ function Basket() {
                 </Box>
             )}
             <PrintFooter />
-            <div ref={basketBottomRef} id='bottomReference'></div>
+            <div ref={ basketBottomRef } id='bottomReference'></div>
         </Box>
     )
 }

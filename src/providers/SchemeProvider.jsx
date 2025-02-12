@@ -11,7 +11,7 @@ export const SchemeProvider = ({ children, colorScheme, setColorScheme }) => {
                 colorScheme, setColorScheme,
             }}
         >
-            {children}
+            { children }
         </SchemeContext.Provider>
     );
 };

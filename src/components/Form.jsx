@@ -87,11 +87,11 @@ function Form() {
                 pr='xs'
                 pb='xl'
                 pl='xl'
-                mah={scrollHeight}
+                mah={ scrollHeight }
             >
                 {response.error ? <Text c={'salmon'}>{response.error}</Text> : ''}
                 <Text id='message'>{response.view.message}</Text>
-                <form onSubmit={submit}>
+                <form onSubmit={ submit }>
                     {formElements.map((element, i) => {
                         let key = response.view.name + ':' + element.key;
                         switch (element.type) {
@@ -99,12 +99,21 @@ function Form() {
                                 return <Text
                                     className='error'
                                     c={'salmon'}
-                                    key={key}
+                                    key={ key }
                                     type='text'
                                     w={'95%'}
                                 >{element.label}</Text>
                             }
-                            case 'TEXT':
+                            case 'MESSAGE': {
+                                return <Text
+                                    display={element.hidden ? 'none' : 'block'}
+                                    id={ key }
+                                    key={ key }
+                                    w={'95%'}
+                                    pt={18}
+                                >{element.label ?? ''}&nbsp;{element.value ?? ''}</Text>
+                            }
+                            case 'TEXT': 
                             case 'EMAIL': {
                                 return <TextInput
                                     autoComplete='off'
@@ -112,14 +121,14 @@ function Form() {
                                     className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
-                                    id={key}
-                                    key={key}
+                                    id={ key }
+                                    key={ key }
                                     label={element.label}
                                     mt='md'
-                                    name={key}
+                                    name={ key }
                                     onChange={(evt) => { valueChange(i, evt.currentTarget.value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
-                                    readOnly={showKeyboard}
+                                    readOnly={ showKeyboard }
                                     required={element.required}
                                     type='text'
                                     value={element.value ?? ''}
@@ -133,14 +142,14 @@ function Form() {
                                     className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
-                                    id={key}
-                                    key={key}
+                                    id={ key }
+                                    key={ key }
                                     label={element.label}
                                     mt='md'
-                                    name={key}
+                                    name={ key }
                                     onChange={(value) => { valueChange(i, value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
-                                    readOnly={showKeyboard}
+                                    readOnly={ showKeyboard }
                                     required={element.required}
                                     type='text'
                                     value={element.value ?? ''}
@@ -154,14 +163,14 @@ function Form() {
                                     className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
-                                    id={key}
-                                    key={key}
+                                    id={ key }
+                                    key={ key }
                                     label={element.label}
                                     mt='md'
-                                    name={key}
+                                    name={ key }
                                     onChange={(value) => { valueChange(i, value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
-                                    readOnly={showKeyboard}
+                                    readOnly={ showKeyboard }
                                     required={element.required}
                                     type='text'
                                     value={element.value ?? ''}
@@ -174,11 +183,11 @@ function Form() {
                                     className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
-                                    id={key}
-                                    key={key}
+                                    id={ key }
+                                    key={ key }
                                     label={element.label}
                                     mt='md'
-                                    name={key}
+                                    name={ key }
                                     required={element.required}
                                     valueFormat={response.uiTranslations.dateFormat.toUpperCase()}
                                     onChange={(value) => { valueChange(i, value.toISOString().slice(0, 10)) }}
@@ -193,14 +202,14 @@ function Form() {
                                     className={key == inputFocused ? 'focused' : ''}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
-                                    id={key}
-                                    key={key}
+                                    id={ key }
+                                    key={ key }
                                     label={element.label}
                                     mt='md'
-                                    name={key}
+                                    name={ key }
                                     onChange={(evt) => { valueChange(i, evt.currentTarget.value) }}
                                     onFocus={(evt) => { focusChange(i, evt.target.id) }}
-                                    readOnly={showKeyboard}
+                                    readOnly={ showKeyboard }
                                     required={element.required}
                                     type='password'
                                     value={element.value ?? ''}
@@ -212,8 +221,8 @@ function Form() {
                                     className='primary'
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
-                                    id={key}
-                                    key={key}
+                                    id={ key }
+                                    key={ key }
                                     label={element.label}
                                     mt='lg'
                                     type='submit'                                >
@@ -225,13 +234,13 @@ function Form() {
                                 return <Group
                                     mt='sm'
                                     w={'95%'}
-                                    key={key}
+                                    key={ key }
                                 >
                                     <Button
                                         disabled={element.disabled}
                                         display={element.hidden ? 'none' : 'block'}
                                         onClick={() => { formButtonClick(i) }}
-                                        key={key}
+                                        key={ key }
                                     >{element.button.label}</Button>
                                     <Text>{
                                         element.key + ' - ' + 
@@ -243,7 +252,7 @@ function Form() {
                             case 'IMAGE': {
                                 return <Box
                                     display={element.hidden ? 'none' : 'block'}
-                                    key={key}
+                                    key={ key }
                                     w={'95%'}
                                 >
                                     <img src={getImageUrl(element.image)} />
@@ -255,7 +264,7 @@ function Form() {
                             case 'PRODUCT_WEB':
                             case 'PRODUCT_DRINK': {
                                 return <Group
-                                    key={key}
+                                    key={ key }
                                     mt='sm'
                                     style={{ flexWrap: 'nowrap' }}
                                     w={'95%'}
@@ -297,7 +306,7 @@ function Form() {
                             }
                             case 'RETURN': {
                                 return <Group
-                                    key={key}
+                                    key={ key }
                                     mt='sm'
                                     w={'95%'}
                                 >
@@ -340,9 +349,9 @@ function Form() {
                                     label={element.label}
                                     disabled={element.disabled}
                                     display={element.hidden ? 'none' : 'block'}
-                                    data={selectOptions}
-                                    id={key}
-                                    key={key}
+                                    data={ selectOptions }
+                                    id={ key }
+                                    key={ key }
                                     mt='lg'
                                     name={element.key}
                                     onChange={(value) => { valueChange(i, value) }}

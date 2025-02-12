@@ -129,7 +129,7 @@ function FunctionButtons() {
                                 }}
                             >
                                 { showFunctionNumbers ? <div>{'F' + button.position}&nbsp;-&nbsp;</div> : ''}
-                                <div>{label}</div>
+                                <div>{ label }</div>
                             </Button>
                         </Tooltip>
                     )

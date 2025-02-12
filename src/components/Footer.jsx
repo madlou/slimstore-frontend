@@ -16,8 +16,8 @@ function Footer() {
         { portrait == true ? '' : (
             <Slider
                 defaultValue={6}
-                label={null}
-                onChange={sliderChange}
+                label={ null }
+                onChange={ sliderChange }
                 thumbChildren={<RxDragHandleVertical />}
                 radius={0}
                 color="transparent"
@@ -40,7 +40,6 @@ function Footer() {
                 }}
             />
         )}
-        
         <Keyboard />
         <FunctionButtons />
         <StatusBar />

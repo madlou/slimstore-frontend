@@ -24,8 +24,8 @@ function Display() {
             flex={1}
         >
             <ScrollArea.Autosize
-                mah={scrollHeight}
-                maw={scrollWidth}
+                mah={ scrollHeight }
+                maw={ scrollWidth }
                 mx='auto'
                 pt='xl'
                 pr='xs'

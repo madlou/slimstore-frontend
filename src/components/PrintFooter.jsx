@@ -22,8 +22,8 @@ function PrintFooter() {
             <Group
                 justify={'space-between'}
             >
-                <Text>{response.uiTranslations.date}: {dateString}</Text>
-                <Text>{response.uiTranslations.time}: {timeString}</Text>
+                <Text>{response.uiTranslations.date}: { dateString }</Text>
+                <Text>{response.uiTranslations.time}: { timeString }</Text>
             </Group>
             <Divider mb={8} size='md' variant='dotted' />
         </Box >

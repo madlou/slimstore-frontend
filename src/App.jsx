@@ -8,11 +8,11 @@ import Shell from './components/Shell'
 import { SchemeProvider } from './providers/SchemeProvider';
 
 function App() {
-    const [colorScheme, setColorScheme] = useState('dark');
+    const [ colorScheme, setColorScheme ] = useState('dark');
     return (
-        <SchemeProvider colorScheme={colorScheme} setColorScheme={setColorScheme}>
-            <ColorSchemeScript forceColorScheme={colorScheme} />
-            <MantineProvider forceColorScheme={colorScheme} withGlobalStyles withNormalizeCSS >
+        <SchemeProvider colorScheme={ colorScheme } setColorScheme={ setColorScheme }>
+            <ColorSchemeScript forceColorScheme={ colorScheme } />
+            <MantineProvider forceColorScheme={ colorScheme } withGlobalStyles withNormalizeCSS >
                 <FormProvider>
                     <LayoutProvider>
                         <Shell />
