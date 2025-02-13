@@ -42,7 +42,9 @@ export const FormProvider = ({ children }) => {
         })
         errorCount.current = 0;
         clearTimeout(logoutTimer.current);
-        logoutTimer.current = setTimeout(logout.current, import.meta.env.VITE_AUTO_LOGOUT * 60 * 1000);
+        if(response.view.name != 'LOGIN'){
+            logoutTimer.current = setTimeout(logout.current, import.meta.env.VITE_AUTO_LOGOUT * 60 * 1000);
+        }
     }, [ response ]);
     useEffect(() => {
         api.post(setResponse, requestForm, lang);
