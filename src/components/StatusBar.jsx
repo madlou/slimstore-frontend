@@ -4,10 +4,6 @@ import { useContext } from 'react';
 
 function StatusBar() {
     const { response } = useContext(FormContext);
-    const pad = (value, width, character = '0') => {
-        value = value + '';
-        return value.length >= width ? value : new Array(width - value.length + 1).join(character) + value;
-    }
     return (
         <Flex
             id='function-buttons'
@@ -20,7 +16,7 @@ function StatusBar() {
         >
             <Container>
                 <Text span visibleFrom='sm'>{response.uiTranslations.store}-{response.uiTranslations.register}: </Text>
-                <Text span>{pad(response.store.number, 4)}-{pad(response.register.number, 2)}</Text>
+                <Text span>{response.store.number.toString().padStart(4, "0")}-{response.register.number.toString().padStart(2, "0")}</Text>
             </Container>
             <Container>
                 <Text span visibleFrom='sm'>{response.uiTranslations.user}: </Text>
@@ -28,7 +24,7 @@ function StatusBar() {
             </Container>
             <Container>
                 <Text span visibleFrom='sm'>{response.uiTranslations.transaction}: </Text>
-                <Text span>{pad(response.register.lastTxnNumber + 1, 6)}</Text>
+                <Text span>{(response.register.lastTxnNumber + 1).toString().padStart(6, "0")}</Text>
             </Container>
             <Container>
                 <Text span visibleFrom='sm'>{response.uiTranslations.status}: </Text>
