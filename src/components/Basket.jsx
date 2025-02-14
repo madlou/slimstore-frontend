@@ -99,6 +99,7 @@ function Basket() {
                     {response.tender.map((line, i) => {
                         return <Text key={i}>
                             {response.uiTranslations[line.type.toLowerCase().toCamelCase()]}
+                            {line.reference ? ' (' + line.reference + ')' : ''}:
                             &nbsp;
                             {formatMoney(line.value)}
                         </Text>
