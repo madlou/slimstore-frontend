@@ -28,14 +28,16 @@ function Footer() {
                         height: '1px',
                         position: 'absolute',
                         width: '100%',
-                        marginTop: '-45vh'
+                        marginTop: '-45vh',
                     },
                     track: {    
                         height: '0px',
                     },
                     thumb: {
                         border: '0px',
-                        height: '50px'
+                        color: 'darkgray',
+                        height: '50px',
+                        backgroundColor: "transparent",
                     }
                 }}
             />
