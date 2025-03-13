@@ -2,10 +2,14 @@ import { useContext, useEffect } from 'react'
 import { Flex, Button, Tooltip } from '@mantine/core';
 import { LayoutContext } from '../providers/LayoutProvider.jsx';
 import { FormContext } from '../providers/FormProvider.jsx';
+import { DisplayContext } from '../providers/DisplayProvider.jsx';
+import { LocationContext } from '../providers/LocationProvider.jsx';
 
 function FunctionButtons() {
-    const { formatMoney, formElements, setRequestForm, response } = useContext(FormContext);
+    const { formElements, setRequestForm, response } = useContext(FormContext);
     const { showFunctionNumbers } = useContext(LayoutContext);
+    const { formatMoney } = useContext(LocationContext);
+    const { basket, tender } = useContext(DisplayContext);
     const fixedButtons = new Array(8).fill({}, 1, 8).map((e, i) => {return {
             label: '',
             position: i + 1,
@@ -32,14 +36,14 @@ function FunctionButtons() {
                 first = response.user.role;
                 break;
             case 'basket.length':
-                first = response.basket.length;
+                first = basket.length;
                 break;
             case 'tender.length':
-                first = response.tender.length;
+                first = tender.length;
                 break;
             case 'basket.total':
                 first = 0;
-                response.basket.map((line) => {
+                basket.map((line) => {
                     first += line.quantity * line.unitValue * (isReturn(line) ? -1 : 1);
                 })
                 break;

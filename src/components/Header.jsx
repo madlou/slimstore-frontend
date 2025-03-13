@@ -1,12 +1,14 @@
 import { useContext } from 'react'
 import { Box, Burger, Drawer, Group, Title } from '@mantine/core';
 import MenuButtons from './MenuButtons.jsx';
-import { LayoutContext } from '../providers/LayoutProvider.jsx';
 import { FormContext } from '../providers/FormProvider.jsx';
+import { LayoutContext } from '../providers/LayoutProvider.jsx';
+import { TranslationContext } from '../providers/TranslationProvider.jsx';
 
 function Header() {
-    const { menuOpened, setMenuOpened } = useContext(LayoutContext);
     const { response } = useContext(FormContext);
+    const { menuOpened, setMenuOpened } = useContext(LayoutContext);
+    const { translations } = useContext(TranslationContext);
     return (
         <Group
             pl='md'
@@ -21,14 +23,14 @@ function Header() {
                     order={1}
                     pt={5}
                     textWrap='nowrap'
-                >{response.uiTranslations.logo}</Title>
+                >{translations.logo}</Title>
                 <Title
                     order={2}
                     pt={10}
                     fz={22}
                     textWrap='nowrap'
                     visibleFrom='lg'
-                >{response.uiTranslations.header} - </Title>
+                >{translations.header} - </Title>
                 <Title
                     order={2}
                     pt={10}
@@ -45,7 +47,7 @@ function Header() {
                 size='40%'
                 padding='md'
                 position='right'
-                title={response.uiTranslations.header}
+                title={translations.header}
                 hiddenFrom='sm'
                 zIndex={100}
             >

@@ -1,29 +1,33 @@
-import { Box, Divider, Text } from "@mantine/core"
-import { FormContext } from '../providers/FormProvider.jsx';
 import { useContext } from "react";
+import { Box, Divider, Text } from "@mantine/core"
+import { LocationContext } from '../providers/LocationProvider.jsx';
+import { TranslationContext } from '../providers/TranslationProvider.jsx';
 
 function PrintHeader() {
-    const { response } = useContext(FormContext);
+    const { store } = useContext(LocationContext);
+    const { translations } = useContext(TranslationContext);
     return (
         <Box
             className="printonly"
         >
-            <Text fw={700}>
-                {response.uiTranslations.logo}
-                {response.store.name}
-            </Text>
-            <Text>
-                {response.store.address1}
-                {response.store.address2 ? ', ' + response.store.address2 : ''}
-            </Text>
-            <Text>
-                {response.store.city}
-                {response.store.postCode ? ', ' + response.store.postCode : ''}
-            </Text>
-            <Text>
-                {response.store.phoneNumber}
-            </Text>
-            <Divider mb={8} size='md' variant='dotted' />
+            { store && (<>
+                <Text fw={700}>
+                    {translations.logo}
+                    {store.name}
+                </Text>
+                <Text>
+                    {store.address1}
+                    {store.address2 ? ', ' + store.address2 : ''}
+                </Text>
+                <Text>
+                    {store.city}
+                    {store.postCode ? ', ' + store.postCode : ''}
+                </Text>
+                <Text>
+                    {store.phoneNumber}
+                </Text>
+                <Divider mb={8} size='md' variant='dotted' />
+            </>) }
         </Box>
     )
 }

@@ -3,12 +3,16 @@ import { Box, Button, Group, Image, NumberInput, Paper, ScrollArea, Select, Text
 import { DatePickerInput } from '@mantine/dates';
 import { useViewportSize } from '@mantine/hooks';
 import '@mantine/dates/styles.css';
-import { LayoutContext } from '../providers/LayoutProvider.jsx';
 import { FormContext } from '../providers/FormProvider.jsx';
+import { LayoutContext } from '../providers/LayoutProvider.jsx';
+import { LocationContext } from '../providers/LocationProvider.jsx';
+import { TranslationContext } from '../providers/TranslationProvider.jsx';
 
 function Form() {
+    const { formElements, updateFormElements, setRequestForm, response } = useContext(FormContext);
     const { inputFocused, portrait, setInputFocused, showKeyboard } = useContext(LayoutContext);
-    const { formElements, updateFormElements, setRequestForm, response, formatMoney } = useContext(FormContext);
+    const { formatMoney } = useContext(LocationContext);
+    const { translations } = useContext(TranslationContext);
     const focusChange = (i, id) => {
         if (id == inputFocused) {
             return false;
@@ -189,7 +193,7 @@ function Form() {
                                     mt='md'
                                     name={ key }
                                     required={element.required}
-                                    valueFormat={response.uiTranslations.dateFormat.toUpperCase()}
+                                    valueFormat={translations.dateFormat.toUpperCase()}
                                     onChange={(value) => { valueChange(i, value.toISOString().slice(0, 10)) }}
                                     value={element.value ? new Date(element.value) : null}
                                     w={'95%'}
@@ -230,7 +234,7 @@ function Form() {
                                 </Button>
                             }
                             case 'BUTTON': {
-                                const elementLabel = response.uiTranslations[element.label.toLowerCase()] ?? element.label;
+                                const elementLabel = translations[element.label.toLowerCase()] ?? element.label;
                                 return <Group
                                     mt='sm'
                                     w={'95%'}

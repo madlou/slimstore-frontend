@@ -4,9 +4,15 @@ import PrintHeader from './PrintHeader.jsx'
 import PrintFooter from './PrintFooter.jsx'
 import DemoInstructions from './DemoInstructions.jsx';
 import { FormContext } from '../providers/FormProvider.jsx';
+import { DisplayContext } from '../providers/DisplayProvider.jsx';
+import { LocationContext } from '../providers/LocationProvider.jsx';
+import { TranslationContext } from '../providers/TranslationProvider.jsx';
 
 function Basket() {
-    const { formatMoney, response } = useContext(FormContext);
+    const { response } = useContext(FormContext);
+    const { basket, tender } = useContext(DisplayContext);
+    const { formatMoney } = useContext(LocationContext);
+    const { translations } = useContext(TranslationContext);
     let total = 0;
     let lines = 0;
     let items = 0;
@@ -18,12 +24,12 @@ function Basket() {
         }
         return false;
     }
-    response.basket.map((line) => {
+    basket.map((line) => {
         total += line.quantity * line.unitValue * (isReturn(line) ? -1 : 1);
         items += line.quantity;
         lines++;
     })
-    response.tender.map((line) => {
+    tender.map((line) => {
         tenders += line.value;
     })
     if (tenders != 0) {
@@ -47,14 +53,14 @@ function Basket() {
             scrollToBottom()
         }, 100)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [response.basket, response.tender]);
+    }, [basket, tender]);
     return (
         <Box
             w={'95%'}
         >
             <PrintHeader />
             <DemoInstructions />
-            {response.basket.map((line, i) => {
+            {basket.map((line, i) => {
                 return (
                     <Box mb={8} key={i}>
                         <Text>{line.code} {line.name}</Text>
@@ -73,32 +79,32 @@ function Basket() {
                     </Box>
                 );
             })}
-            {response.basket.length < 1 ? '' : (
+            {basket.length < 1 ? '' : (
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
                     <Text>
-                        {response.uiTranslations.subtotal}
+                        {translations.subtotal}
                         :&nbsp;
                         {formatMoney(total)}
                     </Text>
                     <Text>
-                        {response.uiTranslations.transactionLines}
+                        {translations.transactionLines}
                         :&nbsp;
                         { lines }
                     </Text>
                     <Text>
-                        {response.uiTranslations.items}
+                        {translations.items}
                         :&nbsp;
                         { items }
                     </Text>
                 </Box>
             )}
-            {response.tender && response.tender.length > 0 ? (
+            {tender && tender.length > 0 ? (
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
-                    {response.tender.map((line, i) => {
+                    {tender.map((line, i) => {
                         return <Text key={i}>
-                            {response.uiTranslations[line.type.toLowerCase().toCamelCase()]}
+                            {translations[line.type.toLowerCase().toCamelCase()]}
                             {line.reference ? ' (' + line.reference + ')' : ''}:
                             &nbsp;
                             {formatMoney(line.value)}
@@ -111,7 +117,7 @@ function Basket() {
                 <Box mb={8}>
                     <Divider mb={8} size='md' variant='dotted' />
                     <Text>
-                        {response.uiTranslations.tenderTotal}
+                        {translations.tenderTotal}
                         :&nbsp;
                         {formatMoney(tenders)}
                     </Text>
@@ -120,7 +126,7 @@ function Basket() {
             {tenders == 0 || difference == 0 ? '' : (
                 <Box mb={8}>
                     <Text>
-                        {response.uiTranslations.difference}
+                        {translations.difference}
                         :&nbsp;
                         {formatMoney(difference)}
                     </Text>

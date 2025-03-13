@@ -1,22 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useState, useEffect, useRef } from "react";
+import { createContext, useState, useEffect, useRef, useContext } from "react";
 import { useApi } from "../hooks/useApi";
-import { useLogger } from "../hooks/useLogger";
-import { useMoney } from '../hooks/useMoney.js';
 import { useImmer } from 'use-immer';
 import apiDefault from '../data/apiDefault.js';
+import { LocationContext } from '../providers/LocationProvider.jsx';
+import { TranslationContext } from './TranslationProvider.jsx';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const FormContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export const FormProvider = ({ children }) => {
-    const logger = useLogger();
+    const { location, setLocation } = useContext(LocationContext);
+    const { language } = useContext(TranslationContext);
+    const [ user, setUser ] = useState(null);
     const errorCount = useRef(0);
     const logoutTimer = useRef(null);
     const logout = useRef(null);
     const api = useApi({
-        logger: logger,
         onError: () => {
             if (errorCount.current > 10) {
                 window.location.reload();
@@ -29,17 +30,48 @@ export const FormProvider = ({ children }) => {
             }, 5 * 1000)
         },
     });
-    const [ lang, setLang ] = useState('EN');
     const [ formElements, updateFormElements] = useImmer([]);
     const [ requestForm, setRequestForm ] = useState(apiDefault.view.form);
     const [ response, setResponse ] = useState(apiDefault);
-    const { updateMoney, formatMoney } = useMoney();
+    const filterForm = (form) => {
+        if (form.elements) {
+            form.elements = form.elements.filter((element) => {
+                switch (element.type) {
+                    case 'ERROR':
+                    case 'SUBMIT':
+                        return false;
+                    case 'PRODUCT':
+                    case 'PRODUCT_WEB':
+                    case 'PRODUCT_DRINK':
+                    case 'RETURN':
+                        if (element.quantity == 0 || element.quantity == '') {
+                            return false;
+                        }
+                        return true
+                    default:
+                        return true;
+                }
+            })
+            form.elements = form.elements.map((element) => {
+                let newElement = {};
+                for (const attributeKey in element) {
+                    if (element[attributeKey] != null) {
+                        newElement[attributeKey] = element[attributeKey];
+                    }
+                }
+                return newElement;
+            })
+        }
+        return form;
+    }
     useEffect(() => {
+        if(response.user?.store != null){
+            setUser(response.user);
+            console.log(location)
+            console.log(response.user.store)
+            setLocation({...location, ...{store: response.user.store.number}});
+        }
         updateFormElements(response.view.form.elements ?? []);
-        updateMoney({
-            currencyCode: response.store.currencyCode ?? '',
-            countryCode: response.store.countryCode ?? '',
-        })
         errorCount.current = 0;
         clearTimeout(logoutTimer.current);
         if(response.view.name != 'LOGIN'){
@@ -47,7 +79,7 @@ export const FormProvider = ({ children }) => {
         }
     }, [ response ]);
     useEffect(() => {
-        api.post(setResponse, requestForm, lang);
+        api.post(setResponse, filterForm(requestForm), language);
     }, [ requestForm ]);
     useEffect(()=>{
         logout.current = ()=>{
@@ -62,11 +94,10 @@ export const FormProvider = ({ children }) => {
     return (
         <FormContext.Provider
             value={{
-                lang, setLang,
                 formElements, updateFormElements,
                 requestForm, setRequestForm,
                 response, setResponse,
-                formatMoney,
+                user,
             }}
         >
             { children }

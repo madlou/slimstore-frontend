@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { Table } from "@mantine/core";
 import { FormContext } from '../providers/FormProvider.jsx';
-import { useContext } from "react";
+import { TranslationContext } from '../providers/TranslationProvider.jsx';
 
 function Report() {
     const { response } = useContext(FormContext);
+    const { translations } = useContext(TranslationContext);
     const camelToWords = (value) => {
         const step = value.replace(/([A-Z])/g, " $1");
         return step.charAt(0).toUpperCase() + step.slice(1);
@@ -13,15 +15,15 @@ function Report() {
         head: headers.map((cell) => {
             let title = cell;
             const lookup = cell.toCamelCase().replace(/ /g, '_');
-            if (response.uiTranslations[lookup]) {
-                title = response.uiTranslations[lookup];
+            if (translations[lookup]) {
+                title = translations[lookup];
             }
             return camelToWords(title)
         }),
         body: response.report.map((line) => {
             return Object.values(line).map((cell, j) => {
                 if (headers[j] == 'type') {
-                    return response.uiTranslations[cell.toLowerCase()]
+                    return translations[cell.toLowerCase()]
                 }
                 return cell
             });
