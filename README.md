@@ -17,7 +17,8 @@ The application is currently deployed on the Oracle platform and can be found he
 
 You can run a local dev environment with:
 
-```rpm run dev```
+```npm install```
+```npm run dev```
 
 ## Mantine Vite template
 
