@@ -17,6 +17,7 @@ The application is currently deployed on the Oracle platform and can be found he
 
 You can run a local dev environment with:
 
+```nix develop```
 ```npm install```
 ```npm run dev```
 
